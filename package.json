@@ -8,7 +8,7 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "start": "ng serve –proxy http://localhost:9000",
+        "start": "ng serve –proxy-config proxy.conf.json",
         "dev": "nodemon server/app.js"
     },
     "private": true,
