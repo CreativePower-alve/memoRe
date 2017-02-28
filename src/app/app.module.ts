@@ -5,10 +5,16 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
+
+import 'hammerjs';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TopBarComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,
@@ -17,6 +23,7 @@ import { AppComponent } from './app.component';
     MaterialModule.forRoot()
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [TopBarComponent]
 })
 export class AppModule { }
