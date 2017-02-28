@@ -1,7 +1,11 @@
 <md-sidenav-container 
   class="example-container"
   (backdropClick)="handleCloseMenu($event)">
-    <md-sidenav #sidenav opened=false mode="over" class="sidenav">
+    <md-sidenav 
+    #sidenav
+     opened=false
+      mode="over"
+       class="example-sidenav">
         <!-- sidenav content -->
         Sidenav items
     </md-sidenav>

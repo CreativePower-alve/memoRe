@@ -1,3 +1,14 @@
-.sidenav {
+.example-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.example-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.example-sidenav {
   padding: 20px;
 }
