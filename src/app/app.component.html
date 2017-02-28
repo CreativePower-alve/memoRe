@@ -1,16 +1,9 @@
 <memore-side-nav 
   [isOpen]="isOpen"
-  (onBackdropClick)="onMenuClosed($event)"
- >
+  (onBackdropClick)="onMenuClosed($event)">
 	<top-bar 
 	 (onOpenMenu)=openMenu($event)
-	 [isMenuClosed]="!isOpen">
-		
+	 [isMenuClosed]="!isOpen">	
 	</top-bar>
-	<h1> {{title}}<i class="fa fa-camera-retro"></i>
-	</h1>
-	<button md-raised-button>
-	    Angular Material works!
-	    <md-icon>done</md-icon>
-	</button>
+	<router-outlet></router-outlet>
 </memore-side-nav>
