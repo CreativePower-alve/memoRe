@@ -12,7 +12,4 @@ export class AppComponent {
   openMenu(isOpen) {
 	  this.isOpen = isOpen;
   }
-  onMenuClosed($event) {
-	  this.isOpen = false;
-  }
 }

@@ -1,0 +1,17 @@
+<div class="container"
+ (mouseenter)="showActions()"
+ (mouseleave)="hideActions()"
+>
+	<div class="content">
+		{{truncateText(item.text, 500)}}
+	</div>
+	<div class="footer">
+		<div class="source">
+			{{item.source}}
+		</div>
+		<div class="actions" *ngIf="canShowActions">
+			 <md-icon color="primary">edit</md-icon>
+			  <md-icon color="primary">delete</md-icon>
+		</div>
+	</div>
+</div>

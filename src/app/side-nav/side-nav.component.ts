@@ -2,7 +2,6 @@ import { Component,
  OnInit,
   OnChanges,
    Input,
-   Output,
    SimpleChanges,
    ViewChild,
    EventEmitter
@@ -19,25 +18,19 @@ export class SideNavComponent implements
  OnInit, OnChanges {
 	@Input() isOpen: boolean;
 	@ViewChild('sidenav') sidenav: MdSidenav;
-	@Output() onBackdropClick = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-	  if (changes['isOpen'] && 
-	  	changes['isOpen'].currentValue) {
+	  if (changes['isOpen']) {
 		  this.openSidenav();
      }
   }
 
   openSidenav() {
-	  this.sidenav.open();
-  }
-
-  handleCloseMenu($event) {
-	  this.onBackdropClick.emit($event);
+	  this.sidenav.toggle();
   }
 
 }

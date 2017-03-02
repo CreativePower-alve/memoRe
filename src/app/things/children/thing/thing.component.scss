@@ -1,0 +1,22 @@
+.container{
+	display: flex;
+	flex-direction: column;
+	width: 250px;
+	height: 200px;
+	margin: 16px;
+	background: white;
+}
+.content{
+	flex: 1;
+	padding: 8px;
+	overflow: hidden;
+}
+.footer{
+	margin: 8px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+}
+.source{
+	flex: 1;
+}
