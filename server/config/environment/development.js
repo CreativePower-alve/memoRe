@@ -7,6 +7,7 @@ module.exports = {
     mongo: {
         uri: 'mongodb://localhost/memore-dev'
     },
+   'secret': 'super secret password!',
 
     seedDB: true
 };
