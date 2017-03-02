@@ -1,9 +1,7 @@
 <memore-side-nav 
-  [isOpen]="isOpen"
-  (onBackdropClick)="onMenuClosed($event)">
+  [isOpen]="isOpen">
 	<top-bar 
-	 (onOpenMenu)=openMenu($event)
-	 [isMenuClosed]="!isOpen">	
+	 (onOpenMenu)=openMenu($event)>	
 	</top-bar>
 	<div class="mainContainer">
 		<router-outlet></router-outlet>

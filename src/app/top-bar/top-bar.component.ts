@@ -20,13 +20,8 @@ export class TopBarComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngOnChanges(changes) {
-	  if (changes['isMenuClosed']) {
-		  this.isOpen = !changes['isMenuClosed'];
-	  }
-  }
 
-  openSideNav() {
+  toggleSideNav() {
 	  this.isOpen = !this.isOpen;
 	  this.onOpenMenu.emit(this.isOpen);
   }
