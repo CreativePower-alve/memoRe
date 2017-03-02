@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
-import { ThingComponent } from './thing/thing.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ThingComponent } from './thing/thing.component';
+import { ThingDetailsComponent } from './thing-details/thing-details.component';
 
 @NgModule({
 	imports: [SharedModule],
 	declarations: [
-	 ThingComponent
+	 ThingComponent,
+	 ThingDetailsComponent
 	 ],
 	exports: [
 	 ThingComponent
-	 ]
+	 ],
+	 entryComponents: [ThingDetailsComponent]
 })
 export class ThingsChildrenModule {};

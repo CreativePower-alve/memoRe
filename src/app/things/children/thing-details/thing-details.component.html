@@ -1,0 +1,47 @@
+<div class="thingDetails">
+    <h1 md-dialog-title *ngIf="!readOnly">{{thing.id ? 'Edit': 'Create'}} Thing</h1>
+    <div md-dialog-content>
+        <div class="readOnly" *ngIf="readOnly">
+            <div class="content">
+                {{thing.text}}
+            </div>
+        </div>
+        <div class="edit" *ngIf="!readOnly">
+            <md-input-container class="content">
+                <textarea mdInput [(ngModel)]="thing.text" placeholder="text" type="text" rows="5" cols="70">
+                </textarea>
+            </md-input-container>
+            <md-input-container class="source">
+                <input mdInput [(ngModel)]="thing.source" placeholder="source">
+            </md-input-container>
+            <div class="tags" *ngIf="thing.tags.length">
+                <md-chip-list class="mat-chip-list-stacked">
+                    <md-chip *ngFor="let chipTag of thing.tags" selected="true" class="tag">
+                        {{chipTag}} <span class="removeTag"></span>
+                    </md-chip>
+                </md-chip-list>
+            </div>
+            <div class="addTag">
+                <md-input-container>
+                    <input mdInput [(ngModel)]="newTag" placeholder="tag" (keyup.enter)="addTag()">
+                </md-input-container>
+                <button class="addTagBtn" md-button color="primary" md-raised-button (click)="addTag()" [disabled]="!canAddTag()">Add Tag</button>
+            </div>
+        </div>
+    </div>
+    <div md-dialog-actions class="actions">
+        <div class="edit" *ngIf="!readOnly">
+            <button md-button color="warn" (click)="onClose()">Cancel</button>
+            <button md-button color="primary" (click)="onClose()">Save</button>
+        </div>
+        <div class="readOnly" *ngIf="readOnly">
+            <div class="source">
+                {{thing.source}}
+            </div>
+            <div class="buttons">
+              <md-icon color="primary" (click)="switchToEditMode()">edit</md-icon>
+              <md-icon color="primary">delete</md-icon>    
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+.thingDetails{
+	width: 500px;
+	height: 380px;
+	display: flex;
+	flex-direction: column;
+}
+
+div[md-dialog-content] {
+   flex: 1;
+   display: flex;
+}
+
+.readOnly, .edit {
+	display: flex;
+	flex-direction: column;
+}
+.content{
+	flex: 1;
+}
+
+.actions .edit {
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.actions .readOnly {
+   width: 100%;
+   flex-direction: row;
+  .source {
+  	flex: 1;
+  }
+  .buttons {
+   cursor: pointer;
+  }
+}
+
+
+.tag{
+	outline: none;
+	width: 70px;
+	text-align: center;
+	margin: 8px;
+	@extend .truncate;
+}
+.tags{
+	max-width: 600px;
+	overflow: auto;
+	max-height: 100px;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addTag {
+	md-input-container {
+		flex: 1;
+		margin-right: 8px;
+	}
+	.addTagBtn {
+		flex: 1;
+	}
+}

@@ -1,7 +1,13 @@
 <div class="container">
-	<h1> Things </h1>
-	<div class="thingsList">
-		<memore-thing [item]="aThing" *ngFor="let aThing of things; let i = index">
-		</memore-thing>
-	</div>
+    <h1> Things </h1>
+    <div class="thingsList">
+        <memore-thing 
+          [item]="aThing"
+          (openThingDetailsDialog) = "openThingDetailsDialog($event)" 
+          *ngFor="let aThing of things; let i = index">
+        </memore-thing>
+    </div>
+    <button md-mini-fab class="addThingButton" color="primary" (click)="addNewThing()">
+        <md-icon class="md-24">add</md-icon>
+    </button>
 </div>

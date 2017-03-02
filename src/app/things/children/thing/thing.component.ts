@@ -1,7 +1,9 @@
 import { 
 	Component, 
 	OnInit,
-	Input
+	Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
 
 @Component({
@@ -10,7 +12,8 @@ import {
   styleUrls: ['./thing.component.scss']
 })
 export class ThingComponent implements OnInit {
-  @Input() item; 
+  @Input() item;
+  @Output() openThingDetailsDialog = new EventEmitter(); 
   canShowActions: boolean = false;
   constructor() { }
 
@@ -27,6 +30,14 @@ export class ThingComponent implements OnInit {
 
   hideActions() {
     this.canShowActions = false;
+  }
+
+  openThingDetails(isReadOnly) {
+    const event = {
+      thing : this.item,
+      isReadOnly: isReadOnly
+    }
+    this.openThingDetailsDialog.emit(event);
   }
 
 }
