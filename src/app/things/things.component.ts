@@ -6,8 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./things.component.scss']
 })
 export class ThingsComponent implements OnInit {
-
-  constructor() { }
+  public things: any[];
+  constructor() { 
+    this.things = [
+    {name: 'firstQuote'},
+    {name: 'secondQuote'}
+    ];
+  }
 
   ngOnInit() {
   }
