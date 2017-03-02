@@ -28,6 +28,6 @@ import { ThingsModule } from './things/things.module';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [TopBarComponent]
+  exports: [TopBarComponent, MaterialModule]
 })
 export class AppModule { }
