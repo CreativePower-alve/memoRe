@@ -1,51 +1,68 @@
 <div class="thingDetails">
-    <div md-dialog-content>
+    <form     
+              *ngIf="!readOnly" 
+              class="form-horizontal"
+              novalidate autocomplete="off"
+              #thingForm="ngForm">
+    <div md-dialog-content class="edit">
         <md-icon color="primary" class="closeModal" title="Close" (click)="safeClose()">close</md-icon>
-        <div class="readOnly" *ngIf="readOnly">
-            <div class="content">
-                {{thing.text}}
-            </div>
-        </div>
-        <div class="edit" *ngIf="!readOnly">
-            <md-input-container class="content">
-                <textarea mdInput [(ngModel)]="thing.text" placeholder="text" type="text" rows="5" cols="70">
+            <md-input-container class="content" 
+              dividerColor="{{ (textVar.touched || textVar.dirty) && !textVar.valid ? 'warn' : 'primary' }}">
+                <textarea mdInput
+                    [(ngModel)]="thing.text"
+                    name="text"
+                    type="text"
+                    rows="5"
+                    cols="70"
+                    required
+                    #textVar="ngModel">
                 </textarea>
-            </md-input-container>
-            <md-input-container class="source">
-                <input mdInput [(ngModel)]="thing.source" placeholder="source">
-            </md-input-container>
+                 <md-hint [hidden]="textVar.pristine || textVar.valid">
+                      <span [hidden]="!textVar.errors?.required">Text is required.</span>
+                </md-hint>
+        </md-input-container>
+        <md-input-container class="source">
+            <input 
+               mdInput
+               [(ngModel)]="thing.source"
+               name="source">
+        </md-input-container>
+    </div>
+    <div md-dialog-actions class="edit actions">
+        <div class="tags">
+            <tag-input 
+                  [ngModel]="thing.tags"
+                  [placeholder]="'new tag'"
+                  [secondaryPlaceholder]="'new tag'"
+                  [maxItems]="5"
+                  [separatorKeys]="[32]"
+                  [theme]="minimal"
+                  (onAdd)="onTagAdded($event)"
+                  (onRemove)="onTagRemoved($event)"
+                  [ngModelOptions]="{standalone: true}">
+                    <tag-input-dropdown [appendToBody]="false" [autocompleteItems]="tags">
+                    </tag-input-dropdown>
+            </tag-input>
+        </div>
+        <div class="buttons">
+                <md-icon color="primary" title="Save" (click)="saveThing(eventType.SAVE, thingForm)">save</md-icon>
+                <md-icon color="primary" title="Delete" (click)="onClose(eventType.DELETE)">delete</md-icon>
         </div>
     </div>
-    <div md-dialog-actions class="actions">
-        <div class="edit" *ngIf="!readOnly">
-            <div class="tags">
-                <tag-input [ngModel]="thing.tags" 
-                   [placeholder]="'new tag'"
-                   [maxItems]="5" 
-                   [separatorKeys]="[32]"
-                   [theme]="minimal"
-                   (onAdd)="onTagAdded($event)"
-                   (onRemove)="onTagRemoved($event)">
-                      
-                      <tag-input-dropdown 
-                        [appendToBody]="false"
-                        [autocompleteItems]="tags">
-                    </tag-input-dropdown>
-                
-                </tag-input>
-            </div>
-            <div class="buttons">
-                <md-icon color="primary" title="Save" (click)="onClose(eventType.SAVE)">save</md-icon>
-                <md-icon color="primary" title="Delete" (click)="onClose(eventType.DELETE)">delete</md-icon>
-            </div>
+    </form>
+
+    <div md-dialog-content *ngIf="readOnly" class="readOnly">
+        <md-icon color="primary" class="closeModal" title="Close" (click)="safeClose()">close</md-icon>
+        <div class="content">
+            {{thing.text}}
         </div>
-        <div class="readOnly" *ngIf="readOnly">
-            <div class="source">
-                {{thing.source}}
-            </div>
-            <div class="buttons">
-                <md-icon color="primary" title="Delete" (click)="onClose(eventType.DELETE)">delete</md-icon>
-            </div>
+    </div>
+    <div md-dialog-actions class="readOnly actions" *ngIf="readOnly">
+        <div class="source">
+            {{thing.source}}
+        </div>
+        <div class="buttons">
+            <md-icon color="primary" title="Delete" (click)="onClose(eventType.DELETE)">delete</md-icon>
         </div>
     </div>
 </div>

@@ -5,7 +5,7 @@
           [item]="aThing"
           (openThingDetailsDialog) = "openThingDetailsDialog($event)" 
           (onDelete) = "deleteThing($event)"
-          *ngFor="let aThing of things; let i = index">
+          *ngFor="let aThing of things">
         </memore-thing>
     </div>
     <button md-mini-fab class="addThingButton" color="primary" (click)="addNewThing()">

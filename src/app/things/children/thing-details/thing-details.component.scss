@@ -4,6 +4,10 @@
 	flex-direction: column;
 }
 
+md-hint span{
+  color: red;
+}
+
 .closeModal{
 	position: absolute;
     top: -20px;
@@ -21,7 +25,7 @@
 	min-height: 90px;
 }
 
-.actions .edit {
+.edit.actions {
   width: 100%;
   flex-direction: row;
   align-items:center;
@@ -34,7 +38,7 @@
   }
 }
 
-.actions .readOnly {
+.readOnly.actions {
    width: 100%;
    flex-direction: row;
   .source {
@@ -43,34 +47,4 @@
   .buttons {
    cursor: pointer;
   }
-}
-
-
-.tag{
-	outline: none;
-	width: 70px;
-	text-align: center;
-	margin: 8px;
-	@extend .truncate;
-}
-.tags{
-	max-width: 600px;
-	overflow: auto;
-	max-height: 100px;
-}
-
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.addTag {
-	md-input-container {
-		flex: 1;
-		margin-right: 8px;
-	}
-	.addTagBtn {
-		flex: 1;
-	}
 }

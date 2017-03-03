@@ -36,6 +36,12 @@ export class ThingDetailsComponent implements OnInit {
     this.dialogRef.close(); 
   }
 
+  saveThing(eventType, thingForm) {
+    if (!thingForm.form.invalid ) {
+      this.onClose(eventType);
+    }
+  }
+
   onTagAdded(aTag) {
       this.thing.tags = this.thing.tags.concat([aTag.value]);
   }
