@@ -1,4 +1,4 @@
-<memore-side-nav 
+<memore-side-nav *ngIf="loggedIn"
   [isOpen]="isOpen">
 	<top-bar 
 	 (onOpenMenu)=openMenu($event)>	
@@ -7,3 +7,6 @@
 		<router-outlet></router-outlet>
 	</div>
 </memore-side-nav>
+<div class="mainContainer" *ngIf="!loggedIn">
+	<router-outlet></router-outlet>
+</div>

@@ -11,12 +11,14 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 
 import 'hammerjs';
 import { ThingsModule } from './things/things.module';
+import { LoginComponent } from './account/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
     SideNavComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
