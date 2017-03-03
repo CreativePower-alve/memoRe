@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   public isOpen: boolean = false;
   title = 'app works!';
-  loggedIn = false;
+  loggedIn = true;
 
   openMenu(isOpen) {
 	  this.isOpen = isOpen;
