@@ -20,6 +20,7 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  gravatar:String,
   provider: String,
   salt: String
 });

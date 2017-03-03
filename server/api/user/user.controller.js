@@ -3,6 +3,7 @@
 var User = require('./user.model');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+const gravatar = require('gravatar');
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -34,7 +35,10 @@ exports.index = function(req, res) {
  * Creates a new user
  */
 exports.create = function(req, res) {
+  console.log(req.body.email);
+  var url = gravatar.url(req.body.email, {s: '200', r: 'pg', d: '404'});
   var newUser = new User(req.body);
+  newUser.gravatar = url;
   newUser.provider = 'local';
   newUser.role = 'user';
   newUser.save()
@@ -42,7 +46,7 @@ exports.create = function(req, res) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: 60 * 60 * 5
       });
-      res.json({ token:token, name:newUser.name, id:newUser._id, email:newUser.email });
+      res.json({ token:token, name:newUser.name, id:newUser._id, email:newUser.email,gravatar:newUser.gravatar });
     })
     .catch(validationError(res));
 }
