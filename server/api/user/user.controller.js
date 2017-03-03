@@ -42,7 +42,7 @@ exports.create = function(req, res) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: 60 * 60 * 5
       });
-      res.json({ token });
+      res.json({ token:token, name:newUser.name, id:newUser._id, email:newUser.email });
     })
     .catch(validationError(res));
 }
