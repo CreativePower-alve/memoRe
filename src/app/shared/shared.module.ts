@@ -2,6 +2,7 @@ import { NgModule }  from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
+import { TagInputModule } from 'ng2-tag-input';
 
 @NgModule({
     declarations: [  ],
@@ -9,7 +10,8 @@ import { MaterialModule } from '@angular/material';
     exports: [
         CommonModule,
         FormsModule,
-        MaterialModule
+        MaterialModule,
+        TagInputModule
     ]
 })
 export class SharedModule { }

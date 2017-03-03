@@ -1,27 +1,37 @@
 .thingDetails{
-	width: 500px;
-	height: 380px;
+	position: relative;
 	display: flex;
 	flex-direction: column;
 }
 
-div[md-dialog-content] {
-   flex: 1;
-   display: flex;
+.closeModal{
+	position: absolute;
+    top: -20px;
+    right: -20px;
+    cursor: pointer;
 }
 
 .readOnly, .edit {
 	display: flex;
 	flex-direction: column;
 }
-.content{
-	flex: 1;
+
+.readOnly .content {
+	max-width:500px;
+	min-height: 90px;
 }
 
 .actions .edit {
   width: 100%;
   flex-direction: row;
-  justify-content: flex-end;
+  align-items:center;
+
+  .tags{
+  	flex:1;
+  }
+  .buttons{
+  	cursor: pointer;
+  }
 }
 
 .actions .readOnly {

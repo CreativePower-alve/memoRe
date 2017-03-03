@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { MdDialogRef } from '@angular/material';
 
+import { EventType } from '../../things.component';
+
 @Component({
   selector: 'memore-thing-details',
   templateUrl: './thing-details.component.html',
@@ -10,30 +12,36 @@ export class ThingDetailsComponent implements OnInit {
   readOnly : boolean;
   data;
   thing;
-  newTag;
+  tags;
+  eventType;
   constructor(public dialogRef: MdDialogRef<ThingDetailsComponent>) { }
 
   ngOnInit() {
+    this.eventType = EventType;
+    this.tags = ['quotes'];
   	this.data = this.dialogRef.componentInstance.data;
   	this.readOnly = this.data.isReadOnly;
     this.thing = this.data.thing;
   }
 
-  onClose() {
-  	this.dialogRef.close(this.thing);
+  onClose(eventType) {
+    const event = {
+      event: eventType,
+      thing: this.thing
+    };
+  	this.dialogRef.close(event);
   }
 
-  addTag() {
-      this.thing.tags = this.thing.tags.concat([this.newTag]);
-      this.newTag = '';
+  safeClose() {
+    this.dialogRef.close(); 
   }
 
-  canAddTag() {
-    return this.newTag && this.thing.tags.length ? this.thing.tags.indexOf(this.newTag) === -1 : this.newTag;
+  onTagAdded(aTag) {
+      this.thing.tags = this.thing.tags.concat([aTag.value]);
   }
 
-  switchToEditMode() {
-    this.readOnly = false;
+  onTagRemoved(aTag: string) {
+     this.thing.tags = this.thing.tags.filter((tag) => tag !== aTag);
   }
 
 }

@@ -13,7 +13,8 @@ import {
 })
 export class ThingComponent implements OnInit {
   @Input() item;
-  @Output() openThingDetailsDialog = new EventEmitter(); 
+  @Output() openThingDetailsDialog = new EventEmitter();
+  @Output() onDelete = new EventEmitter(); 
   canShowActions: boolean = false;
   constructor() { }
 
@@ -38,6 +39,10 @@ export class ThingComponent implements OnInit {
       isReadOnly: isReadOnly
     }
     this.openThingDetailsDialog.emit(event);
+  }
+
+  onDeleteThing() {
+    this.onDelete.emit(this.item);
   }
 
 }

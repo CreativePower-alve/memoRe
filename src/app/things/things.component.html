@@ -4,6 +4,7 @@
         <memore-thing 
           [item]="aThing"
           (openThingDetailsDialog) = "openThingDetailsDialog($event)" 
+          (onDelete) = "deleteThing($event)"
           *ngFor="let aThing of things; let i = index">
         </memore-thing>
     </div>

@@ -5,3 +5,6 @@
 body{
 	margin: 0;
 }
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing{
+	opacity: 0.9;
+}

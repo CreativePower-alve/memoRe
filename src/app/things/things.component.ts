@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {MdDialog} from '@angular/material';
+import { MdDialog, MdDialogConfig } from '@angular/material';
 
 import { ThingDetailsComponent } from './children/thing-details/thing-details.component';
+
+export enum EventType {
+  SAVE,
+  DELETE
+};
 
 @Component({
   selector: 'memore-things',
@@ -94,7 +99,7 @@ export class ThingsComponent implements OnInit {
             orem Ipsum passages, and more recently with desktop publishing s
             oftware like Aldus PageMaker including versions of Lorem Ipsum.`,
          source: 'Unknown',
-         tags: ['quotes']
+         tags: ['other']
        }
     ];
   }
@@ -103,10 +108,12 @@ export class ThingsComponent implements OnInit {
   }
 
   saveThing(aThing) {
+    console.log('add', aThing);
    // :todo call backend to edit/create thing
   }
 
   deleteThing(aThing) {
+    console.log('delete', aThing);
    // :todo call backend to delete thing
   }
 
@@ -120,15 +127,30 @@ export class ThingsComponent implements OnInit {
   }
 
   openThingDetailsDialog(event) {
-    let dialogRef = this.dialog.open(ThingDetailsComponent);
+    let config: MdDialogConfig = {
+     disableClose: !event.isReadOnly,
+     width: '500px'
+    }
+    let dialogRef = this.dialog.open(ThingDetailsComponent, config);
     dialogRef.componentInstance.data = {
-       thing: event.thing,
+       thing: Object.assign({}, event.thing),
        isReadOnly: event.isReadOnly
     };
     dialogRef.afterClosed().subscribe(result => {
-      if(!event.isReadOnly) {
-        this.saveThing(result);
-      }
+        if (!result) {
+          return;
+        }
+        switch(result.event) {
+          case EventType.SAVE:
+             this.saveThing(result.thing);
+             break;
+          case EventType.DELETE:
+             this.deleteThing(result.thing);
+             break;
+          default:
+             '';      
+        }
+        console.log(result);
     });
   }
 
