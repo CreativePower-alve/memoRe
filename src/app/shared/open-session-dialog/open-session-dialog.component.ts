@@ -17,9 +17,7 @@ export class OpenSessionDialogComponent implements OnInit {
 
   openSessionConfigDialog() {
      let config: MdDialogConfig = {
-     disableClose: true,
-     width: '500px',
-     height: '350px'
+     width: '500px'
     }
     let dialogRef: any = this.dialog.open(SessionConfigComponent, config);
     dialogRef.componentInstance.data = {

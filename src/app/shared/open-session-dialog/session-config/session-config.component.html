@@ -1,9 +1,11 @@
 <div class="sessionConfig">
+    <h1 md-dialog-title>Session Config</h1>
     <form class="form-horizontal" novalidate autocomplete="off" #configForm="ngForm">
         <div md-dialog-content>
+        <md-icon color="primary" class="closeModal" title="Close" (click)="cancel()">close</md-icon>
             <div class="setTime">
-                <md-input-container>
-                    <input mdInput placeholder="Session Time" [(ngModel)]="config.sessionTime" name="sessionTime">
+                <md-input-container dividerColor="{{ (timeVar.touched || timeVar.dirty) && !timeVar.valid ? 'warn' : 'primary' }}">
+                    <input mdInput placeholder="Session Time (in minutes)" [(ngModel)]="config.sessionTime" name="sessionTime" type="number" min="1" md-min="1" required #timeVar="ngModel">
                 </md-input-container>
             </div>
             <div class="toggleSessionItems">
@@ -33,7 +35,7 @@
         </div>
         <div md-dialog-actions>
             <div class="startSessionButton">
-                <button (click)="close()" md-button color="primary">Start</button>
+                <button (click)="close()" [disabled]="!canSubmit()" md-button color="primary">Start</button>
             </div>
         </div>
     </form>

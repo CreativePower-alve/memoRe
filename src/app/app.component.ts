@@ -19,6 +19,8 @@ export class AppComponent {
 
   startTypingSession(confObject) {
   	console.log(confObject);
-    this.router.navigate(['/things-session']);
+  	if(confObject) {
+       this.router.navigate(['/things-session']);
+  	}
   }
 }

@@ -42,4 +42,15 @@ export class SessionConfigComponent implements OnInit {
     this.dialogRef.close(this.config); 
   }
 
+  cancel() {
+   this.dialogRef.close(); 
+  }
+
+  canSubmit() {
+    if (this.config.isSessionMode === SessionMode.TAGS) {
+      return this.config.sessionTime && this.config.sessionTime > 0;
+    }
+    return this.config.input && this.config.input !== '';
+  }
+
 }

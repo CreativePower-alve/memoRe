@@ -1,0 +1,31 @@
+.sessionConfig{
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+[md-dialog-content]{
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+
+	md-input-container {
+			width: 100%;
+	}
+}
+
+[md-dialog-actions]{
+	display: flex;
+	justify-content: flex-end;
+}
+
+.toggleSessionItems{
+	margin-bottom: 8px;
+}
+
+.closeModal{
+	position: absolute;
+    top: -20px;
+    right: -20px;
+    cursor: pointer;
+}
