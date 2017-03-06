@@ -1,7 +1,8 @@
 <memore-side-nav *ngIf="loggedIn"
   [isOpen]="isOpen">
 	<top-bar 
-	 (onOpenMenu)=openMenu($event)>	
+	 (onOpenMenu)="openMenu($event)"
+	 (onStartTypingSession)="startTypingSession($event)">	
 	</top-bar>
 	<div class="mainContainer">
 		<router-outlet></router-outlet>

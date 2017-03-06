@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 
+import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -11,6 +12,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 
 import 'hammerjs';
 import { ThingsModule } from './things/things.module';
+import { ThingsSessionModule } from './things-session/things-session.module';
 import { LoginComponent } from './account/login/login.component';
 
 @NgModule({
@@ -18,7 +20,7 @@ import { LoginComponent } from './account/login/login.component';
     AppComponent,
     TopBarComponent,
     SideNavComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,9 @@ import { LoginComponent } from './account/login/login.component';
     HttpModule,
     MaterialModule.forRoot(),
     AppRoutingModule,
-    ThingsModule
+    ThingsModule,
+    ThingsSessionModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent],

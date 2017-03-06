@@ -1,0 +1,40 @@
+<div class="sessionConfig">
+    <form class="form-horizontal" novalidate autocomplete="off" #configForm="ngForm">
+        <div md-dialog-content>
+            <div class="setTime">
+                <md-input-container>
+                    <input mdInput placeholder="Session Time" [(ngModel)]="config.sessionTime" name="sessionTime">
+                </md-input-container>
+            </div>
+            <div class="toggleSessionItems">
+                <md-button-toggle-group #group="mdButtonToggleGroup" value="{{config.isSessionMode}}">
+                    <md-button-toggle value="0" (change)="setSessionMode(0)">
+                        Tags
+                    </md-button-toggle>
+                    <md-button-toggle value="1" (change)="setSessionMode(1)">
+                        Input
+                    </md-button-toggle>
+                </md-button-toggle-group>
+            </div>
+            <div class="sessionSelection">
+                <div class="tags" [hidden]="config.isSessionMode!==0">
+                    <tag-input [onlyFromAutocomplete]="true" [ngModel]="config.tags" [secondaryPlaceholder]="'@All'" [separatorKeys]="[32]" [theme]="minimal" (onAdd)="onTagAdded($event)" (onRemove)="onTagRemoved($event)" [ngModelOptions]="{standalone: true}">
+                        <tag-input-dropdown [appendToBody]="false" [autocompleteItems]="allTags">
+                        </tag-input-dropdown>
+                    </tag-input>
+                </div>
+                <div class="input" [hidden]="config.isSessionMode!==1">
+                    <md-input-container class="content" dividerColor="{{ (textVar.touched || textVar.dirty) && !textVar.valid ? 'warn' : 'primary' }}">
+                        <textarea mdInput [(ngModel)]="config.input" placeholder="Enter text" name="text" type="text" rows="5" cols="70" required #textVar="ngModel">
+                        </textarea>
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+        <div md-dialog-actions>
+            <div class="startSessionButton">
+                <button (click)="close()" md-button color="primary">Start</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,14 @@ export class AppComponent {
   title = 'app works!';
   loggedIn = true;
 
+  constructor(private router: Router){}
+
   openMenu(isOpen) {
 	  this.isOpen = isOpen;
+  }
+
+  startTypingSession(confObject) {
+  	console.log(confObject);
+    this.router.navigate(['/things-session']);
   }
 }

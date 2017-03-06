@@ -14,6 +14,7 @@ import { Component,
 export class TopBarComponent implements OnInit {
 	@Input() isMenuClosed: boolean;
 	@Output() onOpenMenu = new EventEmitter();
+	@Output() onStartTypingSession = new EventEmitter();
 	private isOpen: boolean = false;
   constructor() { }
 
@@ -24,6 +25,10 @@ export class TopBarComponent implements OnInit {
   toggleSideNav() {
 	  this.isOpen = !this.isOpen;
 	  this.onOpenMenu.emit(this.isOpen);
+  }
+
+  startSession(result) {
+     this.onStartTypingSession.emit(result);
   }
 
 }
