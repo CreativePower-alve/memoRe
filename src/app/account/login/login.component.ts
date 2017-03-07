@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
 
     this.loginService.loginUser(formValues.email, 
     	formValues.password).subscribe(resp =>{
-    			console.log("called loginUser from loginService",formValues);
     		if(!resp){
     			this.loginInvalid = true;
     		}else{

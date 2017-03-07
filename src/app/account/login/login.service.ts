@@ -18,14 +18,12 @@ export class loginService {
           let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let loginInfo = {email:email, password:password};
-        console.log("making http post call",loginInfo);
         return this.http.post(this.baseUrl, loginInfo, options).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
                 }
             })
             .catch(error =>{
-                  console.log("http post call error",error);
                 return Observable.of(false);
             });
     }
