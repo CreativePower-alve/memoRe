@@ -4,9 +4,13 @@ var mongoose = require('mongoose');
 var events = require('./thing.events');
 
 var ThingSchema = new mongoose.Schema({
-  name: String,
-  info: String,
-  active: Boolean
+  text: String,
+  source: String,
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  tags: [{
+           type: mongoose.Schema.Types.ObjectId,
+           ref: 'tags'
+   }]
 });
 
 events.registerEvents(ThingSchema);
