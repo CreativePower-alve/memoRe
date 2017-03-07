@@ -12,16 +12,16 @@ export class ThingDetailsComponent implements OnInit {
   readOnly : boolean;
   data;
   thing;
-  tags;
+  tags = [{id:1, name: 'quotes'}];
   eventType;
   constructor(public dialogRef: MdDialogRef<ThingDetailsComponent>) { }
 
   ngOnInit() {
     this.eventType = EventType;
-    this.tags = ['quotes'];
   	this.data = this.dialogRef.componentInstance.data;
   	this.readOnly = this.data.isReadOnly;
     this.thing = this.data.thing;
+    this.tags = this.data.allTags;
   }
 
   onClose(eventType) {
@@ -43,11 +43,11 @@ export class ThingDetailsComponent implements OnInit {
   }
 
   onTagAdded(aTag) {
-      this.thing.tags = this.thing.tags.concat([aTag.value]);
+      this.thing.tags = this.thing.tags.concat([aTag]);
   }
 
-  onTagRemoved(aTag: string) {
-     this.thing.tags = this.thing.tags.filter((tag) => tag !== aTag);
+  onTagRemoved(aTag) {
+     this.thing.tags = this.thing.tags.filter((tag) => tag.id !== aTag.id);
   }
 
 }

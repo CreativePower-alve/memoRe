@@ -2,7 +2,6 @@
     <form     
               *ngIf="!readOnly" 
               class="form-horizontal"
-              novalidate autocomplete="off"
               #thingForm="ngForm">
     <div md-dialog-content class="edit">
         <md-icon color="primary" class="closeModal" title="Close" (click)="safeClose()">close</md-icon>
@@ -10,6 +9,7 @@
               dividerColor="{{ (textVar.touched || textVar.dirty) && !textVar.valid ? 'warn' : 'primary' }}">
                 <textarea mdInput
                     [(ngModel)]="thing.text"
+                    placeholder="enter text" 
                     name="text"
                     type="text"
                     rows="5"
@@ -17,14 +17,12 @@
                     required
                     #textVar="ngModel">
                 </textarea>
-                 <md-hint [hidden]="textVar.pristine || textVar.valid">
-                      <span [hidden]="!textVar.errors?.required">Text is required.</span>
-                </md-hint>
         </md-input-container>
         <md-input-container class="source">
             <input 
                mdInput
                [(ngModel)]="thing.source"
+               placeholder="enter source" 
                name="source">
         </md-input-container>
     </div>
@@ -39,8 +37,9 @@
                   [theme]="minimal"
                   (onAdd)="onTagAdded($event)"
                   (onRemove)="onTagRemoved($event)"
-                  [ngModelOptions]="{standalone: true}">
-                    <tag-input-dropdown [appendToBody]="false" [autocompleteItems]="tags">
+                  [ngModelOptions]="{standalone: true}"
+                  [identifyBy]="'id'" [displayBy]="'name'">
+                    <tag-input-dropdown [appendToBody]="false" [autocompleteItems]="tags" [identifyBy]="'id'" [displayBy]="'name'">
                     </tag-input-dropdown>
             </tag-input>
         </div>

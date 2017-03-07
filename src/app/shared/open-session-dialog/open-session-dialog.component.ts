@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { MdDialog, MdDialogConfig } from '@angular/material';
 import { SessionConfigComponent } from './session-config/session-config.component';
+import { TagsService } from '../tags.service';
 
 @Component({
   selector: 'memore-open-session-dialog',
@@ -8,11 +9,14 @@ import { SessionConfigComponent } from './session-config/session-config.componen
   styleUrls: ['./open-session-dialog.component.scss']
 })
 export class OpenSessionDialogComponent implements OnInit {
-  allTags=['quotes'];
+  allTags;
   @Output() onStartSession = new EventEmitter();
-  constructor(private dialog: MdDialog) { }
+  constructor(private dialog: MdDialog,
+    private tagsService: TagsService) { }
 
   ngOnInit() {
+    this.tagsService.getAllTags()
+     .subscribe(allTags => this.allTags = allTags);
   }
 
   openSessionConfigDialog() {

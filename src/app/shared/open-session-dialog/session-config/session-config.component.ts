@@ -1,9 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
-enum SessionMode {
-  TAGS,
-  INPUT
-}
+import { SessionConfig, SessionMode } from '../../things-session.service';
 
 @Component({
   selector: 'memore-session-config',
@@ -13,7 +10,7 @@ enum SessionMode {
 export class SessionConfigComponent implements OnInit {
   allTags = [];
   data;
-  config = {
+  config: SessionConfig = {
   	sessionTime : 10,
     isSessionMode: SessionMode.TAGS,
     input: '',
@@ -31,11 +28,11 @@ export class SessionConfigComponent implements OnInit {
   }
 
   onTagAdded(aTag) {
-      this.config.tags = this.config.tags.concat([aTag.value]);
+      this.config.tags = this.config.tags.concat([aTag]);
   }
 
-  onTagRemoved(aTag: string) {
-     this.config.tags = this.config.tags.filter((tag) => tag !== aTag);
+  onTagRemoved(aTag) {
+     this.config.tags = this.config.tags.filter((tag) => tag.id !== aTag.id);
   }
 
   close() {

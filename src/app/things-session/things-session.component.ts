@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ThingsSessionService, SessionConfig } from '../shared/things-session.service';
+
 
 @Component({
   selector: 'memore-things-session',
@@ -8,13 +10,15 @@ import { Component, OnInit } from '@angular/core';
 export class ThingsSessionComponent implements OnInit {
   isSession: boolean = false;
   isSessionEnd: boolean = false;
-  allTags = ['quotes']; // :todo make tags service
-  constructor() { }
+  constructor(private thingsSessionService: ThingsSessionService) { }
 
   ngOnInit() {
+
+    this.startSession();
   }
 
-  startSession(config) {
+  startSession() {
+      const config: SessionConfig = this.thingsSessionService.getSessionConfig();
       console.log(config); //:todo handle session configuration based on given parameters
   }
 

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogConfig } from '@angular/material';
+import 'rxjs/add/operator/mergeMap';
 
 import { ThingDetailsComponent } from './children/thing-details/thing-details.component';
 import { ThingsService } from './things.service';
+import { TagsService } from '../shared/tags.service';
 
 export enum EventType {
   SAVE,
@@ -16,13 +18,25 @@ export enum EventType {
 })
 export class ThingsComponent implements OnInit {
   public things;
-  constructor(private dialog: MdDialog, private thingsService: ThingsService ) { 
+  private allTags;
+  constructor(private dialog: MdDialog,
+   private thingsService: ThingsService,
+   private tagsService: TagsService) { 
    
   }
 
   ngOnInit() {
-     this.thingsService.getThings()
-      .subscribe((things) => this.things = things);
+    this.tagsService.getAllTags()
+     .flatMap(allTags => {
+       this.allTags = allTags;
+       return this.thingsService.getThings();
+      })
+      .subscribe((things) => {
+        this.things = things.map(thing => {
+           thing.tags = thing.tags.map(tagId => this.allTags.find(tag => tag.id === tagId));
+           return thing;
+        });
+      });
   }
 
   saveThing(aThing) {
@@ -68,6 +82,7 @@ export class ThingsComponent implements OnInit {
     let dialogRef = this.dialog.open(ThingDetailsComponent, config);
     dialogRef.componentInstance.data = {
        thing: Object.assign({}, event.thing),
+       allTags: this.allTags,
        isReadOnly: event.isReadOnly
     };
     dialogRef.afterClosed().subscribe(result => this.handleThingDialogClose(result));

@@ -1,6 +1,6 @@
 <div class="sessionConfig">
     <h1 md-dialog-title>Session Config</h1>
-    <form class="form-horizontal" novalidate autocomplete="off" #configForm="ngForm">
+    <form class="form-horizontal" #configForm="ngForm">
         <div md-dialog-content>
         <md-icon color="primary" class="closeModal" title="Close" (click)="cancel()">close</md-icon>
             <div class="setTime">
@@ -20,8 +20,23 @@
             </div>
             <div class="sessionSelection">
                 <div class="tags" [hidden]="config.isSessionMode!==0">
-                    <tag-input [onlyFromAutocomplete]="true" [ngModel]="config.tags" [secondaryPlaceholder]="'@All'" [separatorKeys]="[32]" [theme]="minimal" (onAdd)="onTagAdded($event)" (onRemove)="onTagRemoved($event)" [ngModelOptions]="{standalone: true}">
-                        <tag-input-dropdown [appendToBody]="false" [autocompleteItems]="allTags">
+                    <tag-input 
+                      [onlyFromAutocomplete]="true"
+                      [ngModel]="config.tags"
+                      [secondaryPlaceholder]="'@All'"
+                      [separatorKeys]="[32]"
+                      [theme]="minimal"
+                      (onAdd)="onTagAdded($event)"
+                      (onRemove)="onTagRemoved($event)"
+                      [ngModelOptions]="{standalone: true}"
+                      [identifyBy]="'id'"
+                      [displayBy]="'name'">
+                        <tag-input-dropdown 
+                          [appendToBody]="false"
+                          [autocompleteItems]="allTags"
+                          [identifyBy]="'id'"
+                          [displayBy]="'name'"
+                          [showDropdownIfEmpty]='true'>
                         </tag-input-dropdown>
                     </tag-input>
                 </div>

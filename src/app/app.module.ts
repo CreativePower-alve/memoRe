@@ -15,6 +15,9 @@ import { ThingsModule } from './things/things.module';
 import { ThingsSessionModule } from './things-session/things-session.module';
 import { LoginComponent } from './account/login/login.component';
 
+import { ThingsSessionService } from './shared/things-session.service';
+import { TagsService } from './shared/tags.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +35,7 @@ import { LoginComponent } from './account/login/login.component';
     ThingsSessionModule,
     SharedModule
   ],
-  providers: [],
+  providers: [ThingsSessionService, TagsService],
   bootstrap: [AppComponent],
   exports: [TopBarComponent, MaterialModule]
 })
