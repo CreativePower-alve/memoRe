@@ -11,7 +11,7 @@
 'use strict';
 
 var jsonpatch = require('fast-json-patch');
-var Thing = require('./thing.model');
+var tag = require('./tag.model');
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -63,16 +63,16 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Things
+// Gets a list of tags
 exports.index = function(req, res) {
-  return Thing.find().exec()
+  return tag.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Thing from the DB
+// Gets a single tag from the DB
 exports.show = function(req, res) {
-  return Thing.findById(req.params.id).exec()
+  return tag.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -80,7 +80,7 @@ exports.show = function(req, res) {
 
 // Creates a new Thing in the DB
 exports.create = function(req, res) {
-  return Thing.create(req.body)
+  return tag.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
@@ -90,7 +90,7 @@ exports.upsert = function(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
-  return Thing.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  return tag.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
 
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -101,17 +101,16 @@ exports.patch = function(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
-  return Thing.findById(req.params.id).exec()
+  return tag.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(patchUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-
 // Deletes a Thing from the DB
 exports.destroy = function(req, res) {
-  return Thing.findById(req.params.id).exec()
+  return tag.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
