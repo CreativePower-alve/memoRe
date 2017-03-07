@@ -1,6 +1,6 @@
 <md-toolbar color="primary">
     <div class="left">
-        <div class="openMenu">
+        <div class="openMenu" *ngIf="canShowNavBarButtons">
             <md-icon *ngIf="!isOpen" class="icon" title="Show search and filters" (click)="toggleSideNav()">
                 search
             </md-icon>
@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="right">
-        <div class="startSession">
+        <div class="startSession" *ngIf="canShowNavBarButtons">
             <memore-open-session-dialog (onStartSession)="startSession($event)"></memore-open-session-dialog>
         </div>
         <div class="userProfile">

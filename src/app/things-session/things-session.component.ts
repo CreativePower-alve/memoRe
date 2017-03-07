@@ -19,6 +19,10 @@ export class ThingsSessionComponent implements OnInit {
 
   startSession() {
       const config: SessionConfig = this.thingsSessionService.getSessionConfig();
+      if (!config) {
+        return;
+      }
+      this.isSession = true;
       console.log(config); //:todo handle session configuration based on given parameters
   }
 

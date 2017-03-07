@@ -1,6 +1,7 @@
 <memore-side-nav *ngIf="loggedIn"
   [isOpen]="isOpen">
 	<top-bar 
+	 [canShowNavBarButtons] = "canShowNavBarButtons"
 	 (onOpenMenu)="openMenu($event)"
 	 (onStartTypingSession)="startTypingSession($event)">	
 	</top-bar>

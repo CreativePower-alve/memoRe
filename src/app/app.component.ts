@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import { ThingsSessionService, SessionConfig } from './shared/things-session.service';
 
 @Component({
@@ -9,11 +9,18 @@ import { ThingsSessionService, SessionConfig } from './shared/things-session.ser
 })
 export class AppComponent {
   public isOpen: boolean = false;
-  title = 'app works!';
+  canShowNavBarButtons = true;
   loggedIn = true;
 
   constructor(private router: Router,
-   private thingsSessionService: ThingsSessionService){}
+   private thingsSessionService: ThingsSessionService){
+  }
+
+  ngOnInit() {
+    this.router.events.subscribe(()=> {
+      this.canShowNavBarButtons = location.pathname !== '/things-session';
+    });
+  }
 
   openMenu(isOpen) {
 	  this.isOpen = isOpen;
