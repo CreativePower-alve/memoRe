@@ -17,7 +17,7 @@ import {FakeData} from './fake.data';
       MaterialModule.forRoot(),
       FormsModule,
       TagInputModule,
-      InMemoryWebApiModule.forRoot(FakeData)
+     // InMemoryWebApiModule.forRoot(FakeData)
      ],
     exports: [
         CommonModule,

@@ -13,8 +13,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import 'hammerjs';
 import { ThingsModule } from './things/things.module';
 import { ThingsSessionModule } from './things-session/things-session.module';
-import { LoginComponent } from './account/login/login.component';
-
+import { AccountModule } from './account/account.module';
 import { ThingsSessionService } from './shared/things-session.service';
 import { TagsService } from './shared/tags.service';
 
@@ -22,8 +21,7 @@ import { TagsService } from './shared/tags.service';
   declarations: [
     AppComponent,
     TopBarComponent,
-    SideNavComponent,
-    LoginComponent
+    SideNavComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +31,8 @@ import { TagsService } from './shared/tags.service';
     AppRoutingModule,
     ThingsModule,
     ThingsSessionModule,
-    SharedModule
+    SharedModule,
+    AccountModule
   ],
   providers: [ThingsSessionService, TagsService],
   bootstrap: [AppComponent],
