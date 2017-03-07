@@ -1,0 +1,41 @@
+$width : 800px;
+$font-size : 2em;
+.displayArea{
+	max-height: 300px;
+	width: $width;
+}
+
+.practiceItem {
+	display: flex;
+	flex-wrap: wrap;
+	height: 100%;
+}
+
+span.letter{
+    font-size: $font-size;
+	cursor: text;
+	width: 20px;
+	height: 30px;
+	overflow: hidden;
+	outline: none;
+}
+
+span.letter:before{
+	color: gray;
+	content: attr(data-ph);
+	pointer-events: none;
+	user-select: none;
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	z-index: -1;
+}
+
+span.letter.active:before{
+	background: #3295db;
+    color: #fff;
+}
+
+span.letter.typed:before{
+    color: black;
+}

@@ -16,8 +16,13 @@
 		{{config.input}}
 	</div>
 </div>
-	session component
-	  session item
+     <div class="items">
+        <div class="wrapper" *ngFor="let sessionItem of practiceItems; let i=index">
+        	<memore-practice-item 
+     			[item]="sessionItem" (onFinish)="getNextItem()" *ngIf="i===currentIndex">
+	 		</memore-practice-item>
+        </div>
+     </div>
 </div>
 
 <div class="sessionEndDisplay" *ngIf="isSessionEnd">
