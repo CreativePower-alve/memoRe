@@ -1,4 +1,21 @@
 <div class="session" *ngIf="isSession">
+<div class="SessionSelection">
+	<div class="tags" *ngIf="thingsSessionService.isTagsMode(config.isSessionMode)">
+	  <tag-input      *ngIf="config.tags.length > 0"
+					  [readonly]='true'
+                      [ngModel]="config.tags"
+                      [theme]="minimal"
+                      [identifyBy]="'id'"
+                      [displayBy]="'name'">
+      </tag-input>
+      <div class="allTags" *ngIf="!config.tags.length">
+      	All items
+      </div>	
+	</div>
+	<div class="Input" *ngIf="!thingsSessionService.isTagsMode(config.isSessionMode)">
+		{{config.input}}
+	</div>
+</div>
 	session component
 	  session item
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ThingsSessionService, SessionConfig } from '../shared/things-session.service';
-
+import {ThingsService} from '../things/things.service';
 
 @Component({
   selector: 'memore-things-session',
@@ -10,20 +10,31 @@ import { ThingsSessionService, SessionConfig } from '../shared/things-session.se
 export class ThingsSessionComponent implements OnInit {
   isSession: boolean = false;
   isSessionEnd: boolean = false;
-  constructor(private thingsSessionService: ThingsSessionService) { }
+  config: SessionConfig;
+  currentItem;
+  private practiceItems: any[];
+  private allThings: any[];
+  constructor(private thingsSessionService: ThingsSessionService,
+    private thingsService:ThingsService) { }
 
   ngOnInit() {
-
-    this.startSession();
+    this.thingsService.getThings()
+     .subscribe(allThings => {
+        this.allThings = allThings;
+        this.startSession();
+     });
   }
 
   startSession() {
-      const config: SessionConfig = this.thingsSessionService.getSessionConfig();
-      if (!config) {
+      this.config= this.thingsSessionService.getSessionConfig();
+      if (!this.config) {
         return;
       }
       this.isSession = true;
-      console.log(config); //:todo handle session configuration based on given parameters
+  }
+
+  getPracticeItems() {
+    
   }
 
 }
