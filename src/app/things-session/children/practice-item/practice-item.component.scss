@@ -58,10 +58,14 @@ span.letter:before{
 span.letter.active:before{
 	background: #3295db;
     color: #fff;
+    width: 20px;
+    text-align: center;
 }
 span.letter.error:before{
 	background: red;
     color: #fff;
+    width: 20px;
+    text-align: center;
 }
 
 span.letter.typed:before{

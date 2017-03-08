@@ -44,7 +44,7 @@ export class ThingsSessionComponent implements OnInit {
       }
       this.isSession = true;
       this.practiceItems = this.getPracticeItems(this.config.isSessionMode);
-      this.startOfSessionTime = new Date().getMinutes();
+      this.startOfSessionTime = new Date().getTime();
       this.sessionTimeout = setTimeout(() => {  
          this.stopSession();
        }, this.config.sessionTime * 60 * 1000);
@@ -83,6 +83,6 @@ export class ThingsSessionComponent implements OnInit {
   stopSession() {
     this.isSession = false;
     clearTimeout(this.sessionTimeout);
-    this.timeInSession = new Date().getMinutes() - this.startOfSessionTime;
+    this.timeInSession = Math.floor((new Date().getTime() - this.startOfSessionTime) / 60000);
   }
 }
