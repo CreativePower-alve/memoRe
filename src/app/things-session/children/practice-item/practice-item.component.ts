@@ -16,10 +16,13 @@ import { Component,
 export class PracticeItemComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() item;
   @Output() onFinish = new EventEmitter();
+ 
   @ViewChild('userTextInput')
   userTextInput;
+ 
   @ViewChildren('letter')
   letters;
+ 
   chars: string[]
   currentIndex = 0;
 
@@ -36,52 +39,39 @@ export class PracticeItemComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
    ngAfterViewInit() {
-   	console.log('after view init');
     this.letters._results[this.currentIndex].nativeElement.focus();
   }
 
-  finishedItem() {
-  	this.onFinish.emit();
-  }
 
   handleUserInput(event) {
+    event.preventDefault();
   	const userInput = event.key;
-  	const specialChar = event.key === 'Dead' ? this.getSpecialCharacter(event.keyCode) : false;
-    const keyCode = event.keyCode;
-    const isValidChar = this.isValidChar(userInput, specialChar, this.chars[this.currentIndex]);
+    const isValidChar = this.isValidChar(userInput, this.chars[this.currentIndex]);
     
     if (this.currentIndex < this.chars.length - 1 && isValidChar ) {
     	this.currentIndex ++;
     	this.letters._results[this.currentIndex].nativeElement.focus();
     	this.letters._results[this.currentIndex-1].nativeElement.innerText = '';
-    console.log(userInput, 'true');
+      this.letters._results[this.currentIndex-1].nativeElement.className = 'letter typed';
     }
     else if(this.currentIndex === this.chars.length -1 && isValidChar){
     	this.finishedItem();
-    	this.currentIndex = 0;
-    	this.clearLetters();
     }
     else {
     	//handle user mismatch
-    	console.log(userInput, 'false', 'expected', this.chars[this.currentIndex]);
+      this.letters._results[this.currentIndex].nativeElement.className ='letter error'; 
+      this.letters._results[this.currentIndex].nativeElement.innerText = '';
     }
   }
 
-  getSpecialCharacter(key) {
-  	switch(key) {
-  		case 222: 
-  		  return "\'";
-  	}
+  private finishedItem() {
+    this.onFinish.emit();
   }
 
-  isValidChar(userKey, specialChar, expectedInput) {
-  	return specialChar ? specialChar === expectedInput : userKey === expectedInput;
+  private isValidChar(userKey, expectedInput) {
+  	return userKey === expectedInput;
   }
 
-  clearLetters() {
-  	this.letters.forEach(letter => {
-  		letter.nativeElement.innerHTML = '';
-  	})
-  }
+
 
 }

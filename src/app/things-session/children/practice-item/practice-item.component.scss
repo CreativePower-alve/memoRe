@@ -1,14 +1,41 @@
 $width : 800px;
 $font-size : 2em;
-.displayArea{
-	max-height: 300px;
-	width: $width;
+
+.paper {
+  font: normal 12px/1.5 "Lucida Grande", arial, sans-serif;
+  width: 50%;
+  height: 80%;
+  margin: 0 auto;
+  padding: 6px 5px 4px 42px;
+  position: relative;
+  color: #444;
+  line-height: 28px;
+  border: 1px solid #d2d2d2;
+  background: #fff;
+  background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
+  background: -webkit-linear-gradient(top, rgba(207, 208, 117, 0.63) 0%, #ffffba 8%) 0 4px;
+  background: -moz-linear-gradient(top, rgba(207, 208, 117, 0.63) 0%, #ffffba 8%) 0 4px;
+  background: -ms-linear-gradient(top, rgba(207, 208, 117, 0.63) 0%, #ffffba 8%) 0 4px;
+  background: -o-linear-gradient(top, rgba(207, 208, 117, 0.63) 0%, #ffffba 8%) 0 4px;
+  background: linear-gradient(top, rgba(207, 208, 117, 0.63) 0%, #ffffba 8%) 0 4px;
+  -webkit-background-size: 100% 30px;
+  -moz-background-size: 100% 30px;
+  -ms-background-size: 100% 30px;
+  -o-background-size: 100% 30px;
+  background-size: 100% 30px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+  width: 816px;
+  min-height: 200px;
 }
 
 .practiceItem {
 	display: flex;
 	flex-wrap: wrap;
-	height: 100%;
 }
 
 span.letter{
@@ -23,16 +50,17 @@ span.letter{
 span.letter:before{
 	color: gray;
 	content: attr(data-ph);
-	pointer-events: none;
-	user-select: none;
 	position: absolute;
 	margin: 0;
 	padding: 0;
-	z-index: -1;
 }
 
 span.letter.active:before{
 	background: #3295db;
+    color: #fff;
+}
+span.letter.error:before{
+	background: red;
     color: #fff;
 }
 
