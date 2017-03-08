@@ -8,13 +8,16 @@ import {ThingsService} from '../things/things.service';
   styleUrls: ['./things-session.component.scss']
 })
 export class ThingsSessionComponent implements OnInit {
-  isSession: boolean = false;
-  isSessionEnd: boolean = false;
+  isSession: boolean = true;
   config: SessionConfig;
   currentItem;
   currentIndex = 0;
+  timeInSession;
   private practiceItems: any[];
   private allThings: any[];
+  private sessionTimeout;
+  private startOfSessionTime;
+
   constructor(private thingsSessionService: ThingsSessionService,
     private thingsService:ThingsService) { }
 
@@ -28,7 +31,10 @@ export class ThingsSessionComponent implements OnInit {
 
   @HostListener('window:beforeunload')
   askForConfirmation() {
-    return window.confirm('Do you really want to refresh? Your session will be lost');
+    if(this.isSession) {
+      return window.confirm('Do you really want to refresh? Your session will be lost');
+    }
+    return true;
   }
 
   startSession() {
@@ -38,23 +44,31 @@ export class ThingsSessionComponent implements OnInit {
       }
       this.isSession = true;
       this.practiceItems = this.getPracticeItems(this.config.isSessionMode);
-      this.currentItem = this.practiceItems[this.currentIndex];
+      this.startOfSessionTime = new Date().getMinutes();
+      this.sessionTimeout = setTimeout(() => {  
+         this.stopSession();
+       }, this.config.sessionTime * 60 * 1000);
+
   }
 
   getNextItem() {
     if(this.practiceItems.length -1 === this.currentIndex) {
       this.currentIndex = 0;
+      // need to regenerate the list when there
+      // is only one item, to start typing again
+      if(this.practiceItems.length === 1) {
+       this.practiceItems = this.getPracticeItems(this.config.isSessionMode);
+      }
     }
     else {
       this.currentIndex++;
     }
-    this.currentItem = this.practiceItems[this.currentIndex]; 
   }
 
   private getPracticeItems(sessionMode) {
     let sessionItems = [];
     if(sessionMode == SessionMode.INPUT) {
-      return [this.config.input];
+      return [{text: this.config.input, source: 'user input'}];
     }
     if(!this.config.tags.length) {
       return this.allThings;
@@ -64,5 +78,11 @@ export class ThingsSessionComponent implements OnInit {
        sessionItems = thingsByTag.length ? sessionItems.concat(thingsByTag): sessionItems; 
     });
     return sessionItems;
+  }
+
+  stopSession() {
+    this.isSession = false;
+    clearTimeout(this.sessionTimeout);
+    this.timeInSession = new Date().getMinutes() - this.startOfSessionTime;
   }
 }
