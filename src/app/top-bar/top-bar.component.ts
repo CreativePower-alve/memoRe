@@ -13,10 +13,11 @@ import { Component,
 })
 export class TopBarComponent implements OnInit {
 	@Input() isMenuClosed: boolean;
+	@Input() isOpen: boolean;
 	@Input() canShowNavBarButtons: boolean;
 	@Output() onOpenMenu = new EventEmitter();
 	@Output() onStartTypingSession = new EventEmitter();
-	private isOpen: boolean = false;
+  
   constructor() { }
 
   ngOnInit() {

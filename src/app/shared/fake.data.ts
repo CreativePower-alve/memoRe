@@ -4,7 +4,17 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 export class FakeData implements InMemoryDbService {
 
     createDb() {
-        let tags = [ {id:1, name: 'quotes'}, {id: 2, name: 'affirmations'}];
+        let tags = [ {id:1, name: 'quotes'}, 
+        {id: 2, name: 'affirmations'},
+         {id: 3, name: 'fav book'},
+         {id: 4, name: 'encouragement'},
+         {id: 5, name: 'advice'},
+         {id: 6, name: 'wisdom'},
+         {id: 7, name: 'acceptance'},
+         {id: 8, name: 'now'},
+         {id: 9, name: 'career'},
+         {id: 10, name: 'relationships'},
+         {id: 11, name: 'spirituality'}];
         let things = [{
                     "id": 1,
                     "text": "Your inner journey only has one: the step you are taking right now",

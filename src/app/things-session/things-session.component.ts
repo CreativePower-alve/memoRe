@@ -85,4 +85,5 @@ export class ThingsSessionComponent implements OnInit {
     clearTimeout(this.sessionTimeout);
     this.timeInSession = Math.floor((new Date().getTime() - this.startOfSessionTime) / 60000);
   }
+  
 }

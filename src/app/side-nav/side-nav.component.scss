@@ -14,3 +14,14 @@
   height: 100%;
   overflow: hidden;
 }
+
+.tags{
+	display: flex;
+	flex-direction:column;
+	max-height: 550px;
+    overflow-y: auto;
+}
+
+.tagCheckbox{
+	margin-bottom: 16px;
+}

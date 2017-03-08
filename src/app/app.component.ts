@@ -8,7 +8,7 @@ import { ThingsSessionService, SessionConfig } from './shared/things-session.ser
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public isOpen: boolean = false;
+  public isOpen: boolean = true;
   canShowNavBarButtons = true;
   loggedIn = true;
 

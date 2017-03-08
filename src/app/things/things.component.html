@@ -1,11 +1,14 @@
 <div class="container">
     <h1> Things </h1>
     <div class="thingsList">
+        <div class="emptyState" *ngIf="!displayThings?.length">
+          <h1>No results found for current search criteria</h1>
+        </div>
         <memore-thing 
           [item]="aThing"
           (openThingDetailsDialog) = "openThingDetailsDialog($event)" 
           (onDelete) = "deleteThing($event)"
-          *ngFor="let aThing of things">
+          *ngFor="let aThing of displayThings">
         </memore-thing>
     </div>
     <button md-mini-fab class="addThingButton" color="primary" (click)="addNewThing()">

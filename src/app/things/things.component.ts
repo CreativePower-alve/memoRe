@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogConfig } from '@angular/material';
 import 'rxjs/add/operator/mergeMap';
 
@@ -16,13 +17,25 @@ export enum EventType {
   templateUrl: './things.component.html',
   styleUrls: ['./things.component.scss']
 })
-export class ThingsComponent implements OnInit {
-  public things;
+export class ThingsComponent implements OnInit, OnDestroy {
+  things;
+  displayThings;
   private allTags;
+  private sub: any;
+  private queryParams = { tags: [], searchText: ''};
   constructor(private dialog: MdDialog,
    private thingsService: ThingsService,
-   private tagsService: TagsService) { 
+   private tagsService: TagsService,
+   private route: ActivatedRoute) { 
    
+   this.sub = this.route.queryParams.subscribe(queryParams => {
+       this.queryParams.tags = queryParams['tags'] ? queryParams['tags'].split(',').map(Number) : [];
+      
+       this.displayThings = this.queryParams.tags.length && this.things ? 
+       this.filterThingsByTags(this.queryParams.tags) : this.things;
+      
+    });
+
   }
 
   ngOnInit() {
@@ -36,7 +49,21 @@ export class ThingsComponent implements OnInit {
            thing.tags = thing.tags.map(tagId => this.allTags.find(tag => tag.id === tagId));
            return thing;
         });
+        this.displayThings = this.queryParams.tags.length ? 
+           this.filterThingsByTags(this.queryParams.tags) :
+           this.things;
       });
+  }
+
+   ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+  filterThingsByTags(tags) {
+     const display = this.things.filter((thing) => {
+         return thing.tags.some(tag => tags.indexOf(tag.id) !== -1);
+     });
+     return display ;
   }
 
   saveThing(aThing) {
