@@ -4,11 +4,13 @@ import { ThingsComponent } from './things/things.component';
 import { LoginComponent } from './account/login/login.component';
 import { ThingsSessionComponent } from './things-session/things-session.component';
 import {ThingsGuard} from './things/things-guard.service';
-
+import {LoginGuard} from './account/login/login-guard.service';
 @NgModule({
 	imports: [
 	RouterModule.forRoot([
-	{ path: 'login', component: LoginComponent },	
+	{ path: 'login', 
+	  canActivate: [LoginGuard],		
+	  component: LoginComponent },	
 	{ path: 'things', 
 	  canActivate: [ThingsGuard],	
 	  component: ThingsComponent },

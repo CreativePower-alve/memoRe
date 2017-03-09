@@ -20,6 +20,7 @@ import { TagsService } from './shared/tags.service';
 import {Config} from './config/constants';
 
 import {ThingsGuard} from './things/things-guard.service';
+import {LoginGuard} from './account/login/login-guard.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import {ThingsGuard} from './things/things-guard.service';
     SharedModule,
     AccountModule
   ],
-  providers: [ThingsSessionService, TagsService, ThingsGuard],
+  providers: [ThingsSessionService, TagsService, ThingsGuard,LoginGuard],
   bootstrap: [AppComponent],
   exports: [TopBarComponent, MaterialModule]
 })
