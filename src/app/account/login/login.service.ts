@@ -25,6 +25,8 @@ export class loginService {
         return this.http.post(this.authUrl, loginInfo, options).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
+                   localStorage.setItem('user', JSON.stringify(this.currentUser));
+                 
                 }
             })
             .catch(error =>{
@@ -35,13 +37,20 @@ export class loginService {
       return !!this.currentUser;
    }
    checkAuthenticationStatus(){
-     return this.http.get(this.identityUrl).map((response:any) =>{
+     let user = JSON.parse(localStorage.getItem("user")) || {};
+     let headers = new Headers({ 'Content-Type': 'application/json', "Authorization":"Bearer "+user.token });
+     let options = new RequestOptions({ headers: headers });
+     
+     return this.http.get(this.identityUrl,options)
+     .map((response:any) =>{
         if(response._body){
           return response.json();
         }else{
           return {};
         } 
-     }).do(currentUser =>{
+     })
+     .catch(this.handleError)
+     .do(currentUser =>{
         if(!!currentUser.name){
            this.currentUser = currentUser;
         }
@@ -52,4 +61,8 @@ export class loginService {
      this.currentUser.name = name;
      this.currentUser.email = email;
    }
+   private handleError(error: Response) {
+        console.error(error);
+        return Observable.throw(error || 'Server error');
+    }
 }

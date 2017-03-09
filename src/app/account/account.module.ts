@@ -12,6 +12,9 @@ import { loginService } from './login/login.service';
     ],
     providers: [
       loginService
+    ],
+    exports:[ 
+       LoginComponent
     ]
 })
 export class AccountModule {};
