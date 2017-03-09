@@ -1,17 +1,17 @@
 <div class="container" (mouseenter)="showActions()" (mouseleave)="hideActions()" (click)="openThingDetails(true)">
-    <div class="content">
+    <div class="content fade">
         {{item.text}}
     </div>
     <div class="footer">
         <div class="sourceContainer">
-            <label md-theme="label">Source:</label>
-            <div class="source">
+            <label class="primary-color">Source:</label>
+            <div class="source truncate">
                 {{item.source}}
             </div>
         </div>
         <div class="actions" *ngIf="canShowActions">
-            <md-icon color="primary" title="edit" (click)="openThingDetails(false); $event.stopPropagation();">edit</md-icon>
-            <md-icon color="primary" title="delete" (click)="onDeleteThing(); $event.stopPropagation()">delete</md-icon>
+            <md-icon color="accent" title="edit" (click)="openThingDetails(false); $event.stopPropagation();">edit</md-icon>
+            <md-icon color="accent" title="delete" (click)="onDeleteThing(); $event.stopPropagation()">delete</md-icon>
         </div>
     </div>
 </div>

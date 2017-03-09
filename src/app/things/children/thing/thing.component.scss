@@ -14,6 +14,7 @@
 	flex: 1;
 	padding: 8px;
 	overflow: hidden;
+	max-height: 122px;
 }
 .footer{
     margin-top: 8px;
@@ -28,6 +29,10 @@
 	flex-direction:column;
 	flex: 1;
 
+	.source{
+		max-width: 150px;
+	}
+
 	label{
 		font-size: 12px;
 	}
@@ -35,4 +40,19 @@
 
 .actions md-icon{
 	cursor: pointer;
+}
+
+.fade {
+  position: relative;
+  height: 122px;
+}
+.fade:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40%;
+  height: 1.2em;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
 }

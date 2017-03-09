@@ -12,7 +12,7 @@
         <div class="tags">
             <h3><i class="fa fa-tags" aria-hidden="true"></i> Tags </h3>
             <span *ngFor="let tag of allTags" class="tagCheckbox">
-              <md-checkbox color="primary" [disableRipple]="true" (change)="addFilter($event, tag)" 
+              <md-checkbox color="accent" [disableRipple]="true" (change)="addFilter($event, tag)" 
               [checked]="tag.checked">
 		        {{tag.name}}
 		      </md-checkbox>
