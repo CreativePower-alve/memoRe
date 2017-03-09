@@ -63,4 +63,7 @@ export class loginService {
         console.error(error);
         return Observable.throw(error || 'Server error');
     }
+    logout(){
+       localStorage.removeItem("user"); 
+    }
 }
