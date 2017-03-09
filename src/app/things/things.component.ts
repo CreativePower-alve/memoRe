@@ -33,7 +33,9 @@ export class ThingsComponent implements OnInit, OnDestroy {
       
        this.displayThings = this.queryParams.tags.length && this.things ? 
        this.filterThingsByTags(this.queryParams.tags) : this.things;
-      
+
+       this.displayThings = queryParams['search'] !=='' && this.things ? 
+       this.filterThingsBySearch(queryParams['search']) : this.things;
     });
 
   }
@@ -63,7 +65,16 @@ export class ThingsComponent implements OnInit, OnDestroy {
      const display = this.things.filter((thing) => {
          return thing.tags.some(tag => tags.indexOf(tag.id) !== -1);
      });
-     return display ;
+     return display;
+  }
+
+  filterThingsBySearch(searchTerm) {
+    const text = searchTerm.toLowerCase();
+    const display = this.things.filter((thing) => {
+         return thing.text.toLowerCase().indexOf(text) !== -1 || 
+                (thing.source && thing.source.toLowerCase().indexOf(text) !== -1);
+     });
+     return display;  
   }
 
   saveThing(aThing) {

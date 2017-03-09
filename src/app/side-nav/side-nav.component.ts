@@ -21,7 +21,9 @@ export class SideNavComponent implements OnInit, OnChanges {
 	@Input() isOpen: boolean;
 	@ViewChild('sidenav') sidenav: MdSidenav;
   allTags;
+  searchThings;
   private filterBy: number[] = [];
+  
   constructor(private tagsService: TagsService,
    private router: Router) { }
 
@@ -36,6 +38,8 @@ export class SideNavComponent implements OnInit, OnChanges {
               return aTag;
             });
       });
+     // needed to clear the search query param from url on page refresh
+     this.router.navigate(['/things'], { queryParams: { tags: this.filterBy.join(',') } });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -57,6 +61,15 @@ export class SideNavComponent implements OnInit, OnChanges {
       }
       localStorage.setItem('tags', this.filterBy.join(','));
       this.router.navigate(['/things'], { queryParams: { tags: this.filterBy.join(',') } });
+  }
+
+  doThingsSearch() {
+    this.router.navigate(['/things'], { 
+       queryParams: { 
+         tags: this.filterBy.join(','), 
+         search: this.searchThings 
+       } 
+     });
   }
 
 }

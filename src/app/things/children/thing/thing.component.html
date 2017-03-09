@@ -7,8 +7,8 @@
             {{item.source}}
         </div>
         <div class="actions" *ngIf="canShowActions">
-            <md-icon color="primary" (click)="openThingDetails(false); $event.stopPropagation();">edit</md-icon>
-            <md-icon color="primary" (click)="onDeleteThing(); $event.stopPropagation()">delete</md-icon>
+            <md-icon color="primary" title="edit" (click)="openThingDetails(false); $event.stopPropagation();">edit</md-icon>
+            <md-icon color="primary" title="delete" (click)="onDeleteThing(); $event.stopPropagation()">delete</md-icon>
         </div>
     </div>
 </div>

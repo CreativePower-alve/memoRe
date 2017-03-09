@@ -2,7 +2,11 @@
     <md-sidenav #sidenav opened=[isOpen] mode="side" class="sidenav">
         <!-- sidenav content -->
         <md-input-container class="search">
-            <input mdInput [(ngModel)]="searchThings" name="search" placeholder="search things">
+            <input mdInput
+                  [(ngModel)]="searchThings"
+                  name="search"
+                  placeholder="search things"
+                  (change)="doThingsSearch($event)">
             <md-icon class="material-icons" mdSuffix>search</md-icon>
         </md-input-container>
         <div class="tags">
