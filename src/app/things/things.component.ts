@@ -61,6 +61,20 @@ export class ThingsComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  getCols(){
+    if(window.innerWidth < 600) {
+      return 1;
+    }
+    else if(window.innerWidth < 960) {
+      return 2;
+    }
+    else if(window.innerWidth < 1280) {
+      return 3;
+    }
+    
+    return 4;
+  }
+
   filterThingsByTags(tags) {
      const display = this.things.filter((thing) => {
          return thing.tags.some(tag => tags.indexOf(tag.id) !== -1);
