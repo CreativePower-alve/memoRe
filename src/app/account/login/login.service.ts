@@ -53,8 +53,7 @@ export class loginService {
         if(!!currentUser.name){
            this.currentUser = currentUser;
         }
-     })
-     .subscribe();
+     });
    }
    updateCurrentUser(name:string, email:string){
      this.currentUser.name = name;

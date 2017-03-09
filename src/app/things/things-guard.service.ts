@@ -1,15 +1,14 @@
 import {Injectable} from '@angular/core';
 import {CanActivate,Router} from '@angular/router';
-import {loginService} from '../account/login/login.service';
 @Injectable()
 export class ThingsGuard implements CanActivate {
-	constructor(private _router:Router, private auth: loginService){	
+	constructor(private _router:Router){	
 	}
 
-	canActivate(): boolean{
-		if(!this.auth.checkAuthenticationStatus()){
-			this._router.navigate(['/login']);
-			return false;
+	canActivate(): any{
+		if(!JSON.parse(localStorage.getItem("user"))){
+				this._router.navigate(['/login']);
+				return false;
 		}
 		return true;
 	}

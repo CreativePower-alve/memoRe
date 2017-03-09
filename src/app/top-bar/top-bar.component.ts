@@ -21,7 +21,7 @@ export class TopBarComponent implements OnInit {
   constructor( private auth:loginService) { }
 
   ngOnInit() {
-  	 this.auth.checkAuthenticationStatus();
+  	 this.auth.checkAuthenticationStatus().subscribe();
   }
 
 
