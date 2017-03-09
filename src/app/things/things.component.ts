@@ -133,7 +133,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
   openThingDetailsDialog(event) {
     let config: MdDialogConfig = {
      disableClose: !event.isReadOnly,
-     width: '500px'
+     width: '600px'
     }
     let dialogRef = this.dialog.open(ThingDetailsComponent, config);
     dialogRef.componentInstance.data = {

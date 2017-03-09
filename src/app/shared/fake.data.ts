@@ -18,7 +18,7 @@ export class FakeData implements InMemoryDbService {
         let things = [{
                     "id": 1,
                     "text": "Your inner journey only has one: the step you are taking right now",
-                    "source": "someone",
+                    "source": "someone really long sourcereally long source",
                     "tags": [1]
                 }, {
                     "id": 2,

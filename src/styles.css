@@ -13,3 +13,13 @@ body{
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing{
 	opacity: 0.9;
 }
+
+.primary-color{
+	color: #673ab7;
+}
+
+.truncate{
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
