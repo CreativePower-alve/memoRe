@@ -16,7 +16,11 @@ import { ThingsSessionModule } from './things-session/things-session.module';
 import { AccountModule } from './account/account.module';
 import { ThingsSessionService } from './shared/things-session.service';
 import { TagsService } from './shared/tags.service';
+
 import {Config} from './config/constants';
+
+import {ThingsGuard} from './things/things-guard.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +38,7 @@ import {Config} from './config/constants';
     SharedModule,
     AccountModule
   ],
-  providers: [ThingsSessionService, TagsService],
+  providers: [ThingsSessionService, TagsService, ThingsGuard],
   bootstrap: [AppComponent],
   exports: [TopBarComponent, MaterialModule]
 })
