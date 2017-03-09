@@ -8,8 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start": "ng serve –proxy-config proxy.conf.json",
-    "dev": "nodemon server/app.js"
+    "start": "ntl",
+    "dev": "nodemon server/app.js",
+    "startClient" :"ng serve –proxy-config proxy.conf.json" 
   },
   "private": true,
   "dependencies": {
@@ -61,6 +62,7 @@
     "mongoose": "^4.8.5",
     "morgan": "^1.8.1",
     "nodemon": "^1.11.0",
+    "ntl": "^1.2.0",
     "passport": "^0.3.2",
     "password": "^0.1.1",
     "path": "^0.12.7",
