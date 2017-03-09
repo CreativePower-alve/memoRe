@@ -34,8 +34,10 @@ export class ThingsComponent implements OnInit, OnDestroy {
        this.displayThings = this.queryParams.tags.length && this.things ? 
        this.filterThingsByTags(this.queryParams.tags) : this.things;
 
-       this.displayThings = queryParams['search'] !=='' && this.things ? 
-       this.filterThingsBySearch(queryParams['search']) : this.things;
+       if(queryParams['search']) {
+         this.displayThings = queryParams['search'] !=='' && this.displayThings ? 
+         this.filterThingsBySearch(queryParams['search']) : this.displayThings;
+       }
     });
 
   }
@@ -71,7 +73,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
     else if(window.innerWidth < 1280) {
       return 3;
     }
-    
+
     return 4;
   }
 
@@ -84,7 +86,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
 
   filterThingsBySearch(searchTerm) {
     const text = searchTerm.toLowerCase();
-    const display = this.things.filter((thing) => {
+    const display = this.displayThings.filter((thing) => {
          return thing.text.toLowerCase().indexOf(text) !== -1 || 
                 (thing.source && thing.source.toLowerCase().indexOf(text) !== -1);
      });
