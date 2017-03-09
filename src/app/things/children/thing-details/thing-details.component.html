@@ -44,8 +44,9 @@
             </tag-input>
         </div>
         <div class="buttons">
-                <md-icon color="accent" title="Save" (click)="saveThing(eventType.SAVE, thingForm)">save</md-icon>
-                <md-icon color="accent" title="Delete" (click)="onClose(eventType.DELETE)">delete</md-icon>
+                <md-icon color="accent" title="Save" [ngClass]="{'disabled':thingForm.form.invalid}" 
+                (click)="saveThing(eventType.SAVE, thingForm)">save</md-icon>
+                <md-icon color="accent" title="Delete" *ngIf="thing.id" (click)="onClose(eventType.DELETE)">delete</md-icon>
         </div>
     </div>
     </form>
@@ -61,7 +62,7 @@
             {{thing.source}}
         </div>
         <div class="buttons">
-            <md-icon color="accent" title="Delete" (click)="onClose(eventType.DELETE)">delete</md-icon>
+            <md-icon color="accent" title="Delete" md-icon-button (click)="onClose(eventType.DELETE)">delete</md-icon>
         </div>
     </div>
 </div>

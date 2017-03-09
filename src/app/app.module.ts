@@ -16,6 +16,7 @@ import { ThingsSessionModule } from './things-session/things-session.module';
 import { AccountModule } from './account/account.module';
 import { ThingsSessionService } from './shared/things-session.service';
 import { TagsService } from './shared/tags.service';
+import { ToastService } from './shared/toast.service';
 
 import {Config} from './config/constants';
 
@@ -39,7 +40,7 @@ import {LoginGuard} from './account/login/login-guard.service';
     SharedModule,
     AccountModule
   ],
-  providers: [ThingsSessionService, TagsService, ThingsGuard,LoginGuard],
+  providers: [ThingsSessionService, TagsService,ToastService, ThingsGuard,LoginGuard],
   bootstrap: [AppComponent],
   exports: [TopBarComponent, MaterialModule]
 })

@@ -1,12 +1,13 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MdDialog, MdDialogConfig } from '@angular/material';
+import { MdDialog, MdDialogConfig} from '@angular/material';
 import 'rxjs/add/operator/mergeMap';
 
 
 import { ThingDetailsComponent } from './children/thing-details/thing-details.component';
 import { ThingsService } from './things.service';
 import { TagsService } from '../shared/tags.service';
+import { ToastService } from '../shared/toast.service';
 
 export enum EventType {
   SAVE,
@@ -24,20 +25,25 @@ export class ThingsComponent implements OnInit, OnDestroy {
   private allTags;
   private sub: any;
   private queryParams = { tags: [], searchText: ''};
+  
   constructor(private dialog: MdDialog,
    private thingsService: ThingsService,
    private tagsService: TagsService,
    private route: ActivatedRoute,
-   private router: Router) { 
+   private router: Router,
+   private toastService: ToastService) { 
+
    this.sub = this.route.queryParams.subscribe(queryParams => {
        this.queryParams.tags = queryParams['tags'] ? queryParams['tags'].split(',').map(Number) : [];
       
        this.displayThings = this.queryParams.tags.length && this.things ? 
        this.filterThingsByTags(this.queryParams.tags) : this.things;
 
-       if(queryParams['search']) {
-         this.displayThings = queryParams['search'] !=='' && this.displayThings ? 
-         this.filterThingsBySearch(queryParams['search']) : this.displayThings;
+       this.queryParams.searchText = queryParams['search']; 
+
+       if(this.queryParams.searchText) {
+         this.displayThings = this.queryParams.searchText !=='' && this.displayThings ? 
+         this.filterThingsBySearch(this.queryParams.searchText) : this.displayThings;
        }
     });
 
@@ -66,36 +72,6 @@ export class ThingsComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  getCols(){
-    if(window.innerWidth < 600) {
-      return 1;
-    }
-    else if(window.innerWidth < 960) {
-      return 2;
-    }
-    else if(window.innerWidth < 1280) {
-      return 3;
-    }
-
-    return 4;
-  }
-
-  filterThingsByTags(tags) {
-     const display = this.things.filter((thing) => {
-         return thing.tags.some(tag => tags.indexOf(tag.id) !== -1);
-     });
-     return display;
-  }
-
-  filterThingsBySearch(searchTerm) {
-    const text = searchTerm.toLowerCase();
-    const display = this.displayThings.filter((thing) => {
-         return thing.text.toLowerCase().indexOf(text) !== -1 || 
-                (thing.source && thing.source.toLowerCase().indexOf(text) !== -1);
-     });
-     return display;  
-  }
-
   saveThing(aThing) {
     const isCreate = !aThing.id; 
     const req = this.thingsService.saveThing(aThing);
@@ -105,24 +81,12 @@ export class ThingsComponent implements OnInit, OnDestroy {
           (error: any) => { }) //:todo show toast error
   }
 
-  handleSaveCallback(isCreate, thingObject) {
-    if (isCreate) {
-       this.things = this.things.concat([thingObject])
-     }
-    else {
-      this.things = this.things.map(thing => {
-        if (thing.id === thingObject.id) {
-          thing = Object.assign({}, thing, thingObject); 
-        }
-        return thing;
-     });
-    }
-  }
-
   deleteThing(aThing) {
     this.thingsService.deleteThing(aThing)
        .subscribe(() => {
           this.things = this.things.filter((thing => thing.id !== aThing.id));
+          this.toastService.open('Thing deleted successfully');
+          this.updateDisplayThings();
        }); 
   }
 
@@ -145,7 +109,38 @@ export class ThingsComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => this.handleThingDialogClose(result));
   }
 
-  handleThingDialogClose(result) {
+  getCols(){
+    if(window.innerWidth < 600) {
+      return 1;
+    }
+    else if(window.innerWidth < 960) {
+      return 2;
+    }
+    else if(window.innerWidth < 1280) {
+      return 3;
+    }
+
+    return 4;
+  }
+
+   private handleSaveCallback(isCreate, thingObject) {
+    if (isCreate) {
+       this.things = this.things.concat([thingObject]);
+       this.toastService.open('Thing saved successfully'); 
+     }
+    else {
+      this.things = this.things.map(thing => {
+        if (thing.id === thingObject.id) {
+          thing = Object.assign({}, thing, thingObject); 
+        }
+        return thing;
+     });
+      this.toastService.open('Thing updated successfully');
+    }
+    this.updateDisplayThings();
+  }
+
+  private handleThingDialogClose(result) {
     if (!result) {
           return;
     }
@@ -158,6 +153,32 @@ export class ThingsComponent implements OnInit, OnDestroy {
          break;
       default:
          '';      
+    }
+  }
+
+  private filterThingsByTags(tags) {
+     const display = this.things.filter((thing) => {
+         return thing.tags.some(tag => tags.indexOf(tag.id) !== -1);
+     });
+     return display;
+  }
+
+  private filterThingsBySearch(searchTerm) {
+    const text = searchTerm.toLowerCase();
+    const display = this.displayThings.filter((thing) => {
+         return thing.text.toLowerCase().indexOf(text) !== -1 || 
+                (thing.source && thing.source.toLowerCase().indexOf(text) !== -1);
+     });
+     return display;  
+  }
+
+  private updateDisplayThings() {
+      this.displayThings = this.queryParams.tags.length ? 
+        this.filterThingsByTags(this.queryParams.tags) : 
+        this.things;
+
+    if(this.queryParams.searchText) {
+      this.displayThings = this.filterThingsBySearch(this.queryParams.searchText);
     }
   }
 

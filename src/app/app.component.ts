@@ -11,7 +11,6 @@ import {loginService} from './account/login/login.service';
 export class AppComponent {
   public isOpen: boolean;
   canShowNavBarButtons = true;
- // loggedIn = false;
 
   constructor(private router: Router,
    private thingsSessionService: ThingsSessionService, private auth:loginService){
