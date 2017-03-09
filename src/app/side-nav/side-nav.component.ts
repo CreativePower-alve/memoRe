@@ -23,6 +23,7 @@ export class SideNavComponent implements OnInit, OnChanges {
 	@ViewChild('sidenav') sidenav: MdSidenav;
   allTags;
   searchThings;
+  noTag = { id: 0, name: 'Untagged', checked: false};
   private filterBy: number[] = [];
   
   constructor(private tagsService: TagsService,
