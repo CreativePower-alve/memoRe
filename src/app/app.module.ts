@@ -16,7 +16,7 @@ import { ThingsSessionModule } from './things-session/things-session.module';
 import { AccountModule } from './account/account.module';
 import { ThingsSessionService } from './shared/things-session.service';
 import { TagsService } from './shared/tags.service';
-
+import {Config} from './config/constants';
 @NgModule({
   declarations: [
     AppComponent,

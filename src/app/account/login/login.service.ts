@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {Config} from '../../config/constants';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import {IUser} from './user.model';
 import { Observable } from 'rxjs/Observable';
@@ -11,13 +12,13 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class loginService {
     
-    private baseUrl = "http://127.0.0.1:9000/auth/local";
+    private baseUrl = Config.serverURL+'/auth/local';
     public currentUser:IUser; 
 
     constructor(private http: Http) {}
 
   public loginUser(email:String, password:string) {
-          let headers = new Headers({ 'Content-Type': 'application/json' });
+        let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let loginInfo = {email:email, password:password};
         return this.http.post(this.baseUrl, loginInfo, options).do(resp =>{
@@ -33,7 +34,7 @@ export class loginService {
       return !!this.currentUser;
    }
    checkAuthenticationStatus(){
-
+     return this.http.get('api/users/me')
    }
    updateCurrentUser(name:string, email:string){
      this.currentUser.name = name;
