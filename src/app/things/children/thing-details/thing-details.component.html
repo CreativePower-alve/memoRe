@@ -4,7 +4,7 @@
               class="form-horizontal"
               #thingForm="ngForm">
     <div md-dialog-content class="edit">
-        <md-icon color="primary" class="closeModal" title="Close" (click)="safeClose()">close</md-icon>
+        <md-icon color="accent" class="closeModal" title="Close" (click)="safeClose()">close</md-icon>
             <md-input-container class="content" 
               dividerColor="{{ (textVar.touched || textVar.dirty) && !textVar.valid ? 'warn' : 'primary' }}">
                 <textarea mdInput
@@ -44,14 +44,14 @@
             </tag-input>
         </div>
         <div class="buttons">
-                <md-icon color="primary" title="Save" (click)="saveThing(eventType.SAVE, thingForm)">save</md-icon>
-                <md-icon color="primary" title="Delete" (click)="onClose(eventType.DELETE)">delete</md-icon>
+                <md-icon color="accent" title="Save" (click)="saveThing(eventType.SAVE, thingForm)">save</md-icon>
+                <md-icon color="accent" title="Delete" (click)="onClose(eventType.DELETE)">delete</md-icon>
         </div>
     </div>
     </form>
 
     <div md-dialog-content *ngIf="readOnly" class="readOnly">
-        <md-icon color="primary" class="closeModal" title="Close" (click)="safeClose()">close</md-icon>
+        <md-icon color="accent" class="closeModal" title="Close" (click)="safeClose()">close</md-icon>
         <div class="content">
             {{thing.text}}
         </div>
@@ -61,7 +61,7 @@
             {{thing.source}}
         </div>
         <div class="buttons">
-            <md-icon color="primary" title="Delete" (click)="onClose(eventType.DELETE)">delete</md-icon>
+            <md-icon color="accent" title="Delete" (click)="onClose(eventType.DELETE)">delete</md-icon>
         </div>
     </div>
 </div>
