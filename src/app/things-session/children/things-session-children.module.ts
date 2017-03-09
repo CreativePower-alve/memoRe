@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
+import { PracticeItemComponent } from './practice-item/practice-item.component';
 
 
 @NgModule({
 	imports: [SharedModule],
-	declarations: [],
+	declarations: [PracticeItemComponent],
 	exports: [
-	 ]
+      PracticeItemComponent
+	]
 })
 export class ThingsSessionChildrenModule {};

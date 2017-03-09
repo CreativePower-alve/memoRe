@@ -1,8 +1,31 @@
-<div class="session" *ngIf="isSession">
-	session component
-	  session item
+<div class="sessionMessage">
+    <div class="sesssionStartDisplay" *ngIf="isSession">
+        <h1>Let's start typing!</h1>
+        <h3>You are practicing for {{config?.sessionTime}} minutes : </h3>
+    </div>
+    <div class="sessionEndDisplay" *ngIf="!isSession">
+        <h2>Congratulations!</h2>
+        <h3>Here is what you've practiced for {{timeInSession}} minutes: </h3>
+    </div>
+    <div class="tags" *ngIf="thingsSessionService.isTagsMode(config?.isSessionMode)">
+        <tag-input *ngIf="config?.tags.length > 0" [readonly]='true' [ngModel]="config?.tags" [theme]="minimal" [identifyBy]="'id'" [displayBy]="'name'">
+        </tag-input>
+        <div class="allTags" *ngIf="!config?.tags.length">
+            <span>All items</span>
+        </div>
+    </div>
+    <div class="Input" *ngIf="!thingsSessionService.isTagsMode(config?.isSessionMode)">
+        {{config?.input}}
+    </div>
 </div>
-
-<div class="sessionEndDisplay" *ngIf="isSessionEnd">
-	session end component
+<div class="session" *ngIf="isSession">
+    <div class="items">
+        <div class="wrapper" *ngFor="let sessionItem of practiceItems; let i=index">
+            <memore-practice-item [item]="sessionItem" (onFinish)="getNextItem()" *ngIf="i===currentIndex">
+            </memore-practice-item>
+        </div>
+    </div>
+    <div class="sessionActions">
+        <button (click)="stopSession()" md-button md-raised-button color="primary">Stop session</button>
+    </div>
 </div>

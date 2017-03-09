@@ -1,8 +1,19 @@
-<md-sidenav-container 
-  class="container">
-    <md-sidenav #sidenav opened=false mode="side" class="sidenav">
+<md-sidenav-container class="container">
+    <md-sidenav #sidenav opened=[isOpen] mode="side" class="sidenav">
         <!-- sidenav content -->
-        Sidenav items
+        <md-input-container class="search">
+            <input mdInput [(ngModel)]="searchThings" name="search" placeholder="search things">
+            <md-icon class="material-icons" mdSuffix>search</md-icon>
+        </md-input-container>
+        <div class="tags">
+            <h3><i class="fa fa-tags" aria-hidden="true"></i> Tags </h3>
+            <span *ngFor="let tag of allTags" class="tagCheckbox">
+              <md-checkbox color="primary" [disableRipple]="true" (change)="addFilter($event, tag)" 
+              [checked]="tag.checked">
+		        {{tag.name}}
+		      </md-checkbox>
+        	</span>
+        </div>
     </md-sidenav>
     <div class="content">
         <ng-content></ng-content>

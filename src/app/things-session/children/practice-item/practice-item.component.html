@@ -1,0 +1,6 @@
+<section class="paper">
+    <div class="practiceItem" #userTextInput tabindex="0">
+        <span class="letter" *ngFor="let char of chars; let i = index" [ngClass]="{'active': i === currentIndex, 'typed': i < currentIndex}" [attr.data-ph]="char" (keypress)="handleUserInput($event)" contenteditable="true" #letter>
+      </span>
+    </div>
+</section>

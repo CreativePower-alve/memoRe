@@ -23,6 +23,10 @@ export class ThingsSessionService{
  	return this.sessionConfig;
  } 
 
+ isTagsMode(value) {
+ 	return value === SessionMode.TAGS;
+ }
+
  private sessionConfig:SessionConfig;
 
 }

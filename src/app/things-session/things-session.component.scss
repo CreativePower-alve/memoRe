@@ -1,0 +1,17 @@
+.session{
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+}
+.sessionActions{
+	align-self: center;
+	margin-top: 26px;
+}
+.Input{
+	margin-bottom: 26px;
+    font-size: 18px;
+}
+
+.Input:before, .Input:after{
+	content: '\"'
+}
