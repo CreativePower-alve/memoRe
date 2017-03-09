@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogConfig } from '@angular/material';
 import 'rxjs/add/operator/mergeMap';
 
+import {loginService} from '../account/login/login.service';
 import { ThingDetailsComponent } from './children/thing-details/thing-details.component';
 import { ThingsService } from './things.service';
 import { TagsService } from '../shared/tags.service';
@@ -26,6 +27,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
   constructor(private dialog: MdDialog,
    private thingsService: ThingsService,
    private tagsService: TagsService,
+   private auth:loginService,
    private route: ActivatedRoute) { 
    
    this.sub = this.route.queryParams.subscribe(queryParams => {
@@ -39,6 +41,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.auth.checkAuthenticationStatus();
     this.tagsService.getAllTags()
      .flatMap(allTags => {
        this.allTags = allTags;

@@ -10,8 +10,10 @@ import 'rxjs/add/observable/of';
 
 @Injectable()
 export class loginService {
+    
     private baseUrl = "http://127.0.0.1:9000/auth/local";
     public currentUser:IUser; 
+
     constructor(private http: Http) {}
 
   public loginUser(email:String, password:string) {
@@ -27,4 +29,14 @@ export class loginService {
                 return Observable.of(false);
             });
     }
+   isAuthenticated(){
+      return !!this.currentUser;
+   }
+   checkAuthenticationStatus(){
+
+   }
+   updateCurrentUser(name:string, email:string){
+     this.currentUser.name = name;
+     this.currentUser.email = email;
+   }
 }
