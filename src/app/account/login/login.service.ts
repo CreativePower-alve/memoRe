@@ -69,6 +69,6 @@ export class loginService {
     }
     logout(){
        localStorage.removeItem("user"); 
-       this.currentUser = null;
+       this.currentUser = undefined;
     }
 }

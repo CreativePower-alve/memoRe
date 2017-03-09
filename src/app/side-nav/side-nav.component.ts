@@ -72,5 +72,5 @@ export class SideNavComponent implements OnInit, OnChanges {
        } 
      });
   }
-
+  
 }

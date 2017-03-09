@@ -23,6 +23,9 @@ export class AppComponent {
       }
     });
     this.router.events.subscribe(()=> {
+       if(this.auth.isAuthenticated()){
+          this.isOpen = window.innerWidth > 600;  
+        }
         this.canShowNavBarButtons = location.pathname !== '/things-session';
         this.isOpen = this.canShowNavBarButtons ? this.isOpen : false;
     });
@@ -40,6 +43,7 @@ export class AppComponent {
   }
   logout(): void {
        this.auth.logout();
+       this.isOpen = false;
        this.router.navigate(['/login']); 
   }
 }
