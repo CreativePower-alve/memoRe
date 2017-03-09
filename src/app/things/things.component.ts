@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogConfig } from '@angular/material';
 import 'rxjs/add/operator/mergeMap';
@@ -26,8 +26,8 @@ export class ThingsComponent implements OnInit, OnDestroy {
   constructor(private dialog: MdDialog,
    private thingsService: ThingsService,
    private tagsService: TagsService,
-   private route: ActivatedRoute) { 
-   
+   private route: ActivatedRoute,
+   private router: Router) { 
    this.sub = this.route.queryParams.subscribe(queryParams => {
        this.queryParams.tags = queryParams['tags'] ? queryParams['tags'].split(',').map(Number) : [];
       
@@ -43,6 +43,8 @@ export class ThingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // redirect to route to clear any search query param that might remain after page refresh
+    this.router.navigate(['/things'], { queryParams: { tags: this.queryParams.tags.join(',') } });
     this.tagsService.getAllTags()
      .flatMap(allTags => {
        this.allTags = allTags;

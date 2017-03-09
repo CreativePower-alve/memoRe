@@ -38,8 +38,6 @@ export class SideNavComponent implements OnInit, OnChanges {
               return aTag;
             });
       });
-     // needed to clear the search query param from url on page refresh
-     this.router.navigate(['/things'], { queryParams: { tags: this.filterBy.join(',') } });
   }
 
   ngOnChanges(changes: SimpleChanges) {
