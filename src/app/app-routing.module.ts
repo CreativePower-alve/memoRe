@@ -14,7 +14,9 @@ import {LoginGuard} from './account/login/login-guard.service';
 	{ path: 'things', 
 	  canActivate: [ThingsGuard],	
 	  component: ThingsComponent },
-	{ path: 'things-session', component: ThingsSessionComponent },
+	{ path: 'things-session',
+	  canActivate: [ThingsGuard],	
+	  component: ThingsSessionComponent },
 	{ path: '', redirectTo: 'login', pathMatch: 'full' },
 	{ path: '**', redirectTo: 'login', pathMatch: 'full' }
 	])
