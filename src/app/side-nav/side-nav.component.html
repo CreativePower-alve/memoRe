@@ -11,11 +11,22 @@
         </md-input-container>
         <div class="tags">
             <h3><i class="fa fa-tags" aria-hidden="true"></i> Tags </h3>
+            <span class="tagCheckbox">
+                <md-checkbox color="accent" 
+                 [disableRipple]="true"
+                 (change)="addFilter($event, noTag)" 
+                 [checked]="noTag.checked">
+                     {{noTag.name}}
+                </md-checkbox>  
+            </span>
+            
             <span *ngFor="let tag of allTags" class="tagCheckbox">
-              <md-checkbox color="accent" [disableRipple]="true" (change)="addFilter($event, tag)" 
-              [checked]="tag.checked">
-		        {{tag.name}}
-		      </md-checkbox>
+              <md-checkbox color="accent" 
+               [disableRipple]="true"
+               (change)="addFilter($event, tag)" 
+               [checked]="tag.checked">
+		               {{tag.name}}
+		          </md-checkbox>
         	</span>
         </div>
     </md-sidenav>

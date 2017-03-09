@@ -159,7 +159,10 @@ export class ThingsComponent implements OnInit, OnDestroy {
      const display = this.things.filter((thing) => {
          return thing.tags.some(tag => tags.indexOf(tag.id) !== -1);
      });
-     return display;
+     // id 0 is for untagged things
+     return tags.indexOf(0) !== -1 ? 
+     display.concat(this.things.filter((thing) => !thing.tags.length)) :
+     display;
   }
 
   private filterThingsBySearch(searchTerm) {
