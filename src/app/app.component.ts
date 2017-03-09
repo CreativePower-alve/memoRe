@@ -20,6 +20,7 @@ export class AppComponent {
     this.isOpen = window.innerWidth > 600;
     this.router.events.subscribe(()=> {
       this.canShowNavBarButtons = location.pathname !== '/things-session';
+      this.isOpen = this.canShowNavBarButtons ? this.isOpen : false;
     });
   }
 

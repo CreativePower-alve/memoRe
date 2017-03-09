@@ -2,8 +2,7 @@ import { Component,
 	OnInit,
 	EventEmitter,
 	Output,
-	Input,
-	SimpleChanges
+	Input
 } from '@angular/core';
 import {loginService} from '../account/login/login.service';
 
@@ -24,6 +23,7 @@ export class TopBarComponent implements OnInit {
   ngOnInit() {
   	 this.auth.checkAuthenticationStatus();
   }
+
 
 
   toggleSideNav() {
