@@ -2,8 +2,7 @@ import { Component,
 	OnInit,
 	EventEmitter,
 	Output,
-	Input,
-	SimpleChanges
+	Input
 } from '@angular/core';
 
 @Component({
@@ -22,6 +21,7 @@ export class TopBarComponent implements OnInit {
 
   ngOnInit() {
   }
+
 
 
   toggleSideNav() {
