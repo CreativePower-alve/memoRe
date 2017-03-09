@@ -77,7 +77,9 @@ export class ThingsComponent implements OnInit, OnDestroy {
     
     req.subscribe(
           (thingObject) => this.handleSaveCallback(isCreate, thingObject),
-          (error: any) => { }) //:todo show toast error
+          (error: any) => { 
+            this.toastService.open('Thing could not be saved successfully', 'error-toaster');
+          }) //:todo show toast error
   }
 
   deleteThing(aThing) {
@@ -86,6 +88,9 @@ export class ThingsComponent implements OnInit, OnDestroy {
           this.things = this.things.filter((thing => thing.id !== aThing.id));
           this.toastService.open('Thing deleted successfully', 'success-toaster');
           this.updateDisplayThings();
+       },
+       (error: any) => { 
+            this.toastService.open('Thing could not be deleted successfully', 'error-toaster');
        }); 
   }
 
