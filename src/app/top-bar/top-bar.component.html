@@ -14,7 +14,7 @@
             <memore-open-session-dialog (onStartSession)="startSession($event)"></memore-open-session-dialog>
         </div>
         <div class="userProfile">
-            <a *ngIf="auth.isAuthenticated()" >Welcome {{auth.currentUser?.name}}</a>   
+            <a>Welcome {{auth.currentUser?.name}}</a>   
         </div>
         <div class="logout">
             <i class="material-icons" title="sign out">exit_to_app</i>

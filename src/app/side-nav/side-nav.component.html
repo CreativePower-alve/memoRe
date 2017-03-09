@@ -1,4 +1,4 @@
-<md-sidenav-container class="container">
+<md-sidenav-container class="container" [hidden]="!auth.isAuthenticated()">
     <md-sidenav #sidenav [opened]="isOpen" mode="side" class="sidenav">
         <!-- sidenav content -->
         <md-input-container class="search">

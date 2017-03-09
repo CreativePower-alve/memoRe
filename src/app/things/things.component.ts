@@ -44,12 +44,8 @@ export class ThingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-<<<<<<< HEAD
-   
-=======
     // redirect to route to clear any search query param that might remain after page refresh
-    this.router.navigate(['/things'], { queryParams: { tags: this.queryParams.tags.join(',') } });
->>>>>>> 790d84d2c9c1c94e747855bf9ccb299efce6e435
+  //  this.router.navigate(['/things'], { queryParams: { tags: this.queryParams.tags.join(',') } });
     this.tagsService.getAllTags()
      .flatMap(allTags => {
        this.allTags = allTags;

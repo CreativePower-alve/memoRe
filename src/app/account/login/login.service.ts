@@ -33,7 +33,7 @@ export class loginService {
             });
     }
    isAuthenticated(){
-      return !!this.currentUser;
+      return this.currentUser !== undefined;
    }
    checkAuthenticationStatus(){
      let user = JSON.parse(localStorage.getItem("user")) ||{};
