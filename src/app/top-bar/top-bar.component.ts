@@ -5,6 +5,7 @@ import { Component,
 	Input,
 	SimpleChanges
 } from '@angular/core';
+import {loginService} from '../account/login/login.service';
 
 @Component({
   selector: 'top-bar',
@@ -18,9 +19,10 @@ export class TopBarComponent implements OnInit {
 	@Output() onOpenMenu = new EventEmitter();
 	@Output() onStartTypingSession = new EventEmitter();
   
-  constructor() { }
+  constructor( private auth:loginService) { }
 
   ngOnInit() {
+  	 this.auth.checkAuthenticationStatus();
   }
 
 

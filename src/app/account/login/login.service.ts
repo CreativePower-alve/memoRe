@@ -12,7 +12,8 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class loginService {
     
-    private baseUrl = Config.serverURL+'/auth/local';
+    private authUrl = Config.serverURL+'/auth/local';
+    private identityUrl = Config.serverURL+'/api/users/me';
     public currentUser:IUser; 
 
     constructor(private http: Http) {}
@@ -21,7 +22,7 @@ export class loginService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let loginInfo = {email:email, password:password};
-        return this.http.post(this.baseUrl, loginInfo, options).do(resp =>{
+        return this.http.post(this.authUrl, loginInfo, options).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
                 }
@@ -34,7 +35,18 @@ export class loginService {
       return !!this.currentUser;
    }
    checkAuthenticationStatus(){
-     return this.http.get('api/users/me')
+     return this.http.get(this.identityUrl).map((response:any) =>{
+        if(response._body){
+          return response.json();
+        }else{
+          return {};
+        } 
+     }).do(currentUser =>{
+        if(!!currentUser.name){
+           this.currentUser = currentUser;
+        }
+     })
+     .subscribe();
    }
    updateCurrentUser(name:string, email:string){
      this.currentUser.name = name;
