@@ -34,7 +34,9 @@ export class ThingsComponent implements OnInit, OnDestroy {
       
        this.displayThings = this.queryParams.tags.length && this.things ? 
        this.filterThingsByTags(this.queryParams.tags) : this.things;
-      
+
+       this.displayThings = queryParams['search'] !=='' && this.things ? 
+       this.filterThingsBySearch(queryParams['search']) : this.things;
     });
 
   }
@@ -61,11 +63,34 @@ export class ThingsComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  getCols(){
+    if(window.innerWidth < 600) {
+      return 1;
+    }
+    else if(window.innerWidth < 960) {
+      return 2;
+    }
+    else if(window.innerWidth < 1280) {
+      return 3;
+    }
+    
+    return 4;
+  }
+
   filterThingsByTags(tags) {
      const display = this.things.filter((thing) => {
          return thing.tags.some(tag => tags.indexOf(tag.id) !== -1);
      });
-     return display ;
+     return display;
+  }
+
+  filterThingsBySearch(searchTerm) {
+    const text = searchTerm.toLowerCase();
+    const display = this.things.filter((thing) => {
+         return thing.text.toLowerCase().indexOf(text) !== -1 || 
+                (thing.source && thing.source.toLowerCase().indexOf(text) !== -1);
+     });
+     return display;  
   }
 
   saveThing(aThing) {

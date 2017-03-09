@@ -1,6 +1,7 @@
 .container{
   margin: 0 auto;
   width: 90%;
+  padding-bottom: 16px;
 }
 .thingsList{
 	display: flex;
@@ -13,5 +14,9 @@ h1{
 .addThingButton{
 	position: absolute;
     bottom: 38px;
-    right: 44px;
+    right: 16px;
+}
+
+md-grid-list{
+	margin: 18px;
 }

@@ -8,7 +8,7 @@ import { ThingsSessionService, SessionConfig } from './shared/things-session.ser
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public isOpen: boolean = true;
+  public isOpen: boolean;
   canShowNavBarButtons = true;
   loggedIn = true;
 
@@ -17,6 +17,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.isOpen = window.innerWidth > 600;
     this.router.events.subscribe(()=> {
       this.canShowNavBarButtons = location.pathname !== '/things-session';
     });
