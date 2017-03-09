@@ -22,3 +22,9 @@ body{
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.toast-top-right{
+	position: absolute;
+	top: 70px;
+	right: 10px;
+}

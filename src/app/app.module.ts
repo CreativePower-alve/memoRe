@@ -17,6 +17,7 @@ import { LoginComponent } from './account/login/login.component';
 
 import { ThingsSessionService } from './shared/things-session.service';
 import { TagsService } from './shared/tags.service';
+import { ToastService } from './shared/toast.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { TagsService } from './shared/tags.service';
     ThingsSessionModule,
     SharedModule
   ],
-  providers: [ThingsSessionService, TagsService],
+  providers: [ThingsSessionService, TagsService, ToastService],
   bootstrap: [AppComponent],
   exports: [TopBarComponent, MaterialModule]
 })
