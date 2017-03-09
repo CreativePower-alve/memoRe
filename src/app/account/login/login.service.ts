@@ -16,6 +16,7 @@ export class loginService {
     private identityUrl = Config.serverURL+'/api/users/me';
     public currentUser:IUser; 
 
+
     constructor(private http: Http) {}
 
   public loginUser(email:String, password:string) {
@@ -59,11 +60,15 @@ export class loginService {
      this.currentUser.name = name;
      this.currentUser.email = email;
    }
+    getCurrentUser():IUser{
+        return this.currentUser;
+    }
    private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error || 'Server error');
     }
     logout(){
        localStorage.removeItem("user"); 
+       this.currentUser = null;
     }
 }

@@ -2,10 +2,12 @@
   [isOpen]="isOpen">
 	<top-bar 
 	 [isOpen]="isOpen"
+	 [loggedUser] = "auth.getCurrentUser()"
+	 [hidden]="!auth.isAuthenticated()"
 	 [canShowNavBarButtons] = "canShowNavBarButtons"
 	 (onOpenMenu)="openMenu($event)"
+	 (logout) = "logout($event)"
 	 (onStartTypingSession)="startTypingSession($event)"
-	 [hidden]="!auth.isAuthenticated()"
 	 >	
 	</top-bar>
 	<div class="mainContainer">

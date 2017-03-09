@@ -39,4 +39,8 @@ export class AppComponent {
        this.router.navigate(['/things-session']);
   	}
   }
+  logout(): void {
+       this.auth.logout();
+       this.router.navigate(['/login']); 
+  }
 }

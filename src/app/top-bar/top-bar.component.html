@@ -1,4 +1,4 @@
-<md-toolbar color="primary">
+<md-toolbar color="primary" >
     <div class="left">
         <div class="openMenu" *ngIf="canShowNavBarButtons">
             <md-icon *ngIf="!isOpen" class="icon" title="Show search and filters" (click)="toggleSideNav()">
@@ -15,20 +15,20 @@
         </div>
         <div class="userProfile">
            <img src="{{auth.currentUser?.gravatar}}"/>
-          <button  md-button [mdMenuTriggerFor]="menu">{{auth.currentUser?.name}} <md-icon>keyboard_arrow_down</md-icon> </button>
+          <button  md-button [mdMenuTriggerFor]="menu">{{loggedUser?.name}} <md-icon>keyboard_arrow_down</md-icon> </button>
         </div>
             <md-menu #menu="mdMenu" [overlapTrigger]="false">
             <button md-menu-item>
                 <div>
                      <img src="{{auth.currentUser?.gravatar}}"/> 
                      <div>
-                       <div>{{auth.currentUser?.name}}</div> 
+                       <div>{{loggedUser?.name}}</div> 
                        <div>View Profile</div>
                      </div>
                  </div>
             </button>
-            <button md-menu-item>Help   </button>
-            <button md-menu-item>Logout</button>
+            <button md-menu-item>Help </button>
+            <button md-menu-item (click)="logoutUser()" >Logout</button>
         </md-menu>
 
     </div>
