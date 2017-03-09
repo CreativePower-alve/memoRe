@@ -5,15 +5,17 @@ export class ToastService{
 
 constructor(private snackBar: MdSnackBar){}
 
+    private defaultClass: string[] = ['toast-top-right'];
+
 	open(message: string, 
+		 extraClass: string,
 		 autoHide : number = 3000,
-		 extraClass: string[] = ['toast-top-right'],
 		 action: boolean = false,
 		 actionButtonLabel: string = '') {
-	
+	        const classes: string[] = this.defaultClass.slice(0); 
 		    let config = new MdSnackBarConfig();
 		    config.duration = autoHide;
-		    config.extraClasses = extraClass;
+		    config.extraClasses = extraClass ? classes.concat([extraClass]) : classes;
 		    this.snackBar.open(message, action && actionButtonLabel, config);
   }
 }

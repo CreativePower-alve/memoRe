@@ -28,3 +28,7 @@ body{
 	top: 70px;
 	right: 10px;
 }
+
+.success-toaster{
+	background-color: green !important;
+}

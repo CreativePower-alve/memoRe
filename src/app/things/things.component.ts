@@ -24,7 +24,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
   private allTags;
   private sub: any;
   private queryParams = { tags: [], searchText: ''};
-  
+
   constructor(private dialog: MdDialog,
    private thingsService: ThingsService,
    private tagsService: TagsService,
@@ -84,7 +84,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
     this.thingsService.deleteThing(aThing)
        .subscribe(() => {
           this.things = this.things.filter((thing => thing.id !== aThing.id));
-          this.toastService.open('Thing deleted successfully');
+          this.toastService.open('Thing deleted successfully', 'success-toaster');
           this.updateDisplayThings();
        }); 
   }
@@ -125,7 +125,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
    private handleSaveCallback(isCreate, thingObject) {
     if (isCreate) {
        this.things = this.things.concat([thingObject]);
-       this.toastService.open('Thing saved successfully'); 
+       this.toastService.open('Thing saved successfully', 'success-toaster'); 
      }
     else {
       this.things = this.things.map(thing => {
@@ -134,7 +134,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
         }
         return thing;
      });
-      this.toastService.open('Thing updated successfully');
+      this.toastService.open('Thing updated successfully', 'success-toaster');
     }
     this.updateDisplayThings();
   }
