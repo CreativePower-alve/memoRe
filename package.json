@@ -11,7 +11,7 @@
     "list": "ntl",
     "dev": "nodemon server/app.js",
     "startClient": "ng serve –proxy-config proxy.conf.json",
-    "start": "ng build --env='prod' && node server/app.js",
+    "start": "ng build --env=prod && node server/app.js",
     "startServerProduction": "ng build --env=prod && node server/app.js"
   },
   "private": true,
@@ -55,11 +55,12 @@
     "morgan": "1.8.1",
     "lodash": "4.17.4",
     "compression": "1.6.2",
-    "@types/node": "6.0.60"
+    "@types/node": "6.0.60",
+    "@types/jasmine": "2.5.38",
   },
   "devDependencies": {
     "@angular/cli": "^1.0.0-rc.1",
-    "@types/jasmine": "2.5.38",
+   
     "angular-in-memory-web-api": "0.3.0",
     "codelyzer": "2.0.0",
     "connect-livereload": "0.6.0",
