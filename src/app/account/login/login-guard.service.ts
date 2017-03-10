@@ -6,7 +6,7 @@ export class LoginGuard implements CanActivate {
 	}
 
 	canActivate(): any{
-		if(JSON.parse(localStorage.getItem("user"))){
+		if(JSON.parse(sessionStorage.getItem("user"))){
 				this._router.navigate(['/things']);
 				return false;
 		}

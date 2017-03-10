@@ -6,7 +6,7 @@ export class ThingsGuard implements CanActivate {
 	}
 
 	canActivate(): any{
-		if(!JSON.parse(localStorage.getItem("user"))){
+		if(!JSON.parse(sessionStorage.getItem("user"))){
 				this._router.navigate(['/login']);
 				return false;
 		}

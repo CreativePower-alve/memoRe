@@ -26,7 +26,7 @@ export class loginService {
         return this.http.post(this.authUrl, loginInfo, options).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
-                   localStorage.setItem("user", JSON.stringify(this.currentUser));
+                   sessionStorage.setItem("user", JSON.stringify(this.currentUser));
                 }
             })
             .catch(error =>{
@@ -37,7 +37,7 @@ export class loginService {
       return this.currentUser !== undefined;
    }
    checkAuthenticationStatus(){
-     let user = JSON.parse(localStorage.getItem("user")) ||{};
+     let user = JSON.parse(sessionStorage.getItem("user")) ||{};
      let headers = new Headers({ 'Content-Type': 'application/json', "Authorization":"Bearer "+ user.token });
      let options = new RequestOptions({ headers: headers });
      
@@ -68,7 +68,7 @@ export class loginService {
         return Observable.throw(error || 'Server error');
     }
     logout(){
-       localStorage.removeItem("user"); 
+       sessionStorage.removeItem("user"); 
        this.currentUser = undefined;
     }
 }
