@@ -3,7 +3,7 @@
 var express = require('express');
 var passport = require('passport');
 var auth = require('../auth.service');
-
+var User = require('../../api/user/user.model')
 var router = express.Router();
 
 router.post('/', function(req, res, next) {
@@ -19,5 +19,6 @@ router.post('/', function(req, res, next) {
     res.json({ token:token, email:user.email, name:user.name, gravatar:user.gravatar, _id:user._id });
   })(req, res, next);
 });
+
 
 module.exports = router;

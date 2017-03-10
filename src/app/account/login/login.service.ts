@@ -13,7 +13,6 @@ import 'rxjs/add/observable/of';
 export class loginService {
     
     private authUrl = Config.serverURL+'/auth/local';
-    private authGuestUrl = Config.serverURL+'/auth/local/guest';
     private identityUrl = Config.serverURL+'/api/users/me';
     public currentUser:IUser; 
 
@@ -52,7 +51,7 @@ export class loginService {
     public guestLogin(){
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this.http.post(this.authGuestUrl, {},options).do(resp =>{
+        return this.http.post(this.authUrl, {email:"guest@memore.com",password:"guest"},options).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
                    sessionStorage.setItem("user", JSON.stringify(this.currentUser));
