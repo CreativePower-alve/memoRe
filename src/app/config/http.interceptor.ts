@@ -46,7 +46,7 @@ export class InterceptedHttp extends Http {
         }
          let user = JSON.parse(sessionStorage.getItem("user")) ||{};
         options.headers.append('Content-Type', 'application/json');
-        options.headers.append('Authorization', `Bearer: ${user.token}`)
+        options.headers.append('Authorization', `Bearer ${user.token}`)
 
         return options;
     }
