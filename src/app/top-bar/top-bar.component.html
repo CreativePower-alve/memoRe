@@ -20,10 +20,12 @@
             <md-menu #menu="mdMenu" [overlapTrigger]="false">
             <button md-menu-item>
                 <div class="menu-section">
-                     <img src="{{loggedUser?.gravatar}}" class="icon"/> 
-                     <div>
-                       <div>{{loggedUser?.name}}</div> 
-                       <div> <a routerLink="/profile"> View Profile</a></div>
+                     <div class="userIcon">
+                       <img src="{{loggedUser?.gravatar}}" class="icon"/>
+                     </div> 
+                     <div class="userInfo">
+                       <span>{{loggedUser?.name}}</span> 
+                       <a [routerLink]="['profile']"> View Profile</a>
                      </div>
                  </div>
             </button>

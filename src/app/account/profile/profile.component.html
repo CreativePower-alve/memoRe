@@ -1,26 +1,57 @@
  <form autocomplete="on" #profileForm="ngForm" (ngSubmit)="updateProfile(profileForm.value)" novalidate>
   
     <div class="form-group" >
-       <label for="name">Name:</label>
-      <em *ngIf="profileForm.controls.name.invalid && (profileForm.controls.name?.touched || mouseoverLogin)">Required</em>
-      <input id="name" type="text" (ngModel)="name" name="name" required class="form-control" placeholder="Name..." />
+       <md-input-container>
+         <input
+             mdInput 
+             type="text" [(ngModel)]="name"
+             name="name"
+             #nameVar="ngModel"
+             required class="form-control" 
+             placeholder="Name..." />
+         <md-hint *ngIf="nameVar.invalid && (nameVar?.touched || mouseoverLogin)">Required</md-hint>    
+       </md-input-container>
     </div>	
     <div class="form-group">
-      <label for="email">Email:</label>
-      <em *ngIf="profileForm.controls.email?.invalid && (profileForm.controls.email?.touched || mouseoverLogin)">Required</em>
-      <input id="email" type="email" (ngModel)="email" name="email" required class="form-control" placeholder="Email..." />
+      <md-input-container>
+        <input mdInput
+               type="email"
+               [(ngModel)]="email"
+               name="email"
+               #emailVar="ngModel"
+               required
+               class="form-control" 
+               placeholder="Email..." />
+        <md-hint *ngIf="emailVar?.invalid && (emailVar?.touched || mouseoverLogin)">Required</md-hint>         
+      </md-input-container>
     </div>
     <div class="form-group" >
-      <label for="currentPassword">Current Password:</label>
-      <em *ngIf="profileForm.controls.currentPassword?.invalid && (profileForm.controls.currentPassword?.touched || mouseoverLogin)">Required</em>
-      <input id="currentPassword" type="password" (ngModel)="currentPassword" name="currentPassword" required class="form-control"placeholder="Current Password..." />
+      <md-input-container>
+        <input mdInput 
+               type="password" 
+               [(ngModel)]="currentPassword"
+               name="currentPassword"
+               required
+                #currentPasswordVar="ngModel"
+               class="form-control" 
+               placeholder="Current Password..." />
+        <md-hint *ngIf="currentPasswordVar?.invalid && (currentPasswordVar?.touched || mouseoverLogin)">Required</md-hint>       
+      </md-input-container>
     </div>
      <div class="form-group" >
-      <label for="confirmPassword">New Password:</label>
-      <em *ngIf="profileForm.controls.newPassword?.invalid && (profileForm.controls.newPassword?.touched || mouseoverLogin)">Required</em>
-      <input id="confirmPassword" type="password" (ngModel)="newPassword" name="confirmPassword" required class="form-control"placeholder="New Password..." />
+     <md-input-container>
+        <input mdInput
+         type="password"
+         [(ngModel)]="newPassword"
+         name="confirmPassword"
+          #confirmPasswordVar="ngModel"
+         required class="form-control" 
+         placeholder="New Password..." />
+         <md-hint *ngIf="confirmPasswordVar?.invalid && (confirmPasswordVar?.touched || mouseoverLogin)">Required</md-hint>
+     </md-input-container>
     </div>
-    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Save changes</button></span>
+    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" md-button
+     [disabled]="profileForm.invalid">Save changes</button></span>
   </form>
   <div *ngIf ="updateInvalid"> Invalid update profile information</div>
   	
