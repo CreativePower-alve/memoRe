@@ -26,7 +26,15 @@ export class LoginComponent implements OnInit {
     		}
     	});
   } 
-
+  loginGuest() { 
+    this.loginService.guestLogin().subscribe(resp =>{
+        if(!resp){
+          this.loginInvalid = true;
+        }else{
+           this.router.navigate(['things']);        
+        }
+      });
+  }
   cancel() {
     this.router.navigate(['things']);
   }

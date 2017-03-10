@@ -21,10 +21,15 @@
 	</ul>
 </div>
 <div>
-	<button> Login with Google</button>
 	<p> or </p>
+	  <input type="submit"  (click)="loginGuest()" value="Login as Guest"/>
+
+	  <button> Login with Google</button>
 	 <form autocomplete="on" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" novalidate>
+	
+		
     <div class="form-group" >
+
       <label for="email">email:</label>
       <em *ngIf="loginForm.controls.email?.invalid && (loginForm.controls.email?.touched || mouseoverLogin)">Required</em>
       <input id="email" type="email" (ngModel)="email" name="email" required class="form-control" placeholder="email..." />
