@@ -13,8 +13,8 @@ export class ThingsSessionComponent implements OnInit {
   currentItem;
   currentIndex = 0;
   timeInSession;
-  private practiceItems: any[];
-  private allThings: any[];
+  private practiceItems: any[] = [];
+  private allThings: any[] = [];
   private sessionTimeout;
   private startOfSessionTime;
 

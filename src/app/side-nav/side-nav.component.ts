@@ -11,6 +11,7 @@ import { Router} from '@angular/router';
 import { MdSidenav } from '@angular/material';
 
 import { TagsService } from '../shared/tags.service';
+import {loginService} from '../account/login/login.service';
 
 @Component({
   selector: 'memore-side-nav',
@@ -26,9 +27,10 @@ export class SideNavComponent implements OnInit, OnChanges {
   private filterBy: number[] = [];
   
   constructor(private tagsService: TagsService,
-   private router: Router) { }
+   private router: Router, private auth:loginService) { }
 
   ngOnInit() {
+
     const selectedTags = localStorage.getItem('tags');
     this.filterBy = selectedTags ? selectedTags.split(',').map(Number) : [];
      this.tagsService.getAllTags().subscribe(allTags => {
@@ -39,6 +41,7 @@ export class SideNavComponent implements OnInit, OnChanges {
               return aTag;
             });
       });
+ 
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -70,5 +73,5 @@ export class SideNavComponent implements OnInit, OnChanges {
        } 
      });
   }
-
+  
 }

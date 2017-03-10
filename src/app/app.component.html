@@ -1,15 +1,16 @@
-<memore-side-nav *ngIf="loggedIn"
+<memore-side-nav 
   [isOpen]="isOpen">
 	<top-bar 
 	 [isOpen]="isOpen"
+	 [loggedUser] = "auth.getCurrentUser()"
+	 [hidden]="!auth.isAuthenticated()"
 	 [canShowNavBarButtons] = "canShowNavBarButtons"
 	 (onOpenMenu)="openMenu($event)"
-	 (onStartTypingSession)="startTypingSession($event)">	
+	 (logout) = "logout($event)"
+	 (onStartTypingSession)="startTypingSession($event)"
+	 >	
 	</top-bar>
 	<div class="mainContainer">
 		<router-outlet></router-outlet>
 	</div>
 </memore-side-nav>
-<div class="mainContainer" *ngIf="!loggedIn">
-	<router-outlet></router-outlet>
-</div>

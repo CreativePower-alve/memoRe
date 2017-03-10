@@ -18,13 +18,15 @@ exports.seedDatabaseIfNeeded = function() {
           provider: 'local',
           name: 'guest',
           email: 'guest@memore.com',
-          password: 'guest'
+          password: 'guest',
+          gravatar:'http://www.gravatar.com/avatar'
         }, {
           provider: 'local',
           role: 'admin',
           name: 'Admin',
           email: 'admin@example.com',
-          password: 'admin'
+          password: 'admin',
+          gravatar:'http://www.gravatar.com/avatar'
         })
         .then(function(){
          // addDefaultThings();

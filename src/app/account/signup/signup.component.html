@@ -1,0 +1,26 @@
+ <form autocomplete="on" #signupForm="ngForm" (ngSubmit)="signup(signupForm.value)" novalidate>
+  
+    <div class="form-group" >
+       <label for="name">Name:</label>
+      <em *ngIf="signupForm.controls.name.invalid && (signupForm.controls.name?.touched || mouseoverLogin)">Required</em>
+      <input id="name" type="text" (ngModel)="name" name="name" required class="form-control" placeholder="Name..." />
+    </div>	
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <em *ngIf="signupForm.controls.email?.invalid && (signupForm.controls.email?.touched || mouseoverLogin)">Required</em>
+      <input id="email" type="email" (ngModel)="email" name="email" required class="form-control" placeholder="Email..." />
+    </div>
+    <div class="form-group" >
+      <label for="password">Password:</label>
+      <em *ngIf="signupForm.controls.password?.invalid && (signupForm.controls.password?.touched || mouseoverLogin)">Required</em>
+      <input id="password" type="password" (ngModel)="password" name="password" required class="form-control"placeholder="Password..." />
+    </div>
+     <div class="form-group" >
+      <label for="confirmPassword">Confirm Password:</label>
+      <em *ngIf="signupForm.controls.confirmPassword?.invalid && (signupForm.controls.confirmPassword?.touched || mouseoverLogin)">Required</em>
+      <input id="confirmPassword" type="password" (ngModel)="confirmPassword" name="confirmPassword" required class="form-control"placeholder="Confirm Password..." />
+    </div>
+    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">Sign up</button></span>
+  </form>
+  <div *ngIf ="signupInvalid"> Invalid  signup information</div>
+  	<div> Already have an account ?<a href="/login"> Login here</a></div>

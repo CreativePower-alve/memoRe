@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogConfig} from '@angular/material';
 import 'rxjs/add/operator/mergeMap';
 
+
 import { ThingDetailsComponent } from './children/thing-details/thing-details.component';
 import { ThingsService } from './things.service';
 import { TagsService } from '../shared/tags.service';
@@ -50,7 +51,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // redirect to route to clear any search query param that might remain after page refresh
-    this.router.navigate(['/things'], { queryParams: { tags: this.queryParams.tags.join(',') } });
+  //  this.router.navigate(['/things'], { queryParams: { tags: this.queryParams.tags.join(',') } });
     this.tagsService.getAllTags()
      .flatMap(allTags => {
        this.allTags = allTags;

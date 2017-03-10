@@ -21,11 +21,30 @@
 	</ul>
 </div>
 <div>
-	<button> Login with Google</button>
 	<p> or </p>
-	<input placeholder="email" type="text">
-	<input placeholder="password" type="password">
-	<input type="submit" value="Log in">
-	<a href="#">Forgot your Passowrd ?</a>
-	<a href="#">Sign up</a>
+	  <input type="submit"  (click)="loginGuest()" value="Login as Guest"/>
+
+	  <button> Login with Google</button>
+	 <form autocomplete="on" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" novalidate>
+	
+		
+    <div class="form-group" >
+
+      <label for="email">email:</label>
+      <em *ngIf="loginForm.controls.email?.invalid && (loginForm.controls.email?.touched || mouseoverLogin)">Required</em>
+      <input id="email" type="email" (ngModel)="email" name="email" required class="form-control" placeholder="email..." />
+    </div>
+    <div class="form-group" >
+      <label for="password">Password:</label>
+      <em *ngIf="loginForm.controls.password?.invalid && (loginForm.controls.password?.touched || mouseoverLogin)">Required</em>
+      <input id="password" type="password" (ngModel)="password" name="password" required class="form-control"placeholder="Password..." />
+    </div>
+    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid" >Login</button></span>
+    <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+ 	
+  </form>
+  	<a href="#">Forgot your Passowrd ?</a>
+	<a href="/signup">Sign up</a>
+	
+	<div *ngIf ="loginInvalid"> Invalid login information</div>
 </div>
