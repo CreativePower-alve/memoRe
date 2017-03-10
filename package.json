@@ -11,8 +11,8 @@
     "list": "ntl",
     "dev": "nodemon server/app.js",
     "startClient": "ng serve –proxy-config proxy.conf.json",
-    "start": "npm run build && node server/app.js",
-    "startServerProduction": "cross-env NODE_ENV=production && ng build --env=prod && node server/app.js"
+    "start": "ng build --env=prod && node server/app.js",
+    "startServerProduction": "ng build --env=prod && node server/app.js"
   },
   "private": true,
   "dependencies": {
