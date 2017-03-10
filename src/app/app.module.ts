@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 
 import { SharedModule } from './shared/shared.module';
@@ -19,6 +19,7 @@ import { TagsService } from './shared/tags.service';
 import { ToastService } from './shared/toast.service';
 
 import {Config} from './config/constants';
+import { httpFactory } from "./config/http.factory";
 
 import {ThingsGuard} from './things/things-guard.service';
 import {LoginGuard} from './account/login/login-guard.service';
@@ -40,7 +41,16 @@ import {LoginGuard} from './account/login/login-guard.service';
     SharedModule,
     AccountModule
   ],
-  providers: [ThingsSessionService, TagsService,ToastService, ThingsGuard,LoginGuard],
+  providers: [ThingsSessionService,
+    TagsService,
+    ToastService,
+    ThingsGuard,
+    LoginGuard,
+     {
+            provide: Http,
+            useFactory: httpFactory,
+            deps: [XHRBackend, RequestOptions]
+     }],
   bootstrap: [AppComponent],
   exports: [TopBarComponent, MaterialModule]
 })

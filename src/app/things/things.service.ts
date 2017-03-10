@@ -8,10 +8,12 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
+import { Config } from '../config/constants';
+
 
 @Injectable()
 export class ThingsService {
-    private baseUrl = 'api/things';
+    private baseUrl = `${Config.serverURL}/api/things`;
 
     constructor(private http: Http) {}
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Config} from '../../config/constants';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import {IUser} from './user.model';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -12,19 +11,17 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class loginService {
     
-    private authUrl = Config.serverURL+'/auth/local';
-    private identityUrl = Config.serverURL+'/api/users/me';
-    private signupUrl = Config.serverURL+'/api/users/';
+    private authUrl = '/auth/local';
+    private identityUrl = '/api/users/me';
+    private signupUrl = '/api/users/';
     public currentUser:IUser; 
 
 
     constructor(private http: Http) {}
 
   public loginUser(email:String, password:string) {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
         let loginInfo = {email:email, password:password};
-        return this.http.post(this.authUrl, loginInfo, options).do(resp =>{
+        return this.http.post(this.authUrl, loginInfo).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
                    sessionStorage.setItem("user", JSON.stringify(this.currentUser));
@@ -36,10 +33,8 @@ export class loginService {
     }
 
      loginWithGoogle(email:String, password:string) {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
         let loginInfo = {email:email, password:password};
-        return this.http.post(this.authUrl, loginInfo, options).do(resp =>{
+        return this.http.post(this.authUrl, loginInfo).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
                    sessionStorage.setItem("user", JSON.stringify(this.currentUser));
@@ -50,9 +45,7 @@ export class loginService {
             });
     }
     public guestLogin(){
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(this.authUrl, {email:"guest@memore.com",password:"guest"},options).do(resp =>{
+        return this.http.post(this.authUrl, {email:"guest@memore.com",password:"guest"}).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
                    sessionStorage.setItem("user", JSON.stringify(this.currentUser));
@@ -66,12 +59,8 @@ export class loginService {
    isAuthenticated(){
       return this.currentUser !== undefined;
    }
-   checkAuthenticationStatus(){
-     let user = JSON.parse(sessionStorage.getItem("user")) ||{};
-     let headers = new Headers({ 'Content-Type': 'application/json', "Authorization":"Bearer "+ user.token });
-     let options = new RequestOptions({ headers: headers });
-     
-     return this.http.get(this.identityUrl,options)
+   checkAuthenticationStatus(){ 
+     return this.http.get(this.identityUrl)
      .map((response:any) =>{
         if(response._body){
           return response.json();
@@ -97,11 +86,9 @@ export class loginService {
         console.error(error);
         return Observable.throw(error || 'Server error');
     }
-    public signupUser(name:string,email:String, password:string, confrimPassword:string) {
-      let headers = new Headers({ 'Content-Type': 'application/json' });
-      let options = new RequestOptions({ headers: headers });
+    public signupUser(name:string,email:String, password:string, confirmPassword:string) {
       let signupInfo = {name,email, password, confirmPassword};
-      return this.http.post(this.signupUrl, signupInfo, options).do(resp =>{
+      return this.http.post(this.signupUrl, signupInfo).do(resp =>{
               if(resp){
                 this.currentUser = <IUser> resp.json();
                  sessionStorage.setItem("user", JSON.stringify(this.currentUser));
