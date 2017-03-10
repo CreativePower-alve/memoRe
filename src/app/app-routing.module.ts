@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { ThingsComponent } from './things/things.component';
 import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
+import { ProfileComponent } from './account/profile/profile.component';
 import { ThingsSessionComponent } from './things-session/things-session.component';
 import {ThingsGuard} from './things/things-guard.service';
 import {LoginGuard} from './account/login/login-guard.service';
@@ -18,6 +19,9 @@ import {LoginGuard} from './account/login/login-guard.service';
 	{ path: 'things', 
 	  canActivate: [ThingsGuard],	
 	  component: ThingsComponent },
+    { path: 'profile', 
+	  canActivate: [ThingsGuard],	
+	  component: ProfileComponent },
 	{ path: 'things-session',
 	  canActivate: [ThingsGuard],	
 	  component: ThingsSessionComponent },

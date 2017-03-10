@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SharedModule } from '../shared/shared.module';
 import { loginService } from './login/login.service';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
 	imports: [
@@ -10,14 +11,16 @@ import { loginService } from './login/login.service';
 	],
 	declarations: [
 	  LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ProfileComponent
     ],
     providers: [
       loginService
     ],
     exports:[ 
        LoginComponent,
-       SignupComponent
+       SignupComponent,
+       ProfileComponent
     ]
 })
 export class AccountModule {};
