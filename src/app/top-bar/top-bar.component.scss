@@ -1,12 +1,17 @@
-.left{
-	flex-grow: 1;
+.left {
+    flex-grow: 1;
 }
-.right{
-	display: flex;
+
+.right {
+    display: flex;
 }
-.userProfile{
-	margin-right: 8px;
+
+.userProfile {
+    margin-right: 8px;
 }
-.icon{
-	cursor: pointer;
+
+.icon {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
 }

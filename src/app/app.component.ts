@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router} from '@angular/router';
 import { ThingsSessionService, SessionConfig } from './shared/things-session.service';
-import {loginService} from './account/login/login.service';
+import { LoginService } from './account/login/login.service';
+import { AuthTokenService } from './shared/authToken.service';
 
 @Component({
   selector: 'app-root',
@@ -13,15 +14,19 @@ export class AppComponent {
   canShowNavBarButtons = true;
 
   constructor(private router: Router,
-   private thingsSessionService: ThingsSessionService, private auth:loginService){
+   private thingsSessionService: ThingsSessionService,
+   private auth: LoginService,
+   private authTokenService: AuthTokenService){
   }
 
   ngOnInit() {
-    this.auth.checkAuthenticationStatus().subscribe(()=>{
+    if (this.authTokenService.isLoggedIn()) {
+      this.auth.checkAuthenticationStatus().subscribe(() => {
         if(this.auth.isAuthenticated()){
         this.isOpen = window.innerWidth > 600;  
-      }
-    });
+       }
+      });
+    }
     this.router.events.subscribe(()=> {
        if(this.auth.isAuthenticated()){
           this.isOpen = window.innerWidth > 600;  

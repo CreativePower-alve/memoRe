@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { loginService } from '../login/login.service';
+import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'memore-signup',
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
    signupInvalid = false;
-   constructor(private loginService:loginService, private router:Router) {
+   constructor(private loginService:LoginService, private router:Router) {
    }
 
   ngOnInit() {

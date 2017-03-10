@@ -1,11 +1,14 @@
 import {Injectable} from "@angular/core";
 import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from "@angular/http";
 import {Observable} from "rxjs/Rx";
-import {Config} from './constants';
+import { environment } from '../../environments/environment';
+import { AuthTokenService } from '../shared/authToken.service';
 
 @Injectable()
 export class InterceptedHttp extends Http {
-    constructor(backend: ConnectionBackend, defaultOptions: RequestOptions) {
+    private authService: AuthTokenService = new AuthTokenService();
+    constructor(backend: ConnectionBackend,
+               defaultOptions: RequestOptions) {
         super(backend, defaultOptions);
     }
 
@@ -34,7 +37,7 @@ export class InterceptedHttp extends Http {
     }
 
     private updateUrl(req: string) {
-        return  Config.serverURL + req;
+        return  environment.serverURL + req;
     }
 
     private getRequestOptionArgs(options?: RequestOptionsArgs) : RequestOptionsArgs {
@@ -44,9 +47,9 @@ export class InterceptedHttp extends Http {
         if (options.headers == null) {
             options.headers = new Headers();
         }
-         let user = JSON.parse(sessionStorage.getItem("user")) ||{};
+         let token = this.authService.getToken() || {};
         options.headers.append('Content-Type', 'application/json');
-        options.headers.append('Authorization', `Bearer ${user.token}`)
+        options.headers.append('Authorization', `Bearer ${token}`)
 
         return options;
     }
