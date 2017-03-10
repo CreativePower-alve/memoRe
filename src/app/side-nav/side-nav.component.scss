@@ -4,8 +4,8 @@
 }
 
 .sidenav {
-  padding: 20px;
-  width: 200px;
+    padding: 15px;
+    width: 209px;
 }
 
 .content {
@@ -24,4 +24,8 @@
 
 .tagCheckbox{
 	margin-bottom: 16px;
+}
+
+.mat-input-container .mat-input-wrapper{
+  margin-top: 8px !important;
 }
