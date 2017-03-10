@@ -14,6 +14,7 @@ export class loginService {
     
     private authUrl = Config.serverURL+'/auth/local';
     private identityUrl = Config.serverURL+'/api/users/me';
+    private signupUrl = Config.serverURL+'/api/users/';
     public currentUser:IUser; 
 
 
@@ -96,6 +97,21 @@ export class loginService {
         console.error(error);
         return Observable.throw(error || 'Server error');
     }
+    public signupUser(name:string,email:String, password:string, confrimPassword:string) {
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      let options = new RequestOptions({ headers: headers });
+      let signupInfo = {name,email, password, confirmPassword};
+      return this.http.post(this.signupUrl, signupInfo, options).do(resp =>{
+              if(resp){
+                this.currentUser = <IUser> resp.json();
+                 sessionStorage.setItem("user", JSON.stringify(this.currentUser));
+              }
+          })
+          .catch(error =>{
+              return Observable.of(false);
+          });
+  }
+
     logout(){
        sessionStorage.removeItem("user"); 
        this.currentUser = undefined;

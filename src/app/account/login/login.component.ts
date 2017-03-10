@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { loginService } from './login.service'
-import { Router } from '@angular/router'
+import { loginService } from './login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'memore-login',
@@ -34,9 +34,6 @@ export class LoginComponent implements OnInit {
            this.router.navigate(['things']);        
         }
       });
-  }
-  cancel() {
-    this.router.navigate(['things']);
   }
 
 }

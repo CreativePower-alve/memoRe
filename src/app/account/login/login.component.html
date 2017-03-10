@@ -41,8 +41,10 @@
     </div>
     <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid" >Login</button></span>
     <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+ 	
   </form>
   	<a href="#">Forgot your Passowrd ?</a>
-	<a href="#">Sign up</a>
+	<a href="/signup">Sign up</a>
+	
 	<div *ngIf ="loginInvalid"> Invalid login information</div>
 </div>
