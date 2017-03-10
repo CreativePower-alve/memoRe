@@ -12,6 +12,7 @@ import 'rxjs/add/observable/of';
 export class loginService {
    
     private authUrl = '/auth/local';
+     private googleUrl = '/auth/google';
     private identityUrl = '/api/users/me';
     private signupUrl = '/api/users/';
     public currentUser:IUser; 
@@ -33,7 +34,7 @@ export class loginService {
     }
 
      public googleLogin() {
-        return this.http.get(this.googleUrl, options).do(resp =>{
+        return this.http.get(this.googleUrl).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
                    sessionStorage.setItem("user", JSON.stringify(this.currentUser));

@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from "@angular/http";
 import {Observable} from "rxjs/Rx";
-import {Config} from './constants';
+import { environment } from '../../environments/environment';
+
 
 @Injectable()
 export class InterceptedHttp extends Http {
@@ -34,7 +35,7 @@ export class InterceptedHttp extends Http {
     }
 
     private updateUrl(req: string) {
-        return  Config.serverURL + req;
+        return  environment.serverURL + req;
     }
 
     private getRequestOptionArgs(options?: RequestOptionsArgs) : RequestOptionsArgs {
