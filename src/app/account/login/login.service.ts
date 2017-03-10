@@ -13,6 +13,7 @@ import 'rxjs/add/observable/of';
 export class loginService {
     
     private authUrl = Config.serverURL+'/auth/local';
+    private googleUrl = Config.serverURL+'/auth/google';
     private identityUrl = Config.serverURL+'/api/users/me';
     private signupUrl = Config.serverURL+'/api/users/';
     public currentUser:IUser; 
@@ -35,11 +36,10 @@ export class loginService {
             });
     }
 
-     loginWithGoogle(email:String, password:string) {
+     public googleLogin() {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        let loginInfo = {email:email, password:password};
-        return this.http.post(this.authUrl, loginInfo, options).do(resp =>{
+        return this.http.get(this.googleUrl, options).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
                    sessionStorage.setItem("user", JSON.stringify(this.currentUser));
@@ -97,7 +97,7 @@ export class loginService {
         console.error(error);
         return Observable.throw(error || 'Server error');
     }
-    public signupUser(name:string,email:String, password:string, confrimPassword:string) {
+    public signupUser(name:string,email:String, password:string, confirmPassword:string) {
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
       let signupInfo = {name,email, password, confirmPassword};
