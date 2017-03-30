@@ -8,24 +8,25 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
+import { AuthTokenService } from '../../shared/authToken.service';
+
 @Injectable()
-export class loginService {
-   
-    private authUrl = '/auth/local';
+export class LoginService {
+     private authUrl = '/auth/local';
      private googleUrl = '/auth/google';
     private identityUrl = '/api/users/me';
     private signupUrl = '/api/users/';
     public currentUser:IUser; 
 
 
-    constructor(private http: Http) {}
+    constructor(private http: Http, private authService: AuthTokenService) {}
 
   public loginUser(email:String, password:string) {
         let loginInfo = {email:email, password:password};
         return this.http.post(this.authUrl, loginInfo).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
-                   sessionStorage.setItem("user", JSON.stringify(this.currentUser));
+                  this.authService.setToken(this.currentUser.token);
                 }
             })
             .catch(error =>{
@@ -37,7 +38,7 @@ export class loginService {
         return this.http.get(this.googleUrl).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
-                   sessionStorage.setItem("user", JSON.stringify(this.currentUser));
+                   this.authService.setToken(this.currentUser.token);
                 }
             })
             .catch(error =>{
@@ -48,7 +49,7 @@ export class loginService {
         return this.http.post(this.authUrl, {email:"guest@memore.com",password:"guest"}).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
-                   sessionStorage.setItem("user", JSON.stringify(this.currentUser));
+                   this.authService.setToken(this.currentUser.token);
                 }
             })
             .catch(error =>{
@@ -62,11 +63,7 @@ export class loginService {
    checkAuthenticationStatus(){ 
      return this.http.get(this.identityUrl)
      .map((response:any) =>{
-        if(response._body){
-          return response.json();
-        }else{
-          return {};
-        } 
+        return response._body ? response.json() : {}; 
      })
      .catch(this.handleError)
      .do(currentUser =>{
@@ -91,7 +88,7 @@ export class loginService {
       return this.http.post(this.signupUrl, signupInfo).do(resp =>{
               if(resp){
                 this.currentUser = <IUser> resp.json();
-                 sessionStorage.setItem("user", JSON.stringify(this.currentUser));
+                 this.authService.setToken(this.currentUser.token);
               }
           })
           .catch(error =>{
@@ -100,7 +97,7 @@ export class loginService {
   }
 
     logout(){
-       sessionStorage.removeItem("user"); 
+       this.authService.removeStoredToken();
        this.currentUser = undefined;
     }
 }

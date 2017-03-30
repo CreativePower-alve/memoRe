@@ -1,11 +1,12 @@
-import { Component, 
-	OnInit,
-	EventEmitter,
-	Output,
-	Input
-} from '@angular/core';
-import {loginService} from '../account/login/login.service';
-import {IUser} from '../account/login/user.model';
+import {  Component, 
+        	OnInit,
+        	EventEmitter,
+        	Output,
+        	Input
+       }  from '@angular/core';
+
+import { IUser } from '../account/login/user.model';
+
 @Component({
   selector: 'top-bar',
   templateUrl: './top-bar.component.html',
@@ -20,10 +21,9 @@ export class TopBarComponent implements OnInit {
   @Output() logout = new EventEmitter();
 	@Output() onStartTypingSession = new EventEmitter();
   
-  constructor( private auth:loginService) { }
+  constructor() { }
 
   ngOnInit() {
-  	 this.auth.checkAuthenticationStatus().subscribe();
   }
 
 

@@ -17,6 +17,7 @@ import { AccountModule } from './account/account.module';
 import { ThingsSessionService } from './shared/things-session.service';
 import { TagsService } from './shared/tags.service';
 import { ToastService } from './shared/toast.service';
+import { AuthTokenService } from './shared/authToken.service';
 
 import { httpFactory } from "./config/http.factory";
 
@@ -45,6 +46,7 @@ import {LoginGuard} from './account/login/login-guard.service';
     ToastService,
     ThingsGuard,
     LoginGuard,
+    AuthTokenService,
      {
             provide: Http,
             useFactory: httpFactory,

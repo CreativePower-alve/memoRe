@@ -1,4 +1,4 @@
-<md-toolbar color="primary" >
+<md-toolbar color="primary" *ngIf="loggedUser">
     <div class="left">
         <div class="openMenu" *ngIf="canShowNavBarButtons">
             <md-icon *ngIf="!isOpen" class="icon" title="Show search and filters" (click)="toggleSideNav()">
@@ -14,16 +14,18 @@
             <memore-open-session-dialog (onStartSession)="startSession($event)"></memore-open-session-dialog>
         </div>
         <div class="userProfile">
-           <img src="{{auth.currentUser?.gravatar}}"/>
+           <img src="{{loggedUser?.gravatar}}" class="icon"/>
           <button  md-button [mdMenuTriggerFor]="menu">{{loggedUser?.name}} <md-icon>keyboard_arrow_down</md-icon> </button>
         </div>
             <md-menu #menu="mdMenu" [overlapTrigger]="false">
             <button md-menu-item>
-                <div>
-                     <img src="{{auth.currentUser?.gravatar}}"/> 
-                     <div>
-                       <div>{{loggedUser?.name}}</div> 
-                       <div> <a routerLink="/profile"> View Profile</a></div>
+                <div class="menu-section">
+                     <div class="userIcon">
+                       <img src="{{loggedUser?.gravatar}}" class="icon"/>
+                     </div> 
+                     <div class="userInfo">
+                       <span>{{loggedUser?.name}}</span> 
+                       <a [routerLink]="['profile']"> View Profile</a>
                      </div>
                  </div>
             </button>
