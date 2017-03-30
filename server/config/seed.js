@@ -29,7 +29,7 @@ exports.seedDatabaseIfNeeded = function() {
           gravatar:'http://www.gravatar.com/avatar'
         })
         .then(function(){
-         // addDefaultThings();
+           addDefaultThings();
            console.log('finished populating users');
         })
         .catch(err => console.log('error populating users', err));
