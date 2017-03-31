@@ -65,7 +65,9 @@ function handleError(res, statusCode) {
 
 // Gets a list of Things
 exports.index = function(req, res) {
-  return Thing.find().exec()
+  return Thing.find()
+  .populate({ path: 'tags', select: 'name' })
+  .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

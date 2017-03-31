@@ -9,7 +9,7 @@ var ThingSchema = new mongoose.Schema({
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   tags: [{
            type: mongoose.Schema.Types.ObjectId,
-           ref: 'tags'
+           ref: 'Tag'
    }]
 });
 

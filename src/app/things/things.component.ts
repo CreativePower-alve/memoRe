@@ -59,7 +59,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
       })
       .subscribe((things) => {
         this.things = things.map(thing => {
-           thing.tags = thing.tags.map(tagId => this.allTags.find(tag => tag.id === tagId));
+           thing.tags = thing.tags.map(tagId => this.allTags.find(tag => tag._id === tagId));
            return thing;
         });
         this.displayThings = this.queryParams.tags.length ? 
@@ -163,7 +163,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
 
   private filterThingsByTags(tags) {
      const display = this.things.filter((thing) => {
-         return thing.tags.some(tag => tags.indexOf(tag.id) !== -1);
+         return thing.tags.some(tag => tags.indexOf(tag._id) !== -1);
      });
      // id 0 is for untagged things
      return tags.indexOf(0) !== -1 ? 
