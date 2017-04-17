@@ -14,6 +14,19 @@ var ThingSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Tag'
     }]
+}, {
+    toObject: {
+        virtuals: true
+    },
+    toJSON: {
+        virtuals: true,
+        transform: function(doc, ret) {
+            delete ret._id
+        }
+    }
+});
+ThingSchema.virtual('id').get(function() {
+    return this._id;
 });
 
 events.registerEvents(ThingSchema);

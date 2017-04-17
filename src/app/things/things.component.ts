@@ -59,7 +59,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
       })
       .subscribe((things) => {
         this.things = things.map(thing => {
-           thing.tags = thing.tags.map(tagId => this.allTags.find(tag => tag._id === tagId));
+           thing.tags = thing.tags.map(tagId => this.allTags.find(tag => tag.id === tagId));
            return thing;
         });
         this.displayThings = this.queryParams.tags.length ? 
@@ -84,7 +84,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
   }
 
   deleteThing(aThing) {
-    this.thingsService.deleteThing(aThing)
+    this.thingsService.deleteThing(aThing.id)
        .subscribe(() => {
           this.things = this.things.filter((thing => thing.id !== aThing.id));
           this.toastService.open('Thing deleted successfully', 'success-toaster');

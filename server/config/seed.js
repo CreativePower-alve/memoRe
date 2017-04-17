@@ -15,19 +15,19 @@ exports.seedDatabaseIfNeeded = function() {
     User.find({}).remove()
         .then(() => {
             User.create({
-                    provider: 'local',
-                    name: 'guest',
-                    email: 'guest@memore.com',
-                    password: 'guest',
-                    gravatar: 'http://www.gravatar.com/avatar'
-                }, {
-                    provider: 'local',
-                    role: 'admin',
-                    name: 'Admin',
-                    email: 'admin@example.com',
-                    password: 'admin',
-                    gravatar: 'http://www.gravatar.com/avatar'
-                })
+                provider: 'local',
+                name: 'guest',
+                email: 'guest@memore.com',
+                password: 'guest',
+                gravatar: 'http://www.gravatar.com/avatar'
+            }, {
+                provider: 'local',
+                role: 'admin',
+                name: 'Admin',
+                email: 'admin@example.com',
+                password: 'admin',
+                gravatar: 'http://www.gravatar.com/avatar'
+            })
                 .then(function() {
                     addDefaultThings();
                     console.log('finished populating users');
@@ -38,16 +38,23 @@ exports.seedDatabaseIfNeeded = function() {
 }
 
 function addDefaultThings(tag) {
-    User.findOne({ "name": "guest" }, function(err, user) {
+    User.findOne({
+        "name": "guest"
+    }, function(err, user) {
         if (err) {
             console.log("error populating things", err);
         }
         if (user) {
             if (config.seedDB) {
-                Tag.find({ name: "default" }).remove()
+                Tag.find({
+                    name: "default"
+                }).remove()
                     .then(() => {
-                        Tag.create({ name: "default", user_id: user._id }, function(err, tag) {
-                            var tag = tag._id;
+                        Tag.create({
+                            name: "default",
+                            user_id: user._id
+                        }, function(err, tag) {
+                            // var tag = tag._id;
                             Thing.find({}).remove()
                                 .then(() => {
                                     Thing.create({
