@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MaterialModule } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -50,7 +51,7 @@ import {LoginGuard} from './account/login/login-guard.service';
      {
             provide: Http,
             useFactory: httpFactory,
-            deps: [XHRBackend, RequestOptions]
+            deps: [XHRBackend, RequestOptions, Router]
      }],
   bootstrap: [AppComponent],
   exports: [TopBarComponent, MaterialModule]
