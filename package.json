@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build",
+    "startProd": "ng build --prod set NODE_ENV=production && node server/app.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
