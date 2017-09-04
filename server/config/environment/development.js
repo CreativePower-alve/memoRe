@@ -9,5 +9,5 @@ module.exports = {
     },
    'secret': 'super secret password!',
 
-    seedDB: true
+    seedDB: false
 };
