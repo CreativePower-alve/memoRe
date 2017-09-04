@@ -35,7 +35,9 @@ md-hint span{
   	flex:1;
   }
   .buttons{
-  	cursor: pointer;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-left: 46px;
   }
 }
 
@@ -56,4 +58,8 @@ md-hint span{
 
 md-icon{
   user-select:none;
+}
+
+md-input-container {
+  width: 100%;
 }

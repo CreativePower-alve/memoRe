@@ -9,7 +9,7 @@
               dividerColor="{{ (textVar.touched || textVar.dirty) && !textVar.valid ? 'warn' : 'primary' }}">
                 <textarea mdInput
                     [(ngModel)]="thing.text"
-                    placeholder="enter text" 
+                    placeholder="Text" 
                     name="text"
                     type="text"
                     rows="5"
@@ -22,7 +22,7 @@
             <input 
                mdInput
                [(ngModel)]="thing.source"
-               placeholder="enter source" 
+               placeholder="Source" 
                name="source">
         </md-input-container>
     </div>
