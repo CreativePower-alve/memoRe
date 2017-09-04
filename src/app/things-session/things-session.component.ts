@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { ThingsSessionService, SessionConfig, SessionMode } from '../shared/things-session.service';
 import {ThingsService} from '../things/things.service';
 
@@ -18,8 +19,10 @@ export class ThingsSessionComponent implements OnInit {
   private sessionTimeout;
   private startOfSessionTime;
 
-  constructor(private thingsSessionService: ThingsSessionService,
-    private thingsService:ThingsService) { }
+  constructor(
+    public thingsSessionService: ThingsSessionService,
+    private thingsService:ThingsService,
+    private router: Router) { }
 
   ngOnInit() {
     this.thingsService.getThings()

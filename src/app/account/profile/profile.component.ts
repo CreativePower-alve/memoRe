@@ -6,7 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-
+  updateProfile;
+  name;
+  email;
+  currentPassword;
+  newPassword;
+  mouseoverLogin;
+  updateInvalid;
   constructor() { }
 
   ngOnInit() {

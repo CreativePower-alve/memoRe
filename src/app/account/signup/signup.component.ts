@@ -8,6 +8,11 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
    signupInvalid = false;
+   name;
+   email;
+   password;
+   confirmPassword;
+   mouseoverLogin;
    constructor(private loginService:LoginService, private router:Router) {
    }
 
