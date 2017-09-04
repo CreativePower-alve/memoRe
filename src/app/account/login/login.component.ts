@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
    loginInvalid = false;
+   email;
+   paswword;
+   mouseoverLogin;
    constructor(private loginService:LoginService, private router:Router) {
    }
 
@@ -43,5 +46,8 @@ export class LoginComponent implements OnInit {
            this.router.navigate(['things']);        
         }
       });
+  }
+  cancel() {
+    
   }
 }

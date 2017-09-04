@@ -15,7 +15,7 @@ export class AppComponent {
 
   constructor(private router: Router,
    private thingsSessionService: ThingsSessionService,
-   private auth: LoginService,
+   public auth: LoginService,
    private authTokenService: AuthTokenService){
   }
 

@@ -20,7 +20,7 @@ export class ThingsSessionComponent implements OnInit {
   private startOfSessionTime;
 
   constructor(
-    private thingsSessionService: ThingsSessionService,
+    public thingsSessionService: ThingsSessionService,
     private thingsService:ThingsService,
     private router: Router) { }
 
