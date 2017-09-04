@@ -8,10 +8,12 @@ exports.setup = function(User, config) {
             callbackURL: config.google.callbackURL
         },
         function(accessToken, refreshToken, profile, done) {
+            console.log("accessToken",accessToken);
+
             User.findOne({
                 'google.id': profile.id
             }, function(err, user) {
-
+                console.log("user google",user);
                 if (!user) {
                     user = new User({
                         name: profile.displayName,
@@ -22,12 +24,12 @@ exports.setup = function(User, config) {
                         google: profile._json
                     });
                     user.save(function(err) {
-
+                        console.log("err save user",err);
                         if (err) return done(err);
                         done(err, user);
                     });
                 } else {
-
+                    console.log("existing user",user);
                     return done(err, user);
                 }
             });

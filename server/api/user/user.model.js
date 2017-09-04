@@ -17,12 +17,12 @@ var UserSchema = new mongoose.Schema({
     default: 'user'
   },
   password: {
-    type: String,
-    required: true
+    type: String 
   },
   gravatar:String,
   provider: String,
-  salt: String
+  salt: String,
+  google: {}
 });
 
 /**

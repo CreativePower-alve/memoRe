@@ -65,7 +65,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of tags
 exports.index = function(req, res) {
-  return tag.find().exec()
+  return tag.find({'user_id':req.user.id}).exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

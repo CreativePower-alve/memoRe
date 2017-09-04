@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
 import { AuthTokenService } from '../../shared/authToken.service';
-
+import { environment } from '../../../environments/environment';
 @Injectable()
 export class LoginService {
      private authUrl = '/auth/local';
@@ -35,15 +35,16 @@ export class LoginService {
     }
 
      public googleLogin() {
-        return this.http.get(this.googleUrl).do(resp =>{
-                if(resp){
-                  this.currentUser = <IUser> resp.json();
-                   this.authService.setToken(this.currentUser.token);
-                }
-            })
-            .catch(error =>{
-                return Observable.of(false);
-            });
+        window.location.href = `${environment.serverURL}/auth/google`;
+        // return this.http.get(this.googleUrl).do(resp =>{
+        //         if(resp){
+        //           this.currentUser = <IUser> resp.json();
+        //            this.authService.setToken(this.currentUser.token);
+        //         }
+        //     })
+        //     .catch(error =>{
+        //         return Observable.of(false);
+        //     });
     }
     public guestLogin(){
         return this.http.post(this.authUrl, {email:"guest@memore.com",password:"guest"}).do(resp =>{

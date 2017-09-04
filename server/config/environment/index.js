@@ -2,7 +2,8 @@
 
 var path = require('path');
 var _ = require('lodash');
-
+var domainUrl = process.env.NODE_ENV === 'development'? 'http://localhost:9000/' : process.env.DOMAIN;
+console.log('domainUrl',domainUrl);
 function requiredProcessEnv(name) {
     if (!process.env[name]) {
         throw new Error('You must set the ' + name + ' environment variable');
@@ -43,12 +44,11 @@ var all = {
             }
         }
     },
-
-    google: {
-        clientID: process.env.GOOGLE_ID || 'id',
-        clientSecret: process.env.GOOGLE_SECRET || 'secret',
-        callbackURL: (process.env.DOMAIN || '') + '/auth/google/callback'
-    }
+  google: {
+    clientID: process.env.GOOGLE_ID || '428235141790-vm5bllbot66f78dfpklom17c895oaqp6.apps.googleusercontent.com',
+    clientSecret: process.env.GOOGLE_SECRET || 'McR4ahSog_p56YIHuxdE2vy7',
+    callbackURL:  domainUrl+'auth/google/callback'
+  }
 };
 
 // Export the config object based on the NODE_ENV
