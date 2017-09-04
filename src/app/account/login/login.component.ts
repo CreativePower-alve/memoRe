@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
    loginInvalid = false;
    email;
-   paswword;
+   password;
    mouseoverLogin;
    constructor(private loginService:LoginService, private router:Router) {
    }

@@ -12,8 +12,9 @@
     "list": "ntl",
     "dev": "nodemon server/app.js",
     "startClient": "ng serve –proxy-config proxy.conf.json",
-    "start": "ng build --prod && node server/app.js",
-    "startServerProduction": "ng build  && node server/app.js"
+    "start": "node server/app.js",
+    "startServerProduction": "ng build  && node server/app.js",
+    "postinstall": "ng build --prod"
   },
   "engines": {
     "node": "6.10.0",
