@@ -40,6 +40,7 @@
     "@types/node": "8.0.26",
     "angular2-jwt": "0.2.3",
     "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.2",
     "composable-middleware": "0.3.0",
     "compression": "1.6.2",
     "cookie-parser": "1.4.3",
@@ -56,6 +57,7 @@
     "lodash": "4.17.4",
     "mongodb": "2.2.31",
     "mongoose": "4.11.10",
+    "morgan": "1.8.1",
     "ngx-chips": "1.5.3",
     "passport": "0.3.2",
     "passport-google-oauth": "1.0.0",
@@ -64,8 +66,7 @@
     "rxjs": "5.4.3",
     "serve-favicon": "2.4.1",
     "typescript": "2.5.2",
-    "zone.js": "0.8.17",
-    "morgan": "1.8.1"
+    "zone.js": "0.8.17"
   },
   "devDependencies": {
     "codelyzer": "2.0.0",
