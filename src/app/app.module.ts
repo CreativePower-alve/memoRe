@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { Router } from '@angular/router';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,7 +35,8 @@ import {LoginGuard} from './account/login/login-guard.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule.forRoot(),
+    MaterialModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ThingsModule,
     ThingsSessionModule,
