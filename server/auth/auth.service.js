@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
+var redirectDomain = process.env.NODE_ENV === 'development'? 'http://localhost:9000/' : process.env.DOMAIN;
 
 var validateJwt = expressJwt({
   secret: config.secrets.session
@@ -76,8 +77,10 @@ exports.setTokenCookie = function(req, res) {
   if(!req.user) {
     return res.status(404).send('It looks like you aren\'t logged in, please try again.');
   }
-  var token = signToken(req.user._id, req.user.role);
+  var token = jwt.sign({ _id: req.user._id, role:req.user.role }, config.secrets.session, {
+    expiresIn: 60 * 60 * 5
+  });
   res.cookie('token', token);
-  res.redirect('/');
+  res.redirect(`${redirectDomain}/google?token=${token}`);
 }
 exports.isAuthenticated = isAuthenticated;

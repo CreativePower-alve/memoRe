@@ -14,14 +14,14 @@
             <memore-open-session-dialog (onStartSession)="startSession($event)"></memore-open-session-dialog>
         </div>
         <div class="userProfile">
-           <img src="{{loggedUser?.gravatar}}" class="icon"/>
+           <img src="{{loggedUser?.gravatar || loggedUser?.google.image.url }}" class="icon"/>
           <button  md-button [mdMenuTriggerFor]="menu">{{loggedUser?.name}} <md-icon>keyboard_arrow_down</md-icon> </button>
         </div>
             <md-menu #menu="mdMenu" [overlapTrigger]="false">
             <button md-menu-item>
                 <div class="menu-section">
                      <div class="userIcon">
-                       <img src="{{loggedUser?.gravatar}}" class="icon"/>
+                       <img src="{{loggedUser?.gravatar || loggedUser?.google.image.url}}" class="icon"/>
                      </div> 
                      <div class="userInfo">
                        <span>{{loggedUser?.name}}</span> 

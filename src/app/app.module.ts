@@ -24,12 +24,14 @@ import { httpFactory } from "./config/http.factory";
 
 import {ThingsGuard} from './things/things-guard.service';
 import {LoginGuard} from './account/login/login-guard.service';
+import { GoogleComponent } from './google/google.component';
   
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
-    SideNavComponent
+    SideNavComponent,
+    GoogleComponent
   ],
   imports: [
     BrowserModule,

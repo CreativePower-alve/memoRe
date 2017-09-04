@@ -6,13 +6,17 @@ import { SignupComponent } from './account/signup/signup.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { ThingsSessionComponent } from './things-session/things-session.component';
 import {ThingsGuard} from './things/things-guard.service';
+import {GoogleComponent} from './google/google.component';
 import {LoginGuard} from './account/login/login-guard.service';
+
 @NgModule({
 	imports: [
 	RouterModule.forRoot([
 	{ path: 'login', 
 	  canActivate: [LoginGuard],		
 	  component: LoginComponent },	
+	{ path: 'google', 		
+	  component: GoogleComponent },	
     { path: 'signup', 
 	  canActivate: [LoginGuard],		
 	  component: SignupComponent },	
