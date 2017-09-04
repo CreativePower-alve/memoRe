@@ -12,8 +12,8 @@ import { AuthTokenService } from '../../shared/authToken.service';
 
 @Injectable()
 export class LoginService {
-    
-    private authUrl = '/auth/local';
+     private authUrl = '/auth/local';
+     private googleUrl = '/auth/google';
     private identityUrl = '/api/users/me';
     private signupUrl = '/api/users/';
     public currentUser:IUser; 
@@ -34,9 +34,8 @@ export class LoginService {
             });
     }
 
-     loginWithGoogle(email:String, password:string) {
-        let loginInfo = {email:email, password:password};
-        return this.http.post(this.authUrl, loginInfo).do(resp =>{
+     public googleLogin() {
+        return this.http.get(this.googleUrl).do(resp =>{
                 if(resp){
                   this.currentUser = <IUser> resp.json();
                    this.authService.setToken(this.currentUser.token);

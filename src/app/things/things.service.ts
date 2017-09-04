@@ -50,7 +50,7 @@ export class ThingsService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || [];
+        return body || [];
     }
 
     private handleError(error: Response) {

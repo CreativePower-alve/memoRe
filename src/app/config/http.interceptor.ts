@@ -3,37 +3,39 @@ import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Respons
 import {Observable} from "rxjs/Rx";
 import { environment } from '../../environments/environment';
 import { AuthTokenService } from '../shared/authToken.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class InterceptedHttp extends Http {
     private authService: AuthTokenService = new AuthTokenService();
     constructor(backend: ConnectionBackend,
-               defaultOptions: RequestOptions) {
+                defaultOptions: RequestOptions,
+                private router: Router) {
         super(backend, defaultOptions);
     }
 
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-        return super.request(url, options);
+        return super.request(url, options).catch(this.catchErrors());
     }
 
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
-        return super.get(url, this.getRequestOptionArgs(options));
+        return super.get(url, this.getRequestOptionArgs(options)).catch(this.catchErrors());
     }
 
     post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
-        return super.post(url, body, this.getRequestOptionArgs(options));
+        return super.post(url, body, this.getRequestOptionArgs(options)).catch(this.catchErrors());
     }
 
     put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
-        return super.put(url, body, this.getRequestOptionArgs(options));
+        return super.put(url, body, this.getRequestOptionArgs(options)).catch(this.catchErrors());
     }
 
     delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
-        return super.delete(url, this.getRequestOptionArgs(options));
+        return super.delete(url, this.getRequestOptionArgs(options)).catch(this.catchErrors());
     }
 
     private updateUrl(req: string) {
@@ -53,4 +55,15 @@ export class InterceptedHttp extends Http {
 
         return options;
     }
+
+    private catchErrors() {
+    return (res: Response) => {
+      if (res.status === 401 || res.status === 403) {
+        //handle authorization errors
+        this.authService.removeStoredToken();
+        this.router.navigate(['login']);
+      }
+      return Observable.throw(res);
+    };
+  }
 }

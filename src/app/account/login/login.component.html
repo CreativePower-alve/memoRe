@@ -24,7 +24,7 @@
 	<p> or </p>
 	  <input type="submit"  (click)="loginGuest()" value="Login as Guest"/>
 
-	  <button> Login with Google</button>
+	  <button (click)="loginWithGoogle()"> Login with Google</button>
 	 <form autocomplete="on" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" novalidate>
 	
 		

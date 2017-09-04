@@ -6,10 +6,11 @@
         </div>
         <div class="sessionEndDisplay" *ngIf="!isSession">
             <h2>Congratulations!</h2>
+            <p>Go to <a md-button md-raised-button [routerLink]="['/things']">Home</a></p>
             <h3>Here is what you've practiced for {{timeInSession}} minutes: </h3>
         </div>
         <div class="tags" *ngIf="thingsSessionService.isTagsMode(config?.isSessionMode)">
-            <tag-input *ngIf="config?.tags.length > 0" [readonly]='true' [ngModel]="config?.tags" [theme]="minimal" [identifyBy]="'id'" [displayBy]="'name'">
+            <tag-input *ngIf="config?.tags.length > 0" [editable]="false" [ngModel]="config?.tags" [theme]="minimal" [identifyBy]="'id'" [displayBy]="'name'">
             </tag-input>
             <div class="allTags" *ngIf="!config?.tags.length">
                 <span>All items</span>

@@ -1,11 +1,11 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/things              ->  index
- * POST    /api/things              ->  create
- * GET     /api/things/:id          ->  show
- * PUT     /api/things/:id          ->  upsert
- * PATCH   /api/things/:id          ->  patch
- * DELETE  /api/things/:id          ->  destroy
+ * GET     /api/tags              ->  index
+ * POST    /api/tags              ->  create
+ * GET     /api/tags/:id          ->  show
+ * PUT     /api/tags/:id          ->  upsert
+ * PATCH   /api/tags/:id          ->  patch
+ * DELETE  /api/tags/:id          ->  destroy
  */
 
 'use strict';

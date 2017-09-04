@@ -23,7 +23,7 @@ export class SideNavComponent implements OnInit, OnChanges {
 	@ViewChild('sidenav') sidenav: MdSidenav;
   allTags;
   searchThings;
-  noTag = { id: 0, name: 'Untagged', checked: false};
+  noTag = { _id: 0, name: 'Untagged', checked: false};
   private filterBy: number[] = [];
   
   constructor(private tagsService: TagsService,
@@ -36,7 +36,7 @@ export class SideNavComponent implements OnInit, OnChanges {
       this.tagsService.getAllTags().subscribe(allTags => {
             this.allTags = allTags.map(aTag => {
                 aTag.checked = this.filterBy ? 
-                  this.filterBy.indexOf(aTag.id) !== -1 :
+                  this.filterBy.indexOf(aTag._id) !== -1 :
                    false;
                 return aTag;
               });
@@ -56,10 +56,10 @@ export class SideNavComponent implements OnInit, OnChanges {
 
   addFilter(event, tag) {
       if (event.checked) {
-        this.filterBy = this.filterBy.concat([tag.id]);
+        this.filterBy = this.filterBy.concat([tag._id]);
       }
       else {
-        this.filterBy = this.filterBy.filter(tagId => tagId !== tag.id); 
+        this.filterBy = this.filterBy.filter(tagId => tagId !== tag._id); 
       }
       localStorage.setItem('tags', this.filterBy.join(','));
       this.router.navigate(['/things'], { queryParams: { tags: this.filterBy.join(',') } });

@@ -5,7 +5,7 @@
 module.exports = {
     // MongoDB connection options
     mongo: {
-        uri: 'mongodb://localhost/memore-dev'
+        uri: 'mongodb://root:root@ds123930.mlab.com:23930/memore'
     },
    'secret': 'super secret password!',
 

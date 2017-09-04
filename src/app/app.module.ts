@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MaterialModule } from '@angular/material';
-
+import { Router } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,7 +24,7 @@ import { httpFactory } from "./config/http.factory";
 
 import {ThingsGuard} from './things/things-guard.service';
 import {LoginGuard} from './account/login/login-guard.service';
-
+  
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import {LoginGuard} from './account/login/login-guard.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule.forRoot(),
+    MaterialModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ThingsModule,
     ThingsSessionModule,
@@ -50,7 +52,7 @@ import {LoginGuard} from './account/login/login-guard.service';
      {
             provide: Http,
             useFactory: httpFactory,
-            deps: [XHRBackend, RequestOptions]
+            deps: [XHRBackend, RequestOptions, Router]
      }],
   bootstrap: [AppComponent],
   exports: [TopBarComponent, MaterialModule]

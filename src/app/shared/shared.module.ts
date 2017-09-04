@@ -2,7 +2,7 @@ import { NgModule }  from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
-import { TagInputModule } from 'ng2-tag-input';
+import { TagInputModule } from 'ngx-chips';
 
 import { SessionConfigComponent } from './open-session-dialog/session-config/session-config.component';
 import { OpenSessionDialogComponent } from './open-session-dialog/open-session-dialog.component';
@@ -11,7 +11,7 @@ import { OpenSessionDialogComponent } from './open-session-dialog/open-session-d
     declarations: [ SessionConfigComponent, OpenSessionDialogComponent ],
     imports: [ 
       CommonModule, 
-      MaterialModule.forRoot(),
+      MaterialModule,
       FormsModule,
       TagInputModule
      ],
