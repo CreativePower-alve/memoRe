@@ -25,7 +25,7 @@ export class SideNavComponent implements OnInit, OnChanges {
   allTags;
   searchThings;
   noTag = { _id: 0, name: 'Untagged', checked: false };
-  private filterBy: number[] = [];
+  private filterBy = [];
   newTagSubscription;
 
   constructor(private tagsService: TagsService,
@@ -34,11 +34,11 @@ export class SideNavComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this.authService.isLoggedIn()) {
       const selectedTags = localStorage.getItem('tags');
-      this.filterBy = selectedTags ? selectedTags.split(',').map(Number) : [];
+      this.filterBy = selectedTags ? selectedTags.split(',') : [];
       this.tagsService.getAllTags().subscribe(allTags => {
         this.allTags = allTags.map(aTag => {
           aTag.checked = this.filterBy ?
-            this.filterBy.indexOf(aTag._id) !== -1 :
+            this.filterBy.indexOf(aTag.id) !== -1 :
             false;
           return aTag;
         });
@@ -65,10 +65,10 @@ export class SideNavComponent implements OnInit, OnChanges {
 
   addFilter(event, tag) {
     if (event.checked) {
-      this.filterBy = this.filterBy.concat([tag._id]);
+      this.filterBy = this.filterBy.concat([tag.id]);
     }
     else {
-      this.filterBy = this.filterBy.filter(tagId => tagId !== tag._id);
+      this.filterBy = this.filterBy.filter(tagId => tagId && tagId !== tag.id);
     }
     localStorage.setItem('tags', this.filterBy.join(','));
     this.router.navigate(['/things'], { queryParams: { tags: this.filterBy.join(',') } });

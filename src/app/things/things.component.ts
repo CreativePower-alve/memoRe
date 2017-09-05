@@ -34,7 +34,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
     private toastService: ToastService) {
 
     this.sub = this.route.queryParams.subscribe(queryParams => {
-      this.queryParams.tags = queryParams['tags'] ? queryParams['tags'].split(',').map(Number) : [];
+      this.queryParams.tags = queryParams['tags'] ? queryParams['tags'].split(',') : [];
 
       this.displayThings = this.queryParams.tags.length && this.things ?
         this.filterThingsByTags(this.queryParams.tags) : this.things;
@@ -173,7 +173,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
 
   private filterThingsByTags(tags) {
     const display = this.things.filter((thing) => {
-      return thing.tags.some(tag => tags.indexOf(tag._id) !== -1);
+      return thing.tags.some(tag => tags.indexOf(tag.id) !== -1);
     });
     // id 0 is for untagged things
     return tags.indexOf(0) !== -1 ?
