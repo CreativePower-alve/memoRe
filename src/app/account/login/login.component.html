@@ -1,50 +1,42 @@
-<div>
-	<ul>
-		<li>
-		  Immersion through typing
-		</li>
-		<li>
-		  Get focused, get inspired !
-		</li>
-		<li>
-		  Chuncked learning
-		</li>
-		<li>
-		  Brute force memorization
-		</li>
-		<li>
-		  Type your way into understanding
-		</li>
-		<li>
-		  Use daily for best results !
-		</li>
-	</ul>
-</div>
-<div>
-	<p> or </p>
-	  <input type="submit"  (click)="loginGuest()" value="Login as Guest"/>
+<div class="container">
+	<div class="inner-container">
 
-	  <button (click)="loginWithGoogle()"> Login with Google</button>
-	 <form autocomplete="on" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" novalidate>
-	
-		
-    <div class="form-group" >
+		<md-list class="list">
+		  <md-list-item>Immersion through typing</md-list-item>
+		  <md-list-item>Get focused, get inspired !</md-list-item>
+		  <md-list-item>Chuncked learning</md-list-item>
+		  <md-list-item> Brute force memorization</md-list-item>
+		  <md-list-item> Type your way into understanding</md-list-item>
+		   <md-list-item>  Use daily for best results !</md-list-item>
+		</md-list>
+		<div class="formContainer">
+			
+			 <form autocomplete="on" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" novalidate>
+			   <p class="title"> MemoRe </p>
+			<div class="alert" *ngIf ="loginInvalid"> Invalid login information</div>	
+		    <div class="form-group" >
+		       <md-input-container>
+		      		<input mdInput id="email" type="email" (ngModel)="email" name="email" required  placeholder = "Email" />
+		       </md-input-container>
+		    </div>
+		    <div class="form-group" >
+		       <md-input-container>	
+		      		<input mdInput id="password" type="password" (ngModel)="password" name="password" required placeholder = "Password" />
+		       </md-input-container>
+		    </div>
+		    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid" >Login</button></span>
+		  </form>
+		  <div class= "align-vertically space-around">
+		 	<div class= "align-vertically center">
+			  	<a href="#">Forgot your Passowrd ?</a>
+				<a href="/signup">Sign up</a>
+			</div>	
+			
 
-      <label for="email">email:</label>
-      <em *ngIf="loginForm.controls.email?.invalid && (loginForm.controls.email?.touched || mouseoverLogin)">Required</em>
-      <input id="email" type="email" (ngModel)="email" name="email" required class="form-control" placeholder="email..." />
-    </div>
-    <div class="form-group" >
-      <label for="password">Password:</label>
-      <em *ngIf="loginForm.controls.password?.invalid && (loginForm.controls.password?.touched || mouseoverLogin)">Required</em>
-      <input id="password" type="password" (ngModel)="password" name="password" required class="form-control"placeholder="Password..." />
-    </div>
-    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid" >Login</button></span>
-    <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
- 	
-  </form>
-  	<a href="#">Forgot your Passowrd ?</a>
-	<a href="/signup">Sign up</a>
-	
-	<div *ngIf ="loginInvalid"> Invalid login information</div>
+			  <input class="guestLogin" type="submit"  (click)="loginGuest()" value="Login as Guest"/>
+
+			  <button class="gLogin" (click)="loginWithGoogle()"><i class="fa fa-google" aria-hidden="true"></i> Login with Google</button>
+		   </div>
+		</div>
+	</div>
 </div>

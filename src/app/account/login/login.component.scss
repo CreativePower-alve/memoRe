@@ -1,0 +1,123 @@
+.buttonClass{
+	border:none;
+}
+.gLogin{
+	@extend .buttonClass;
+	background-color: #DF4A32;
+    color: white;
+    padding: 10px;
+    font-size: medium;
+    &:hover{
+    	background-color: darken(#DF4A32, 10%);
+    }
+}
+.guestLogin{
+	@extend .buttonClass;
+	background-color: #1db723;
+    color: white;
+    padding: 10px;
+    font-size: medium;
+    &:hover{
+    	background-color: darken(#1db723, 10%);
+    }
+}
+.container{
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+ //    background: #4b6cb7;  /* fallback for old browsers */
+	// background: -webkit-linear-gradient(to right, #182848, #4b6cb7);  /* Chrome 10-25, Safari 5.1-6 */
+	// background: linear-gradient(to right, #182848, #4b6cb7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	 background: burlywood;
+}
+.inner-container{
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+	width: 50%;
+    height: 80%;
+    background-color: rgba(0, 0, 0, 0.43);
+    border-radius: 2%;
+    color:white;	
+    min-height: 537px;
+    min-width: 600px;
+}
+.alert{
+	color:#ea3030;
+}
+form{
+	display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 300px;
+    button{
+        @extend .buttonClass;
+    	width:100%;
+    	padding: 10px;
+	    font-size: medium;
+	    background-color:#673AB7;
+	    color:white;
+	    &:hover{
+    		background-color: lighten(#673AB7, 10%);
+    	}
+	    &:focus{
+	    	border:none;
+	    	outline:none;
+	    }
+    }
+    input{
+    	height: 24px;
+    }
+
+}
+.mat-form-field{
+	width:100%;
+}
+.align-vertically{
+   display: flex;
+   flex-direction: column;
+  
+}
+.center{
+   align-items: center;
+}
+.space-around{
+	justify-content: space-around;
+	height: 150px;
+	margin-top: 44px;
+}
+.formContainer{
+	width: 20%;
+    min-width: 200px;
+    background-color: white;
+    padding: 21px;
+    margin-right: -57px;
+}
+.list .mat-list-item{
+	color:white;
+}
+.title{
+	color: black;
+    font-size: 48px;
+    text-align: center;
+}
+@media(max-width:690px){
+	.inner-container{
+		flex-direction: column;
+		height: 100%;
+		justify-content: flex-start;
+		width: auto !important;
+		min-width: 300px;
+		margin-top: 10px;
+    	margin-bottom: 10px;
+	}
+	.formContainer{
+		 width: 85%;
+		 margin-right: 0;
+	}
+	.container{
+		height: auto !important;
+	}
+}
