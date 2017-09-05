@@ -33,7 +33,7 @@
                   [placeholder]="'new tag'"
                   [secondaryPlaceholder]="'new tag'"
                   [maxItems]="5"
-                  [separatorKeys]="[32]"
+                  [separatorKeyCodes]="[32, 13]"
                   [theme]="minimal"
                   (onAdd)="onTagAdded($event)"
                   (onRemove)="onTagRemoved($event)"

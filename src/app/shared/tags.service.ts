@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -9,7 +10,8 @@ import 'rxjs/add/observable/of';
 
 @Injectable()
 export class TagsService{
-	private baseUrl = `/api/tags`;
+    private baseUrl = `/api/tags`;
+    public dynamicTagEvent = new Subject();
 
     constructor(private http: Http) {}
 
