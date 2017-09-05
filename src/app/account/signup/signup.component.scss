@@ -1,0 +1,26 @@
+.container{
+	margin:0 auto;
+	background-color: rgba(255, 255, 255, 0.6);
+    padding: 43px;
+}
+:host{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background: burlywood;
+}
+.mat-form-field{
+	width:100%;
+}
+button{
+	width:100%;
+	padding: 10px;
+    margin-bottom: 15px;
+    background-color: rgba(143, 220, 26, 0.55);
+}
+.title{
+   font-size: 40px;
+}
+.logo{
+   width: 80px;
+}

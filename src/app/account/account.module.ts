@@ -4,10 +4,11 @@ import { SignupComponent } from './signup/signup.component';
 import { SharedModule } from '../shared/shared.module';
 import { LoginService } from './login/login.service';
 import { ProfileComponent } from './profile/profile.component';
-
+import { RouterModule } from '@angular/router';
 @NgModule({
 	imports: [
-	  SharedModule
+	  SharedModule,
+    RouterModule
 	],
 	declarations: [
 	  LoginComponent,

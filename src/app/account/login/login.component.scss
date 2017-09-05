@@ -82,6 +82,13 @@ form{
 }
 .center{
    align-items: center;
+   a{
+   	 color: blue;
+   	 &:hover{
+   	 	text-decoration: underline;
+   	 	cursor: pointer;
+   	 }
+   }
 }
 .space-around{
 	justify-content: space-around;
