@@ -18,15 +18,14 @@
           <button  md-button [mdMenuTriggerFor]="menu">{{loggedUser?.name}} <md-icon>keyboard_arrow_down</md-icon> </button>
         </div>
             <md-menu #menu="mdMenu" [overlapTrigger]="false">
-            <button md-menu-item>
+            <button [routerLink]="['profile']" md-menu-item>
                 <div class="menu-section">
                      <div class="userIcon">
                        <img src="{{loggedUser?.gravatar || loggedUser?.google.image.url}}" class="icon"/>
                      </div> 
                      <div class="userInfo">
                        <span>{{loggedUser?.name}}</span> 
-                       <a [routerLink]="['profile']"> View Profile</a>
-                     </div>
+                    </div>
                  </div>
             </button>
             <button md-menu-item>Help </button>
