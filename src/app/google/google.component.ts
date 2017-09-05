@@ -15,6 +15,7 @@ export class GoogleComponent implements OnInit {
   ngOnInit() {
   	const token = window.location.search.split('token=')[1];
     this.authService.setToken(token);
+    this.authService.dynamicSideNavEvent.next();
     this.router.navigate(['things']);
   }
 

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { JwtHelper } from 'angular2-jwt';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AuthTokenService{
   token;
   jwtHelper: JwtHelper = new JwtHelper();
-
+  dynamicSideNavEvent = new Subject();
 
   constructor(){}
 
