@@ -24,7 +24,7 @@
                       [onlyFromAutocomplete]="true"
                       [ngModel]="config.tags"
                       [secondaryPlaceholder]="'@All'"
-                      [separatorKeys]="[32]"
+                      [separatorKeyCodes]="[32, 13]"
                       (onAdd)="onTagAdded($event)"
                       (onRemove)="onTagRemoved($event)"
                       [ngModelOptions]="{standalone: true}"
