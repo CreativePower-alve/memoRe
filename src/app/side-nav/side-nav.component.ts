@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  OnChanges,
   Input,
   SimpleChanges,
   ViewChild,
@@ -19,7 +18,7 @@ import { AuthTokenService } from '../shared/authToken.service';
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.scss']
 })
-export class SideNavComponent implements OnInit, OnChanges {
+export class SideNavComponent implements OnInit {
   @Input() isOpen: boolean;
   @ViewChild('sidenav') sidenav: MdSidenav;
   allTags = [];
@@ -49,17 +48,12 @@ export class SideNavComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['isOpen']) {
-      this.openSidenav();
-    }
-  }
-
   ngOnDestroy() {
     this.newTagSubscription.unsubscribe();
   }
 
   openSidenav() {
+    console.log('toggle');
     this.sidenav.toggle();
   }
 

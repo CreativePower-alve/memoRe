@@ -21,17 +21,11 @@ export class AppComponent {
   ngOnInit() {
     if (this.authTokenService.isLoggedIn()) {
       this.auth.checkAuthenticationStatus().subscribe(() => {
-        if (this.auth.isAuthenticated()) {
-          this.isOpen = window.innerWidth > 600;
-        }
+        this.canShowNavigation();
       });
     }
     this.router.events.subscribe((event) => {
-      if (this.auth.isAuthenticated()) {
-        this.isOpen = window.innerWidth > 600;
-      }
-      this.canShowNavBarButtons = location.pathname !== '/things-session';
-      this.isOpen = this.canShowNavBarButtons ? this.isOpen : false;
+      this.canShowNavigation();
     });
   }
 
@@ -44,6 +38,14 @@ export class AppComponent {
         }, 0);
         this.auth.checkAuthenticationStatus().subscribe();
       });
+  }
+
+  canShowNavigation() {
+    if (this.auth.isAuthenticated()) {
+      this.isOpen = window.innerWidth > 600;
+    }
+    this.canShowNavBarButtons = location.pathname !== '/things-session';
+    this.isOpen = this.canShowNavBarButtons ? this.isOpen : false;
   }
 
   openMenu(isOpen) {
