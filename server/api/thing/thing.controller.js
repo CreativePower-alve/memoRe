@@ -132,7 +132,6 @@ exports.upsert = function(req, res) {
       setDefaultsOnInsert: true,
       runValidators: true
     }).exec()
-
     .then(respondWithResult(res))
     .catch(handleError(res));
   });
