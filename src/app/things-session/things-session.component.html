@@ -6,7 +6,7 @@
         </div>
         <div class="sessionEndDisplay" *ngIf="!isSession">
             <h2>Congratulations!</h2>
-            <p>Go to <a md-button md-raised-button [routerLink]="['/things']">Home</a></p>
+            <p>Go to <a md-button md-raised-button [routerLink]="['/things']"><md-icon>home</md-icon>Home</a></p>
             <h3>Here is what you've practiced for {{timeInSession}} minutes: </h3>
         </div>
         <div class="tags" *ngIf="thingsSessionService.isTagsMode(config?.isSessionMode)">

@@ -27,9 +27,6 @@ export class AppComponent {
       });
     }
     this.router.events.subscribe((event) => {
-      if (event! instanceof NavigationEnd) {
-        return;
-      }
       if (this.auth.isAuthenticated()) {
         this.isOpen = window.innerWidth > 600;
       }
@@ -56,6 +53,7 @@ export class AppComponent {
   startTypingSession(confObject: SessionConfig): void {
     this.thingsSessionService.setSessionConfig(confObject);
     if (confObject) {
+      this.isOpen = false;
       this.router.navigate(['/things-session']);
     }
   }

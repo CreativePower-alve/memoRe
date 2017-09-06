@@ -1,21 +1,15 @@
 <div class="container">
     <h1> Things </h1>
     <div class="emptyState" *ngIf="!displayThings?.length">
-          <h1>No results found for current search criteria</h1>
+        <h1>No results found for current search criteria</h1>
     </div>
 
-<md-grid-list cols="{{getCols()}}" gutterSize="26px" rowHeight="200px">
-  <md-grid-tile  
-      *ngFor="let aThing of displayThings"
-      [colspan]="1"
-      [rowspan]="1">
-      <memore-thing 
-          [item]="aThing"
-          (openThingDetailsDialog) = "openThingDetailsDialog($event)" 
-          (onDelete) = "deleteThing($event)">
-        </memore-thing>
-  </md-grid-tile>
-</md-grid-list>
+    <md-grid-list cols="{{getCols()}}" gutterSize="26px" rowHeight="200px">
+        <md-grid-tile *ngFor="let aThing of displayThings" [colspan]="1" [rowspan]="1"  class="mat-elevation-z4">
+            <memore-thing [item]="aThing" (openThingDetailsDialog)="openThingDetailsDialog($event)" (onDelete)="deleteThing($event)">
+            </memore-thing>
+        </md-grid-tile>
+    </md-grid-list>
 
 
     <button md-mini-fab class="addThingButton" color="accent" title="create" (click)="addNewThing()">
