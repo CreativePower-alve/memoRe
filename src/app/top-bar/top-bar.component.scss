@@ -1,5 +1,7 @@
 .left {
     flex-grow: 1;
+    display: flex;
+    align-items: center;
 }
 
 .right {
@@ -19,6 +21,8 @@
     cursor: pointer;
     height: 30px;
     width: 30px;
+    display: flex;
+    align-items: center;
 }
 
 .userInfo{
