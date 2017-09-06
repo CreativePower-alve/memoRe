@@ -74,6 +74,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
 
   saveThing(aThing) {
     const isCreate = !aThing.id;
+    aThing.text = aThing.text.replace(/\r?\n|\r/gm, ' ');
     const req = this.thingsService.saveThing(aThing);
 
     req.subscribe(
