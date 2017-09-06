@@ -82,9 +82,9 @@ exports.destroy = function(req, res) {
 /**
  * Change a users password
  */
-exports.updateProfile = function(req, res) {
+exports.changePassword = function(req, res) {
   var userId = req.user._id;
-  var oldPass = String(req.body.currentPassword);
+  var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
 
   return User.findById(userId).exec()
