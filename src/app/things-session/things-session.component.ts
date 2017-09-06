@@ -60,7 +60,8 @@ export class ThingsSessionComponent implements OnInit {
       // need to regenerate the list when there
       // is only one item, to start typing again
       if (this.practiceItems.length === 1) {
-        this.practiceItems = this.getPracticeItems(this.config.isSessionMode);
+        this.currentIndex = 0;
+        this.practiceItems = [Object.assign({}, this.practiceItems[0])];
       }
     }
     else {
