@@ -110,9 +110,23 @@ exports.upsert = function(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  return Thing.findOneAndUpdate({
+   var user = req.user.id;
+   var tags = [];
+ 
+  req.body.tags.forEach((tagBody) => {
+    tags.push(handleTag(tagBody,user));
+  });
+  Promise.all(tags).then(function(tagsValues) {
+    tagsValues = tagsValues.filter((tag) => tag !== undefined);
+    var ThingBody = {
+      "user_id": user,
+      "text": req.body.text,
+      "source": req.body.source,
+      "tags": tagsValues
+    };
+    Thing.findOneAndUpdate({
       _id: req.params.id
-    }, req.body, {
+    }, ThingBody, {
       new: true,
       upsert: true,
       setDefaultsOnInsert: true,
@@ -121,6 +135,7 @@ exports.upsert = function(req, res) {
 
     .then(respondWithResult(res))
     .catch(handleError(res));
+  });
 }
 
 // Updates an existing Thing in the DB

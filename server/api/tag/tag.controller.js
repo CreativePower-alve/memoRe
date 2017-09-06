@@ -12,6 +12,9 @@
 
 var jsonpatch = require('fast-json-patch');
 var tag = require('./tag.model');
+var Thing = require('../thing/thing.model');
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -110,8 +113,46 @@ exports.patch = function(req, res) {
 
 // Deletes a Thing from the DB
 exports.destroy = function(req, res) {
-  return tag.findById(req.params.id).exec()
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
+  var tagId = req.params.id;
+  console.log('tagId',tagId);
+  tag.findOne({ _id:tagId }, function(err, foundTag){
+    console.log('foundTag',foundTag);
+     if(foundTag){
+        Thing.find({ "tags": { "$in" : [ObjectId(tagId)]} }, function(err,foundThings){
+        var things = [];
+        foundThings.forEach((thing) => things.push(updateThings(thing,tagId)));
+       return Promise.all(things)
+              .then(function(updatedThing){
+                 foundTag
+                    .remove()
+                    .then(respondWithResult(res))
+                    .catch(handleError(res));
+              });
+            
+        });
+     }
+     else{
+       return res.status(404).end();
+     }
+      
+  });
+}
+function updateThings(thing,tagId){
+    return new Promise( (resolve,reject) =>{
+        var newTags = thing.tags.filter((tag) => tag !=tagId);
+        thing.tags = newTags;
+        Thing.findOneAndUpdate({
+            _id: thing.id
+          }, thing, {
+            new: true,
+            upsert: true,
+            setDefaultsOnInsert: true,
+            runValidators: true
+          }).exec()
+          .then(function(err,updatedThing){
+            if(err) resolve(false);
+            else resolve(true);
+          });
+    });
+     
 }
