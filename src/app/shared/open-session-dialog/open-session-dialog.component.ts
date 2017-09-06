@@ -9,25 +9,33 @@ import { TagsService } from '../tags.service';
   styleUrls: ['./open-session-dialog.component.scss']
 })
 export class OpenSessionDialogComponent implements OnInit {
-  allTags =[];
+  allTags = [];
+  newTagSubscription;
   @Output() onStartSession = new EventEmitter();
   constructor(private dialog: MdDialog,
     private tagsService: TagsService) { }
 
   ngOnInit() {
     this.tagsService.getAllTags()
-     .subscribe(allTags => this.allTags = allTags)
+      .subscribe(allTags => this.allTags = allTags)
+    this.newTagSubscription = this.tagsService.dynamicTagEvent.subscribe((tag) => {
+      this.allTags.push(tag);
+    });
+  }
+
+  ngOnDestroy() {
+    this.newTagSubscription.unsubscribe();
   }
 
   openSessionConfigDialog() {
-     let config: MdDialogConfig = {
-     width: '500px'
+    let config: MdDialogConfig = {
+      width: '500px'
     }
     let dialogRef: any = this.dialog.open(SessionConfigComponent, config);
     dialogRef.componentInstance.data = {
-       tags: this.allTags.slice(0)
+      tags: this.allTags.slice(0)
     };
     dialogRef.afterClosed().subscribe(result => this.onStartSession.emit(result));
-    }
+  }
 
 }
