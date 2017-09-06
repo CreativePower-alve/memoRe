@@ -3,22 +3,22 @@
  <form autocomplete="on" #signupForm="ngForm" (ngSubmit)="signup(signupForm.value)" novalidate>
     <div>
         <md-input-container>
-          <input mdInput id="name" type="text" (ngModel)="name" name="name" required class="form-control" placeholder="Name..." />
+          <input mdInput id="name" type="text" (ngModel)="name" name="name" required class="form-control" placeholder="Name" />
         </md-input-container>
     </div>  
     <div>
     <md-input-container>
-      <input mdInput id="email" type="email" (ngModel)="email" name="email" required class="form-control" placeholder="Email..." />
+      <input mdInput id="email" type="email" (ngModel)="email" name="email" required class="form-control" placeholder="Email" />
       </md-input-container>
     </div>
     <div>
       <md-input-container>
-        <input mdInput id="password" type="password" (ngModel)="password" name="password" required class="form-control"placeholder="Password..." />
+        <input mdInput id="password" type="password" (ngModel)="password" name="password" required class="form-control"placeholder="Password" />
       </md-input-container>
     </div>
      <div>
       <md-input-container>
-        <input mdInput id="confirmPassword" type="password" (ngModel)="confirmPassword" name="confirmPassword" required class="form-control"placeholder="Confirm Password..." />
+        <input mdInput id="confirmPassword" type="password" (ngModel)="confirmPassword" name="confirmPassword" required class="form-control"placeholder="Confirm Password" />
       </md-input-container>
     </div>
     <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">Sign up</button></span>

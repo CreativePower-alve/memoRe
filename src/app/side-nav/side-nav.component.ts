@@ -22,7 +22,7 @@ import { AuthTokenService } from '../shared/authToken.service';
 export class SideNavComponent implements OnInit, OnChanges {
   @Input() isOpen: boolean;
   @ViewChild('sidenav') sidenav: MdSidenav;
-  allTags;
+  allTags = [];
   searchThings;
   noTag = { _id: 0, name: 'Untagged', checked: false };
   private filterBy = [];
