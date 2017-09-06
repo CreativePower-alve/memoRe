@@ -1,3 +1,4 @@
+ <h1>Your Profile</h1>
  <form autocomplete="on" #profileForm="ngForm" (ngSubmit)="updateProfile(profileForm.value)" novalidate>
   
     <div class="form-group" >
@@ -8,7 +9,7 @@
              name="name"
              #nameVar="ngModel"
              required class="form-control" 
-             placeholder="Name..." />
+             placeholder="Name" />
          <md-hint *ngIf="nameVar.invalid && (nameVar?.touched || mouseoverLogin)">Required</md-hint>    
        </md-input-container>
     </div>	
@@ -21,7 +22,7 @@
                #emailVar="ngModel"
                required
                class="form-control" 
-               placeholder="Email..." />
+               placeholder="Email" />
         <md-hint *ngIf="emailVar?.invalid && (emailVar?.touched || mouseoverLogin)">Required</md-hint>         
       </md-input-container>
     </div>
@@ -34,7 +35,7 @@
                required
                 #currentPasswordVar="ngModel"
                class="form-control" 
-               placeholder="Current Password..." />
+               placeholder="Current Password" />
         <md-hint *ngIf="currentPasswordVar?.invalid && (currentPasswordVar?.touched || mouseoverLogin)">Required</md-hint>       
       </md-input-container>
     </div>
@@ -46,7 +47,7 @@
          name="confirmPassword"
           #confirmPasswordVar="ngModel"
          required class="form-control" 
-         placeholder="New Password..." />
+         placeholder="New Password" />
          <md-hint *ngIf="confirmPasswordVar?.invalid && (confirmPasswordVar?.touched || mouseoverLogin)">Required</md-hint>
      </md-input-container>
     </div>
