@@ -36,15 +36,6 @@ export class LoginService {
 
      public googleLogin() {
         window.location.href = `${environment.serverURL}/auth/google`;
-        // return this.http.get(this.googleUrl).do(resp =>{
-        //         if(resp){
-        //           this.currentUser = <IUser> resp.json();
-        //            this.authService.setToken(this.currentUser.token);
-        //         }
-        //     })
-        //     .catch(error =>{
-        //         return Observable.of(false);
-        //     });
     }
     public guestLogin(){
         return this.http.post(this.authUrl, {email:"guest@memore.com",password:"guest"}).do(resp =>{
@@ -101,4 +92,14 @@ export class LoginService {
        this.authService.removeStoredToken();
        this.currentUser = undefined;
     }
+
+  changePassword(oldPassword, newPassword) {
+    return this.http
+      .put(`/api/users/${this.currentUser._id}/password`, {
+        oldPassword,
+        newPassword
+      })
+      .catch(this.handleError);
+  }
+
 }
