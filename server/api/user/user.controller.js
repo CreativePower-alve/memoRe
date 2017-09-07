@@ -101,7 +101,33 @@ exports.changePassword = function(req, res) {
       }
     });
 }
-
+/**
+* Update a user's profile
+*/
+exports.updateProfile = function(req, res) {
+  var userId = req.user._id;
+  var name = String(req.body.name);
+  var email = String(req.body.email);
+  var avatarValue = req.body.avatar;
+ 
+  return User.findById(userId).exec()
+    .then(user => {
+        user.name = name ? name : user.name;
+        user.email = email ? email : user.email;
+        if(avatarValue != undefined){
+          user.avatar = avatarValue;  
+        }else{
+          console.log(email,'email');
+          user.gravatar = gravatar.url(email, {s: '200', r: 'pg', d: '404'});
+        }
+        //console.log(user.avatar == null, 'test');
+        return user.save()
+          .then(() => {
+            res.status(204).end();
+          })
+          .catch(validationError(res));
+    });
+}
 /**
  * Get my info
  */

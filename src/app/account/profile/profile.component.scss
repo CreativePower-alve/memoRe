@@ -9,3 +9,12 @@ form {
         margin-top: 16px;
     }
 }
+.avatar{
+	display:flex;
+	flex-direction:column;
+	color:rgba(128, 128, 128, 0.81);
+}
+.displayAvatar{
+    width: 20%;
+    padding:10px;
+}

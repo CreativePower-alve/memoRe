@@ -27,11 +27,9 @@ export class TopBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.loggedUser,"loggedUser");
   }
 
   ngOnChanges(change){
-    console.log('change',change);
     if(change['loggedUser'] && change['loggedUser'].currentValue){
         this.hasProfileAccess = this.canSeeProfile(change['loggedUser'].currentValue);  
     }

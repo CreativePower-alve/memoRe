@@ -101,5 +101,15 @@ export class LoginService {
       })
       .catch(this.handleError);
   }
+   updateProfile(name, email, avatar) {
+     console.log('avatar',avatar);
+    return this.http
+      .put(`/api/users/${this.currentUser._id}/profile`, {
+        name,
+        email,
+        avatar
+      })
+      .catch(this.handleError);
+  }
 
 }
