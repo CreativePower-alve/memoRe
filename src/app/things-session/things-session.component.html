@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container" [ngClass]="{'isSession':isSession}">
     <div class="sessionMessage">
-        <div class="sesssionStartDisplay" *ngIf="isSession">
+        <div class="sesssionStartDisplay elementToFadeOut" *ngIf="isSession">
             <h1>Let's start typing!</h1>
         </div>
         <div class="sessionEndDisplay" *ngIf="!isSession">
@@ -10,7 +10,7 @@
                     <md-icon>home</md-icon>Home</a>
             </p>
             <h3>Here is what you've practiced for {{timeInSession}} minutes: </h3>
-            <div class="tags" *ngIf="thingsSessionService.isTagsMode(config?.isSessionMode) && config?.tags.length > 0">
+            <div class="tags" *ngIf="thingsSessionService.isTagsMode(config?.isSessionMode)">
                 <div class="tags-container" *ngIf="config?.tags.length > 0">
                     <span *ngFor="let tag of config?.tags">
                                 {{tag.name}}
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="session" *ngIf="isSession">
+    <div class="session zoomIn" *ngIf="isSession">
         <div class="items">
             <div class="wrapper" *ngFor="let sessionItem of practiceItems; let i=index">
                 <memore-practice-item [item]="sessionItem" (onFinish)="getNextItem()" *ngIf="i===currentIndex">

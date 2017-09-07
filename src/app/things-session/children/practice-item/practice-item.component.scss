@@ -21,13 +21,13 @@ $font-size : 2em;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  max-width: 816px;
-  min-height: 200px;
+  max-width: 1200px;
+  min-height: 300px;
 }
 
 .practiceItem {
 	display: flex;
-	flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 
 span.letter{
@@ -52,14 +52,17 @@ span.letter.active:before{
     color: #fff;
     width: 20px;
     text-align: center;
+    transition: background 0.4s linear;
 }
 span.letter.error:before{
 	background: red;
     color: #fff;
     width: 20px;
     text-align: center;
+    transition: background 0.4s linear;
 }
 
 span.letter.typed:before{
     color: black;
 }
+
