@@ -2,7 +2,8 @@ import {  Component,
         	OnInit,
         	EventEmitter,
         	Output,
-        	Input
+        	Input,
+          OnChanges
        }  from '@angular/core';
 
 import { IUser } from '../account/login/user.model';
@@ -20,13 +21,21 @@ export class TopBarComponent implements OnInit {
 	@Output() onOpenMenu = new EventEmitter();
   @Output() logout = new EventEmitter();
 	@Output() onStartTypingSession = new EventEmitter();
+  hasProfileAccess:boolean;
   
-  constructor() { }
-
-  ngOnInit() {
+  constructor() { 
   }
 
+  ngOnInit() {
+    console.log(this.loggedUser,"loggedUser");
+  }
 
+  ngOnChanges(change){
+    console.log('change',change);
+    if(change['loggedUser'] && change['loggedUser'].currentValue){
+        this.hasProfileAccess = this.canSeeProfile(change['loggedUser'].currentValue);  
+    }
+  }
 
   toggleSideNav() {
 	  this.isOpen = !this.isOpen;
@@ -38,5 +47,13 @@ export class TopBarComponent implements OnInit {
   }
   logoutUser() {
      this.logout.emit();
+  }
+    canSeeProfile(currentUser ){
+    if(!currentUser){
+      return false;
+    }
+     return  currentUser.name !== 'guest' 
+            && currentUser.name !== 'Admin' 
+            && currentUser.provider == "local";   
   }
 }

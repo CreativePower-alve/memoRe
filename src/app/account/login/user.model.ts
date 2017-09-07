@@ -3,5 +3,6 @@ export interface IUser {
   email: string,
   name: string,
   gravatar: string,
-  token:string
+  token:string,
+  provider:object
 }
