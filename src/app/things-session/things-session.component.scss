@@ -1,10 +1,39 @@
-.container{
+:host{
+	display: flex;
+    flex-direction: column;
+	flex: 1 0 auto;
+}
+
+.isSession {
+	background: rgba(0,0,0, 0.4);
+}
+
+.sessionMessage{ 
+	text-align: center;
+	margin-bottom: 16px;
 	margin: 26px;
+}
+.sesssionStartDisplay{
+	position: relative;
+	h1 {
+		position: absolute;
+		margin: 0 auto;
+		text-align: center;
+		width: 100%;
+		top: -15px;
+	}
+	
+}
+.container{
+	display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
 }
 .session{
 	padding: 16px;
 	display: flex;
 	flex-direction: column;
+	animation: zoomIn 1s linear forwards;
 }
 
 .tags {
@@ -17,10 +46,7 @@
 	flex-direction: column;
 }
 
-.sessionMessage{ 
-	text-align: center;
-    margin-bottom: 16px;
-}
+
 .sessionActions{
 	align-self: center;
 	margin-top: 26px;
@@ -33,3 +59,32 @@
 .Input:before, .Input:after{
 	content: '\"'
 }
+
+.elementToFadeOut {
+    animation: fadeOut 0.5s 1s linear forwards;
+}
+
+@keyframes fadeOut {
+	from {
+	  opacity: 1;
+	}
+  
+	to {
+	  opacity: 0;
+	}
+  }
+
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale3d(.3, .3, .3);
+    }
+  
+    50% {
+      opacity: 1;
+    }
+  }
+  
+  .zoomIn {
+    animation-name: zoomIn;
+  }
