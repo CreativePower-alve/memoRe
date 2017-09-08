@@ -1,9 +1,11 @@
+
 import {
   Component,
   OnInit,
   EventEmitter,
   Output,
-  Input
+  Input,
+  OnChanges
 } from '@angular/core';
 
 import { IUser } from '../account/login/user.model';
@@ -23,18 +25,23 @@ export class TopBarComponent implements OnInit {
   @Output() logout = new EventEmitter();
   @Output() onStartTypingSession = new EventEmitter();
   canPlay;
+  hasProfileAccess: boolean;
 
   constructor(private thingsService: ThingsService) { }
 
   ngOnInit() {
     this.thingsService.thingsEvent
-    .take(2)
-    .subscribe((things: any[]) => {
-      this.canPlay = things && things.length > 0;
-    });
+      .take(2)
+      .subscribe((things: any[]) => {
+        this.canPlay = things && things.length > 0;
+      });
   }
 
-
+  ngOnChanges(change) {
+    if (change['loggedUser'] && change['loggedUser'].currentValue) {
+      this.hasProfileAccess = this.canSeeProfile(change['loggedUser'].currentValue);
+    }
+  }
 
   toggleSideNav() {
     this.isOpen = !this.isOpen;
@@ -46,5 +53,13 @@ export class TopBarComponent implements OnInit {
   }
   logoutUser() {
     this.logout.emit();
+  }
+  canSeeProfile(currentUser) {
+    if (!currentUser) {
+      return false;
+    }
+    return currentUser.name !== 'guest'
+      && currentUser.name !== 'Admin'
+      && currentUser.provider == "local";
   }
 }

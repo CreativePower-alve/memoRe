@@ -22,11 +22,11 @@ export class AppComponent {
 
   ngOnInit() {
     if (this.authTokenService.isLoggedIn()) {
-      this.auth.checkAuthenticationStatus().subscribe(() => {
+      this.auth.checkAuthenticationStatus().subscribe((currentUser) => {
         this.canShowNavigation();
       });
     }
-    this.router.events.subscribe((event) => {
+    this.router.events.subscribe((event) => { 
       this.canShowNavigation();
     });
   }
@@ -41,6 +41,7 @@ export class AppComponent {
       .subscribe(() => {
         setTimeout(() => {
           this.isOpen = window.innerWidth > 600 && this.authTokenService.isLoggedIn();
+              
         }, 0);
         this.auth.checkAuthenticationStatus().subscribe();
       });
@@ -70,4 +71,5 @@ export class AppComponent {
     this.isOpen = false;
     this.router.navigate(['/login']);
   }
+
 }

@@ -1,33 +1,48 @@
  <h1>Your Profile</h1>
- <form autocomplete="on" #profileForm="ngForm" (ngSubmit)="updateProfile(profileForm.value)" novalidate>
+ <form autocomplete="on" #profileForm="ngForm" (ngSubmit)="updateProfileData(profileForm.value)" novalidate>
   
     <div class="form-group" >
-       <md-input-container>
+       <md-input-container floatPlaceholder="always">
          <input
              mdInput 
              type="text" [(ngModel)]="name"
              name="name"
              #nameVar="ngModel"
-             required class="form-control" 
+             class="form-control" 
              placeholder="Name" />
-         <md-hint *ngIf="nameVar.invalid && (nameVar?.touched || mouseoverLogin)">Required</md-hint>    
+          <md-error>This field is required</md-error> 
        </md-input-container>
     </div>	
+     <div class="avatar">
+        <label for="avatar">Avatar</label>
+         <input
+             type="file"
+             name="avatar"
+             accept="image/x-png,image/gif,image/jpeg" 
+             (change)="fileChanged($event)"
+          />
+          <img class="displayAvatar" src="{{avatar}}" />
+    </div>  
     <div class="form-group">
-      <md-input-container>
+      <md-input-container floatPlaceholder="always">
         <input mdInput
+               pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" 
                type="email"
                [(ngModel)]="email"
                name="email"
                #emailVar="ngModel"
-               required
                class="form-control" 
                placeholder="Email" />
-        <md-hint *ngIf="emailVar?.invalid && (emailVar?.touched || mouseoverLogin)">Required</md-hint>         
+        <md-error *ngIf="emailVar.errors?.required">Email is required</md-error>
+        <md-error *ngIf="emailVar.errors?.pattern">Email is not valid</md-error>     
       </md-input-container>
     </div>
+     <button type="submit" md-raised-button color="primary"
+     [disabled]="profileForm.invalid">Save changes</button>
+  </form>
+   <form autocomplete="on" #profilePasswordForm="ngForm" (ngSubmit)="updatePassword(profilePasswordForm.value)" novalidate>
     <div class="form-group" >
-      <md-input-container>
+      <md-input-container floatPlaceholder="always">
         <input mdInput 
                type="password" 
                [(ngModel)]="currentPassword"
@@ -36,11 +51,11 @@
                 #currentPasswordVar="ngModel"
                class="form-control" 
                placeholder="Current Password" />
-        <md-hint *ngIf="currentPasswordVar?.invalid && (currentPasswordVar?.touched || mouseoverLogin)">Required</md-hint>       
+         <md-error>This field is required</md-error>       
       </md-input-container>
     </div>
      <div class="form-group" >
-     <md-input-container>
+     <md-input-container floatPlaceholder="always">
         <input mdInput
          type="password"
          [(ngModel)]="newPassword"
@@ -48,11 +63,10 @@
           #confirmPasswordVar="ngModel"
          required class="form-control" 
          placeholder="New Password" />
-         <md-hint *ngIf="confirmPasswordVar?.invalid && (confirmPasswordVar?.touched || mouseoverLogin)">Required</md-hint>
+         <md-error>This field is required</md-error> 
      </md-input-container>
     </div>
-    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" md-button
-     [disabled]="profileForm.invalid">Save changes</button></span>
+    <button type="submit" md-raised-button color="primary"
+     [disabled]="profilePasswordForm.invalid">Save changes</button>
   </form>
-  <div *ngIf ="updateInvalid"> Invalid update profile information</div>
   	

@@ -131,8 +131,9 @@ exports.upsert = function(req, res) {
       upsert: true,
       setDefaultsOnInsert: true,
       runValidators: true
-    }).exec()
-
+    })
+    .populate("tags")
+    .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
   });
