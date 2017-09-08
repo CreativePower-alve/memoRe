@@ -13,10 +13,11 @@ import { TagsService } from "./shared/tags.service";
 export class AppComponent {
   public isOpen: boolean;
   canShowNavBarButtons = true;
-  constructor(private router: Router,
+  constructor(
+    public authTokenService: AuthTokenService,
+    private router: Router,
     private thingsSessionService: ThingsSessionService,
     public auth: LoginService,
-    private authTokenService: AuthTokenService,
     private tagService: TagsService) {
   }
 
