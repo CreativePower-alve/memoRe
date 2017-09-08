@@ -13,7 +13,7 @@ export class LoginService {
     private googleUrl = '/auth/google';
     private identityUrl = '/api/users/me';
     private signupUrl = '/api/users/';
- 
+
 
     constructor(private http: Http, private authService: AuthTokenService) { }
 
@@ -90,23 +90,24 @@ export class LoginService {
         this.logoutEvent.next(true);
     }
 
-  changePassword(oldPassword, newPassword) {
-    return this.http
-      .put(`/api/users/${this.currentUser._id}/password`, {
-        oldPassword,
-        newPassword
-      })
-      .catch(this.handleError);
-  }
-   updateProfile(name, email, avatar) {
-     console.log('avatar',avatar);
-    return this.http
-      .put(`/api/users/${this.currentUser._id}/profile`, {
-        name,
-        email,
-        avatar
-      })
-      .catch(this.handleError);
-  }
+    changePassword(oldPassword, newPassword) {
+        return this.http
+            .put(`/api/users/${this.currentUser._id}/password`, {
+                oldPassword,
+                newPassword
+            })
+            .catch(this.handleError);
+    }
+    
+    updateProfile(name, email, avatar) {
+        console.log('avatar', avatar);
+        return this.http
+            .put(`/api/users/${this.currentUser._id}/profile`, {
+                name,
+                email,
+                avatar
+            })
+            .catch(this.handleError);
+    }
 
 }
