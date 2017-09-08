@@ -18,8 +18,13 @@ export class OpenSessionDialogComponent implements OnInit {
   ngOnInit() {
     this.tagsService.getAllTags()
       .subscribe(allTags => this.allTags = allTags)
-    this.newTagSubscription = this.tagsService.dynamicTagEvent.subscribe((tag) => {
-      this.allTags.push(tag);
+    this.newTagSubscription = this.tagsService.dynamicTagEvent.subscribe(({ tag, action }) => {
+      if ('add' === action) {
+        this.allTags = this.allTags.concat([tag]);
+      }
+      else if ('delete' === action) {
+        this.allTags = this.allTags.filter(aTag => aTag.id !== tag.id);
+      }
     });
   }
 

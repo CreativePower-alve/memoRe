@@ -25,6 +25,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
   private allTags;
   private sub: any;
   private queryParams = { tags: [], searchText: '' };
+  private tagSubscription;
 
   constructor(private dialog: MdDialog,
     private thingsService: ThingsService,
@@ -65,10 +66,28 @@ export class ThingsComponent implements OnInit, OnDestroy {
           this.filterThingsByTags(this.queryParams.tags) :
           this.things;
       });
+
+    this.tagSubscription = this.tagsService.dynamicTagEvent.subscribe(({ tag, action }) => {
+      if ('delete' === action) {
+        this.handleDeleteTag(tag);
+      }
+    });
+  }
+
+  handleDeleteTag(tag) {
+    this.things = this.things.map(aThing => {
+      const toDeleteTag = aThing.tags.find(aTag => aTag.id === tag.id);
+      if (toDeleteTag) {
+        aThing.tags = aThing.tags.filter(aTag => aTag.id !== toDeleteTag.id);
+      }
+      return aThing;
+    });
+    this.allTags = this.allTags.filter(aTag => aTag.id !== tag.id);
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.tagSubscription.unsubscribe();
   }
 
   saveThing(aThing) {
@@ -150,7 +169,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
     newThing.tags.forEach(tag => {
       if (!this.allTags.find(aTag => tag.name === aTag.name)) {
         this.allTags.push(tag);
-        this.tagsService.dynamicTagEvent.next(tag);
+        this.tagsService.dynamicTagEvent.next({ tag, action: 'add' });
       }
     });
   }

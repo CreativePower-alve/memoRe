@@ -12,6 +12,7 @@ import { MdSidenav } from '@angular/material';
 
 import { TagsService } from '../shared/tags.service';
 import { AuthTokenService } from '../shared/authToken.service';
+import { ToastService } from "../shared/toast.service";
 
 @Component({
   selector: 'memore-side-nav',
@@ -28,12 +29,17 @@ export class SideNavComponent implements OnInit {
   private filterBy = [];
   newTagSubscription;
 
-  constructor(private tagsService: TagsService,
-    private router: Router, private authService: AuthTokenService) { }
+  constructor(
+    private tagsService: TagsService,
+    private router: Router,
+    private authService: AuthTokenService,
+    private toastService: ToastService) { }
 
   ngOnInit() {
-    this.newTagSubscription = this.tagsService.dynamicTagEvent.subscribe((tag) => {
-      this.allTags.push(tag);
+    this.newTagSubscription = this.tagsService.dynamicTagEvent.subscribe(({ tag, action }) => {
+      if ('add' === action) {
+        this.allTags = this.allTags.concat([tag]);
+      }
     });
   }
 
@@ -86,7 +92,9 @@ export class SideNavComponent implements OnInit {
 
   deleteTag(tagId) {
     this.tagsService.deleteTag(tagId).subscribe(() => {
+      this.tagsService.dynamicTagEvent.next({ tag: { id: tagId }, action: 'delete' });
       this.allTags = this.allTags.filter(aTag => aTag.id !== tagId);
+      this.toastService.open('Tag deleted successfully', 'success-toaster');
     });
   }
 

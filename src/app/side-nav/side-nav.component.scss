@@ -35,10 +35,10 @@
     }
     .deleteIcon {
         cursor: pointer;
-        color: #ff9800;
+        color: red;
     }
     .deleteIcon:hover {
-        color: darken(#ff9800, 5%);
+        color: darken(red, 5%);
     }
 }
 
