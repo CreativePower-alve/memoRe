@@ -56,6 +56,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
         return this.thingsService.getThings();
       })
       .subscribe((things) => {
+        this.thingsService.thingsEvent.next(things);
         this.things = things.map(thing => {
           thing.tags = thing.tags.map(tagId => this.allTags.find(tag => tag.id === tagId));
           return thing;

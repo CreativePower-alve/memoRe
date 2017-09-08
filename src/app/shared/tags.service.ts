@@ -2,20 +2,22 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
+
+import { LoginService } from "../account/login/login.service";
 
 @Injectable()
 export class TagsService {
     public dynamicTagEvent = new Subject();
+    public logoutSubscription;
     private baseUrl = `/api/tags`;
     private cachedTags;
     private allTagsObservable;
 
-    constructor(private http: Http) { }
+    constructor(private http: Http, loginService: LoginService) {
+        this.logoutSubscription = loginService.logoutEvent.subscribe(() => {
+            this.invalidateCache();
+        });
+    }
 
     getAllTags() {
         if (this.cachedTags) {
@@ -33,10 +35,16 @@ export class TagsService {
         return this.allTagsObservable;
     }
 
+    invalidateCache() {
+        this.cachedTags = undefined;
+        this.allTagsObservable = null;
+    }
+
     private extractData(response: Response) {
         let body = response.json();
         return body || [];
     }
+
 
     private handleError(error: Response) {
         console.error(error);

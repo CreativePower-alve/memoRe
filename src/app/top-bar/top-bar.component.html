@@ -11,7 +11,7 @@
         <a md-icon-button [routerLink]="['/things']" title="Home"><md-icon>home</md-icon></a>
     </div>
     <div class="right">
-        <div class="startSession" *ngIf="canShowNavBarButtons">
+        <div class="startSession" *ngIf="canShowNavBarButtons && canPlay">
             <memore-open-session-dialog (onStartSession)="startSession($event)"></memore-open-session-dialog>
         </div>
         <div class="userProfile">

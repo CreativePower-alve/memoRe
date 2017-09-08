@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { ThingsSessionService, SessionConfig } from './shared/things-session.service';
 import { LoginService } from './account/login/login.service';
 import { AuthTokenService } from './shared/authToken.service';
+import { TagsService } from "./shared/tags.service";
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ export class AppComponent {
   constructor(private router: Router,
     private thingsSessionService: ThingsSessionService,
     public auth: LoginService,
-    private authTokenService: AuthTokenService) {
+    private authTokenService: AuthTokenService,
+    private tagService: TagsService) {
   }
 
   ngOnInit() {
@@ -27,6 +29,10 @@ export class AppComponent {
     this.router.events.subscribe((event) => {
       this.canShowNavigation();
     });
+  }
+
+  ngOnDestroy() {
+    this.tagService.logoutSubscription.unsubscribe();
   }
 
   ngAfterContentInit() {

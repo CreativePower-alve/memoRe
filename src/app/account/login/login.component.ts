@@ -40,13 +40,6 @@ export class LoginComponent implements OnInit {
   }
   loginWithGoogle() { 
     this.loginService.googleLogin();
-    // this.loginService.googleLogin().subscribe(resp =>{
-    //     if(!resp){
-    //       this.loginInvalid = true;
-    //     }else{
-    //        this.router.navigate(['things']);        
-    //     }
-    //   });
   }
   cancel() {
     
