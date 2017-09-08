@@ -7,7 +7,6 @@
              mdInput 
              type="text" [(ngModel)]="name"
              name="name"
-             value ={{auth.getCurrentUser()?.name}}
              #nameVar="ngModel"
              class="form-control" 
              placeholder="Name" />
@@ -31,7 +30,6 @@
                type="email"
                [(ngModel)]="email"
                name="email"
-                value ={{auth.getCurrentUser()?.email}}
                #emailVar="ngModel"
                class="form-control" 
                placeholder="Email" />

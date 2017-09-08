@@ -20,7 +20,7 @@ var UserSchema = new mongoose.Schema({
     type: String 
   },
   gravatar:String,
-  avatar:Buffer,
+  avatar:{ data: Buffer, contentType: String },
   provider: String,
   salt: String,
   google: {}

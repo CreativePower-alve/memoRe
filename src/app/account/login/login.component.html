@@ -15,14 +15,14 @@
 			   <p class="title"> MemoRe </p>
 			<div class="alert" *ngIf ="loginInvalid"> Invalid login information</div>	
 		    <div class="form-group" >
-		       <md-input-container>
+		       <md-input-container  floatPlaceholder="always">
 		      		<input   pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" mdInput id="email" type="email" (ngModel)="email" name="email" required  placeholder = "Email"  #email="ngModel"  />
 		      		<md-error *ngIf="email.errors?.required">Email is required</md-error>
     				<md-error *ngIf="email.errors?.pattern">Email is not valid</md-error>
 		       </md-input-container>
 		    </div>
 		    <div class="form-group" >
-		       <md-input-container>	
+		       <md-input-container  floatPlaceholder="always">	
 		      		<input mdInput id="password" type="password" (ngModel)="password" name="password" required placeholder = "Password" />
 		      		 <md-error>This field is required</md-error>
 		       </md-input-container>
