@@ -20,6 +20,7 @@ import { AuthTokenService } from '../shared/authToken.service';
 })
 export class SideNavComponent implements OnInit {
   @Input() isOpen: boolean;
+  @Input() isLoggedIn: boolean;
   @ViewChild('sidenav') sidenav: MdSidenav;
   allTags = [];
   searchThings;
@@ -31,21 +32,15 @@ export class SideNavComponent implements OnInit {
     private router: Router, private authService: AuthTokenService) { }
 
   ngOnInit() {
-    if (this.authService.isLoggedIn()) {
-      const selectedTags = localStorage.getItem('tags');
-      this.filterBy = selectedTags ? selectedTags.split(',') : [];
-      this.tagsService.getAllTags().subscribe(allTags => {
-        this.allTags = allTags.map(aTag => {
-          aTag.checked = this.filterBy ?
-            this.filterBy.indexOf(aTag.id) !== -1 :
-            false;
-          return aTag;
-        });
-      });
-    }
     this.newTagSubscription = this.tagsService.dynamicTagEvent.subscribe((tag) => {
       this.allTags.push(tag);
     });
+  }
+
+  ngOnChanges(change) {
+    if (change['isLoggedIn'] && change['isLoggedIn'].currentValue) {
+      this.initializeTags();
+    }
   }
 
   ngOnDestroy() {
@@ -53,8 +48,20 @@ export class SideNavComponent implements OnInit {
   }
 
   openSidenav() {
-    console.log('toggle');
     this.sidenav.toggle();
+  }
+
+  initializeTags() {
+    const selectedTags = localStorage.getItem('tags');
+    this.filterBy = selectedTags ? selectedTags.split(',') : [];
+    this.tagsService.getAllTags().subscribe(allTags => {
+      this.allTags = allTags.map(aTag => {
+        aTag.checked = this.filterBy ?
+          this.filterBy.indexOf(aTag.id) !== -1 :
+          false;
+        return aTag;
+      });
+    });
   }
 
   addFilter(event, tag) {

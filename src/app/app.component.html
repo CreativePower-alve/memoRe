@@ -1,5 +1,6 @@
 <memore-side-nav 
-  [isOpen]="isOpen">
+	[isOpen]="isOpen"
+	[isLoggedIn]="authTokenService.isLoggedIn()">
 	<top-bar 
 	 [isOpen]="isOpen"
 	 [loggedUser] = "auth.getCurrentUser()"
