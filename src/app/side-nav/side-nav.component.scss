@@ -21,8 +21,25 @@
     overflow-y: auto;
 }
 
-.tagCheckbox{
-	margin-bottom: 16px;
+.tagCheckbox {
+    margin-bottom: 13px;
+}
+
+.tag-container{
+    display: flex;
+    align-items: center;
+    margin-bottom: 13px;
+    .tagCheckbox {
+        flex: 1;
+        margin: 0px;
+    }
+    .deleteIcon {
+        cursor: pointer;
+        color: #ff9800;
+    }
+    .deleteIcon:hover {
+        color: darken(#ff9800, 5%);
+    }
 }
 
 .mat-input-container .mat-input-wrapper{

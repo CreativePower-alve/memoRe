@@ -84,4 +84,10 @@ export class SideNavComponent implements OnInit {
     });
   }
 
+  deleteTag(tagId) {
+    this.tagsService.deleteTag(tagId).subscribe(() => {
+      this.allTags = this.allTags.filter(aTag => aTag.id !== tagId);
+    });
+  }
+
 }

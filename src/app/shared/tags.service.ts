@@ -35,6 +35,11 @@ export class TagsService {
         return this.allTagsObservable;
     }
 
+    deleteTag(tagId) {
+        return this.http.delete(`${this.baseUrl}/${tagId}`)
+            .catch(this.handleError);
+    }
+
     invalidateCache() {
         this.cachedTags = undefined;
         this.allTagsObservable = null;

@@ -15,9 +15,9 @@ export class ThingsService {
     public thingsEvent = new Subject();
     private baseUrl = `/api/things`;
 
-    constructor(private http: Http) {}
+    constructor(private http: Http) { }
 
-     getThings() {
+    getThings() {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
@@ -43,10 +43,10 @@ export class ThingsService {
             .catch(this.handleError);
     }
 
-    private updateThing(thing) {
-        const url = `${this.baseUrl}/${thing.id}`;
-        return this.http.put(url, thing)
-            .map(() => thing)
+    private updateThing(thingToUpdate) {
+        const url = `${this.baseUrl}/${thingToUpdate.id}`;
+        return this.http.put(url, thingToUpdate)
+            .map((response) => response.json())
             .catch(this.handleError);
     }
 

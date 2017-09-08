@@ -20,13 +20,20 @@
                 </md-checkbox>  
             </span>
             
-            <span *ngFor="let tag of allTags" class="tagCheckbox">
-              <md-checkbox color="accent" 
+            <span *ngFor="let tag of allTags" class="tag-container">
+              <md-checkbox 
+               class="tagCheckbox" 
+               color="accent" 
                [disableRipple]="true"
                (change)="addFilter($event, tag)" 
                [checked]="tag.checked">
 		               {{tag.name}}
-		          </md-checkbox>
+              </md-checkbox>
+              <md-icon 
+              title="delete" 
+              class="deleteIcon"
+              (click)="deleteTag(tag.id)"
+              >delete_forever</md-icon>   
         	</span>
         </div>
     </md-sidenav>
