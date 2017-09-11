@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions, Headers} from '@angular/http';
 import {IUser} from './user.model';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -102,14 +102,23 @@ export class LoginService {
       .catch(this.handleError);
   }
    updateProfile(name, email, avatar) {
-     console.log('avatar',avatar);
+    
+        let formData:FormData = new FormData();
+        if(avatar){
+            formData.append('avatar', avatar, avatar.name);
+        }
+       
+        formData.append('name', name);
+         formData.append('email', email);
+        let options = new RequestOptions();
+        options.headers = new Headers();
+        options.headers.append("Content-Type", "multipart/form-data");
+       
     return this.http
-      .put(`/api/users/${this.currentUser._id}/profile`, {
-        name,
-        email,
-        avatar
-      })
+      .put(`/api/users/${this.currentUser._id}/profile`, formData, options)
       .catch(this.handleError);
+       // xhr.open("PUT", `/api/users/${this.currentUser._id}/profile`, true);
+       // xhr.send(formData);
   }
 
 }

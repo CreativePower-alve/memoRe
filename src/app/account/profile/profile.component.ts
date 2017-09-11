@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
   errorMessage;
   uploadFile;
   currentUser;
+  avatarValue;
   constructor(public auth: LoginService) { }
 
  ngOnInit() {
@@ -25,18 +26,14 @@ export class ProfileComponent implements OnInit {
      this.name = this.currentUser.name;
      this.email = this.currentUser.email;
      if(this.currentUser.avatar){
-       this.avatar = 'data:image/jpeg;base64,' + this.currentUser.avatar ;
+       this.avatarValue = 'data:image/jpeg;base64,' + this.currentUser.avatar ;
      }
      else{
-        this.avatar = this.currentUser.gravatar;
+        this.avatarValue = this.currentUser.gravatar;
      }
-    
-     console.log('avatar',this.avatar);
    }
  }
-hexToBase64(str) {
-    return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
-}
+
  updatePassword() {
     this.auth
     .changePassword(this.currentPassword, this.newPassword)
@@ -45,7 +42,7 @@ hexToBase64(str) {
     });
   }
   updateProfileData() {
-    console.log('prof avatar',this.avatar);
+    console.log(this.avatar,'here');
     this.auth
     .updateProfile(this.name, this.email, this.avatar)
     .subscribe(() => {}, () => {
@@ -55,15 +52,19 @@ hexToBase64(str) {
     fileChanged(e: Event) {
       const target: HTMLInputElement = e.target as HTMLInputElement;
       let file = target.files[0];
+      this.avatar = file;
+
       let reader = new FileReader();
        
         if (file) {
            reader.readAsDataURL(file); //reads the data as a URL
        } else {
-           this.avatar = "";
+           this.avatarValue = "";
        }
         reader.onloadend = function () {
-           this.avatar = reader.result;
+           this.avatarValue = reader.result;
+
        }.bind(this);
     }
+
 }

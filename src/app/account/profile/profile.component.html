@@ -1,5 +1,5 @@
  <h1>Your Profile</h1>
- <form autocomplete="on" #profileForm="ngForm" (ngSubmit)="updateProfileData(profileForm.value)" novalidate>
+ <form autocomplete="on" #profileForm="ngForm" (ngSubmit)="updateProfileData()" novalidate  multiple="multiple">
   
     <div class="form-group" >
        <md-input-container floatPlaceholder="always">
@@ -21,7 +21,7 @@
              accept="image/x-png,image/gif,image/jpeg" 
              (change)="fileChanged($event)"
           />
-          <img class="displayAvatar" src="{{avatar}}" />
+          <img class="displayAvatar" src="{{avatarValue}}" />
     </div>  
     <div class="form-group">
       <md-input-container floatPlaceholder="always">
@@ -40,7 +40,7 @@
      <button type="submit" md-raised-button color="primary"
      [disabled]="profileForm.invalid">Save changes</button>
   </form>
-   <form autocomplete="on" #profilePasswordForm="ngForm" (ngSubmit)="updatePassword(profilePasswordForm.value)" novalidate>
+   <form autocomplete="on" #profilePasswordForm="ngForm" (ngSubmit)="updatePassword()" novalidate>
     <div class="form-group" >
       <md-input-container floatPlaceholder="always">
         <input mdInput 

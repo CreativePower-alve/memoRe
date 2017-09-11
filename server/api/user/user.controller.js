@@ -5,6 +5,8 @@ var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 const gravatar = require('gravatar');
 
+var path = require('path');
+
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
@@ -104,18 +106,32 @@ exports.changePassword = function(req, res) {
 /**
 * Update a user's profile
 */
+
 exports.updateProfile = function(req, res) {
   var userId = req.user._id;
   var name = String(req.body.name);
   var email = String(req.body.email);
   var avatarValue = req.body.avatar;
- 
+  console.log('req.body',req.body);
+  console.log('req.query',req.query);
+  console.log('req.params',req.params);
+  console.log('req.file',req.file);
+  console.log('req.formData',req.formData);
+  console.log('req.data',req.data);
+  console.log('req.name',req.name);
+   console.log('req.payload',req.payload);
+   console.log('req.avatar',req.avatar);
+ /*
+   var tempPath = avatarValue.path;
+  var targetPath = path.join(__dirname, "../../uploads/" + userId  + avatarValue.name);
+  var savePath = "/uploads/" + userId + avatarValue.name;
+*/
   return User.findById(userId).exec()
     .then(user => {
         user.name = name ? name : user.name;
         user.email = email ? email : user.email;
-        if(avatarValue != undefined){
-          user.avatar = avatarValue;  
+        if(avatarValue != undefined ){
+          user.avatar = avatarValue; 
         }else{
           console.log(email,'email');
           user.gravatar = gravatar.url(email, {s: '200', r: 'pg', d: '404'});
