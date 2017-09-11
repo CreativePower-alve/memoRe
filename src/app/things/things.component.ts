@@ -108,6 +108,9 @@ export class ThingsComponent implements OnInit, OnDestroy {
         this.things = this.things.filter((thing => thing.id !== aThing.id));
         this.toastService.open('Thing deleted successfully', 'success-toaster');
         this.updateDisplayThings();
+        if (!this.things.length) {
+          this.thingsService.thingsEvent.next(this.things);
+        }
       },
       (error: any) => {
         this.toastService.open('Thing could not be deleted successfully', 'error-toaster');
@@ -151,6 +154,9 @@ export class ThingsComponent implements OnInit, OnDestroy {
     if (isCreate) {
       this.things = this.things.concat([thingObject]);
       this.toastService.open('Thing saved successfully', 'success-toaster');
+      if (this.things.length === 1) {
+        this.thingsService.thingsEvent.next(this.things);
+      }
     }
     else {
       this.things = this.things.map(thing => {

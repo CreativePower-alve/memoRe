@@ -26,15 +26,19 @@ export class TopBarComponent implements OnInit {
   @Output() onStartTypingSession = new EventEmitter();
   canPlay;
   hasProfileAccess: boolean;
+  thingsUpdateSubscription;
 
   constructor(private thingsService: ThingsService) { }
 
   ngOnInit() {
-    this.thingsService.thingsEvent
-      .take(2)
+    this.thingsUpdateSubscription = this.thingsService.thingsEvent
       .subscribe((things: any[]) => {
         this.canPlay = things && things.length > 0;
       });
+  }
+
+  ngOnDestroy() {
+    this.thingsUpdateSubscription.unsubscribe();
   }
 
   ngOnChanges(change) {
