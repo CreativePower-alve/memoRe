@@ -12,6 +12,7 @@ import { MdSidenav } from '@angular/material';
 
 import { TagsService } from '../shared/tags.service';
 import { AuthTokenService } from '../shared/authToken.service';
+import { ToastService } from "../shared/toast.service";
 
 @Component({
   selector: 'memore-side-nav',
@@ -20,6 +21,7 @@ import { AuthTokenService } from '../shared/authToken.service';
 })
 export class SideNavComponent implements OnInit {
   @Input() isOpen: boolean;
+  @Input() isLoggedIn: boolean;
   @ViewChild('sidenav') sidenav: MdSidenav;
   allTags = [];
   searchThings;
@@ -27,25 +29,24 @@ export class SideNavComponent implements OnInit {
   private filterBy = [];
   newTagSubscription;
 
-  constructor(private tagsService: TagsService,
-    private router: Router, private authService: AuthTokenService) { }
+  constructor(
+    private tagsService: TagsService,
+    private router: Router,
+    private authService: AuthTokenService,
+    private toastService: ToastService) { }
 
   ngOnInit() {
-    if (this.authService.isLoggedIn()) {
-      const selectedTags = localStorage.getItem('tags');
-      this.filterBy = selectedTags ? selectedTags.split(',') : [];
-      this.tagsService.getAllTags().subscribe(allTags => {
-        this.allTags = allTags.map(aTag => {
-          aTag.checked = this.filterBy ?
-            this.filterBy.indexOf(aTag.id) !== -1 :
-            false;
-          return aTag;
-        });
-      });
-    }
-    this.newTagSubscription = this.tagsService.dynamicTagEvent.subscribe((tag) => {
-      this.allTags.push(tag);
+    this.newTagSubscription = this.tagsService.dynamicTagEvent.subscribe(({ tag, action }) => {
+      if ('add' === action) {
+        this.allTags = this.allTags.concat([tag]);
+      }
     });
+  }
+
+  ngOnChanges(change) {
+    if (change['isLoggedIn'] && change['isLoggedIn'].currentValue) {
+      this.initializeTags();
+    }
   }
 
   ngOnDestroy() {
@@ -53,8 +54,20 @@ export class SideNavComponent implements OnInit {
   }
 
   openSidenav() {
-    console.log('toggle');
     this.sidenav.toggle();
+  }
+
+  initializeTags() {
+    const selectedTags = localStorage.getItem('tags');
+    this.filterBy = selectedTags ? selectedTags.split(',') : [];
+    this.tagsService.getAllTags().subscribe(allTags => {
+      this.allTags = allTags.map(aTag => {
+        aTag.checked = this.filterBy ?
+          this.filterBy.indexOf(aTag.id) !== -1 :
+          false;
+        return aTag;
+      });
+    });
   }
 
   addFilter(event, tag) {
@@ -74,6 +87,14 @@ export class SideNavComponent implements OnInit {
         tags: this.filterBy.join(','),
         search: this.searchThings
       }
+    });
+  }
+
+  deleteTag(tagId) {
+    this.tagsService.deleteTag(tagId).subscribe(() => {
+      this.tagsService.dynamicTagEvent.next({ tag: { id: tagId }, action: 'delete' });
+      this.allTags = this.allTags.filter(aTag => aTag.id !== tagId);
+      this.toastService.open('Tag deleted successfully', 'success-toaster');
     });
   }
 

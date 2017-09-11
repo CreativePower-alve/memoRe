@@ -25,6 +25,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
   private allTags;
   private sub: any;
   private queryParams = { tags: [], searchText: '' };
+  private tagSubscription;
 
   constructor(private dialog: MdDialog,
     private thingsService: ThingsService,
@@ -50,14 +51,13 @@ export class ThingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // redirect to route to clear any search query param that might remain after page refresh
-    //  this.router.navigate(['/things'], { queryParams: { tags: this.queryParams.tags.join(',') } });
     this.tagsService.getAllTags()
       .flatMap(allTags => {
         this.allTags = allTags;
         return this.thingsService.getThings();
       })
       .subscribe((things) => {
+        this.thingsService.thingsEvent.next(things);
         this.things = things.map(thing => {
           thing.tags = thing.tags.map(tagId => this.allTags.find(tag => tag.id === tagId));
           return thing;
@@ -66,10 +66,28 @@ export class ThingsComponent implements OnInit, OnDestroy {
           this.filterThingsByTags(this.queryParams.tags) :
           this.things;
       });
+
+    this.tagSubscription = this.tagsService.dynamicTagEvent.subscribe(({ tag, action }) => {
+      if ('delete' === action) {
+        this.handleDeleteTag(tag);
+      }
+    });
+  }
+
+  handleDeleteTag(tag) {
+    this.things = this.things.map(aThing => {
+      const toDeleteTag = aThing.tags.find(aTag => aTag.id === tag.id);
+      if (toDeleteTag) {
+        aThing.tags = aThing.tags.filter(aTag => aTag.id !== toDeleteTag.id);
+      }
+      return aThing;
+    });
+    this.allTags = this.allTags.filter(aTag => aTag.id !== tag.id);
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.tagSubscription.unsubscribe();
   }
 
   saveThing(aThing) {
@@ -90,6 +108,9 @@ export class ThingsComponent implements OnInit, OnDestroy {
         this.things = this.things.filter((thing => thing.id !== aThing.id));
         this.toastService.open('Thing deleted successfully', 'success-toaster');
         this.updateDisplayThings();
+        if (!this.things.length) {
+          this.thingsService.thingsEvent.next(this.things);
+        }
       },
       (error: any) => {
         this.toastService.open('Thing could not be deleted successfully', 'error-toaster');
@@ -133,6 +154,9 @@ export class ThingsComponent implements OnInit, OnDestroy {
     if (isCreate) {
       this.things = this.things.concat([thingObject]);
       this.toastService.open('Thing saved successfully', 'success-toaster');
+      if (this.things.length === 1) {
+        this.thingsService.thingsEvent.next(this.things);
+      }
     }
     else {
       this.things = this.things.map(thing => {
@@ -151,7 +175,7 @@ export class ThingsComponent implements OnInit, OnDestroy {
     newThing.tags.forEach(tag => {
       if (!this.allTags.find(aTag => tag.name === aTag.name)) {
         this.allTags.push(tag);
-        this.tagsService.dynamicTagEvent.next(tag);
+        this.tagsService.dynamicTagEvent.next({ tag, action: 'add' });
       }
     });
   }

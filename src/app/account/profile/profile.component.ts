@@ -44,10 +44,10 @@ export class ProfileComponent implements OnInit {
   updateProfileData() {
     console.log(this.avatar,'here');
     this.auth
-    .updateProfile(this.name, this.email, this.avatar)
-    .subscribe(() => {}, () => {
-       this.errorMessage = "incorrect data";
-    });
+      .updateProfile(this.name, this.email, this.avatar)
+      .subscribe(() => { }, () => {
+        this.errorMessage = "incorrect data";
+      });
   }
     fileChanged(e: Event) {
       const target: HTMLInputElement = e.target as HTMLInputElement;

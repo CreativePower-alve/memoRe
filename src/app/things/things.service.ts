@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -11,11 +12,12 @@ import 'rxjs/add/observable/of';
 
 @Injectable()
 export class ThingsService {
+    public thingsEvent = new Subject();
     private baseUrl = `/api/things`;
 
-    constructor(private http: Http) {}
+    constructor(private http: Http) { }
 
-     getThings() {
+    getThings() {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
@@ -41,10 +43,10 @@ export class ThingsService {
             .catch(this.handleError);
     }
 
-    private updateThing(thing) {
-        const url = `${this.baseUrl}/${thing.id}`;
-        return this.http.put(url, thing)
-            .map(() => thing)
+    private updateThing(thingToUpdate) {
+        const url = `${this.baseUrl}/${thingToUpdate.id}`;
+        return this.http.put(url, thingToUpdate)
+            .map((response) => response.json())
             .catch(this.handleError);
     }
 
