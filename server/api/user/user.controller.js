@@ -4,8 +4,8 @@ var User = require('./user.model');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 const gravatar = require('gravatar');
+var fs = require('fs');
 
-var path = require('path');
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -38,7 +38,7 @@ exports.index = function(req, res) {
  */
 exports.create = function(req, res) {
   console.log(req.body.email);
-  var url = gravatar.url(req.body.email, {s: '200', r: 'pg', d: '404'});
+  var url = gravatar.url(req.body.email, { s: '200', r: 'pg', d: '404' });
   var newUser = new User(req.body);
   newUser.gravatar = url;
   newUser.provider = 'local';
@@ -48,7 +48,7 @@ exports.create = function(req, res) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: 60 * 60 * 5
       });
-      res.json({ token:token, name:newUser.name, id:newUser._id, email:newUser.email,gravatar:newUser.gravatar });
+      res.json({ token: token, name: newUser.name, id: newUser._id, email: newUser.email, gravatar: newUser.gravatar });
     })
     .catch(validationError(res));
 }
@@ -61,10 +61,10 @@ exports.show = function(req, res, next) {
 
   return User.findById(userId).exec()
     .then(user => {
-      if(!user) {
+      if (!user) {
         return res.status(404).end();
       }
-      res.json(user.profile);
+      res.json(user);
     })
     .catch(err => next(err));
 }
@@ -91,7 +91,7 @@ exports.changePassword = function(req, res) {
 
   return User.findById(userId).exec()
     .then(user => {
-      if(user.authenticate(oldPass)) {
+      if (user.authenticate(oldPass)) {
         user.password = newPass;
         return user.save()
           .then(() => {
@@ -104,45 +104,47 @@ exports.changePassword = function(req, res) {
     });
 }
 /**
-* Update a user's profile
-*/
+ * Update a user's profile
+ */
 
 exports.updateProfile = function(req, res) {
   var userId = req.user._id;
   var name = String(req.body.name);
   var email = String(req.body.email);
-  var avatarValue = req.body.avatar;
-  console.log('req.body',req.body);
-  console.log('req.query',req.query);
-  console.log('req.params',req.params);
-  console.log('req.file',req.file);
-  console.log('req.formData',req.formData);
-  console.log('req.data',req.data);
-  console.log('req.name',req.name);
-   console.log('req.payload',req.payload);
-   console.log('req.avatar',req.avatar);
- /*
-   var tempPath = avatarValue.path;
-  var targetPath = path.join(__dirname, "../../uploads/" + userId  + avatarValue.name);
-  var savePath = "/uploads/" + userId + avatarValue.name;
-*/
+  var avatarValue = req.file;
+  console.log('req.body', req.body);
+  console.log('req.file', req.file);
+
   return User.findById(userId).exec()
     .then(user => {
-        user.name = name ? name : user.name;
-        user.email = email ? email : user.email;
-        if(avatarValue != undefined ){
-          user.avatar = avatarValue; 
-        }else{
-          console.log(email,'email');
-          user.gravatar = gravatar.url(email, {s: '200', r: 'pg', d: '404'});
-        }
-        //console.log(user.avatar == null, 'test');
+      user.name = name ? name : user.name;
+      user.email = email ? email : user.email;
+      if (avatarValue != undefined) {
+          user.avatar =avatarValue.path;
+          return user.save()
+            .then(() => {
+              res.status(204).end();
+            })
+            .catch(validationError(res));
+        
+      } else {
+        console.log(email, 'email');
+        user.gravatar = gravatar.url(email, { s: '200', r: 'pg', d: '404' });
         return user.save()
           .then(() => {
             res.status(204).end();
           })
           .catch(validationError(res));
+      }
+
     });
+}
+// function to encode file data to base64 encoded string
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
 }
 /**
  * Get my info
@@ -152,10 +154,17 @@ exports.me = function(req, res, next) {
 
   return User.findOne({ _id: userId }, '-salt -password').exec()
     .then(user => { // don't ever give out the password or salt
-      if(!user) {
+      if (!user) {
         return res.status(401).end();
       }
-      res.json(user);
+      if(user.avatar){
+        var base64str = base64_encode(user.avatar);
+        var userWithAvatarImg = Object.assign({},user._doc,{avatar:base64str});
+        res.json(userWithAvatarImg);
+      }else{
+        res.json(user);
+      }
+      
     })
     .catch(err => next(err));
 }

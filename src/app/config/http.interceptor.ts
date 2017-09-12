@@ -55,8 +55,7 @@ export class InterceptedHttp extends Http {
             options.headers = new Headers();
         }
          let token = this.authService.getToken() || {};
-        options.headers.append('Content-Type', 'application/json');
-        options.headers.append('Authorization', `Bearer ${token}`)
+         options.headers.append('Authorization', `Bearer ${token}`)
 
         return options;
     }

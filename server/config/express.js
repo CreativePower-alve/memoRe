@@ -15,7 +15,6 @@ var errorHandler = require('errorhandler');
 var path = require('path');
 var config = require('./environment');
 var passport = require('passport');
-var multer  = require('multer');
 module.exports = function(app) {
     var env = app.get('env');
 
@@ -29,7 +28,6 @@ module.exports = function(app) {
     app.use(bodyParser.json());
     app.use(methodOverride());
     app.use(cookieParser());
-    app.use(multer({dest:'./public/images/uploads'}).any());
     app.use(passport.initialize());
     console.log("env",env);
     if ('production' === env) {

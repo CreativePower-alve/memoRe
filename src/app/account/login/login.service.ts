@@ -107,15 +107,10 @@ export class LoginService {
        
         formData.append('name', name);
          formData.append('email', email);
-        let options = new RequestOptions();
-        options.headers = new Headers();
-        options.headers.append("Content-Type", "multipart/form-data");
-       
+   
     return this.http
-      .put(`/api/users/${this.currentUser._id}/profile`, formData, options)
+      .put(`/api/users/${this.currentUser._id}/profile`, formData)
       .catch(this.handleError);
-       // xhr.open("PUT", `/api/users/${this.currentUser._id}/profile`, true);
-       // xhr.send(formData);
   }
 
 
