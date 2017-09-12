@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from "../login/login.service";
 import { ToastService } from "../../shared/toast.service";
+import {NgForm} from '@angular/forms';
 @Component({
   selector: 'memore-profile',
   templateUrl: './profile.component.html',
@@ -39,12 +40,16 @@ export class ProfileComponent implements OnInit {
    });
  }
 
- updatePassword() {
+ updatePassword(profilePasswordForm:NgForm) {
     this.auth
     .changePassword(this.currentPassword, this.newPassword)
-    .subscribe(() => {}, () => {
-       this.errorMessage = "incorrect password";
+    .subscribe(() => {
+          this.toastService.open('Password updated successfully', 'success-toaster');
+       }, () => {
+         this.toastService.open('Old password incorrect', 'error-toaster');
+         this.errorMessage = "incorrect password";
     });
+     profilePasswordForm.resetForm();
   }
   updateProfileData() {
     this.auth

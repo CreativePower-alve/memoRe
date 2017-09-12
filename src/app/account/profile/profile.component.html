@@ -41,7 +41,7 @@
      <button type="submit" md-raised-button color="primary"
      [disabled]="profileForm.invalid">Save changes</button>
   </form>
-   <form autocomplete="on" #profilePasswordForm="ngForm" (ngSubmit)="updatePassword()" novalidate>
+   <form autocomplete="on" #profilePasswordForm="ngForm" (ngSubmit)="updatePassword(profilePasswordForm)" novalidate>
     <div class="form-group" >
       <md-input-container floatPlaceholder="always">
         <input mdInput 

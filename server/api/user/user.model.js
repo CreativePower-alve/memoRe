@@ -142,7 +142,6 @@ UserSchema.methods = {
       if(err) {
         return callback(err);
       }
-
       if(this.password === pwdGen) {
         return callback(null, true);
       } else {
@@ -206,7 +205,7 @@ UserSchema.methods = {
     var salt = new Buffer(this.salt, 'base64');
 
     if(!callback) {
-      return crypto.pbkdf2Sync(password, salt, defaultIterations, defaultKeyLength, 'sha512')
+      return crypto.pbkdf2Sync(password, salt, defaultIterations, defaultKeyLength)
         .toString('base64');
     }
 

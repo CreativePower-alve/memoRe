@@ -88,7 +88,6 @@ exports.changePassword = function(req, res) {
   var userId = req.user._id;
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
-
   return User.findById(userId).exec()
     .then(user => {
       if (user.authenticate(oldPass)) {
@@ -99,7 +98,7 @@ exports.changePassword = function(req, res) {
           })
           .catch(validationError(res));
       } else {
-        return res.status(403).end();
+        return res.status(422).end();
       }
     });
 }
