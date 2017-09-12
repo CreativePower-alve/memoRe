@@ -4,8 +4,7 @@ var User = require('./user.model');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 const gravatar = require('gravatar');
-var fs = require('fs');
-
+const utils = require('../../utils/utils');
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -134,13 +133,6 @@ exports.updateProfile = function(req, res) {
 
     });
 }
-// function to encode file data to base64 encoded string
-function base64_encode(file) {
-    // read binary data
-    var bitmap = fs.readFileSync(file);
-    // convert binary data to base64 encoded string
-    return new Buffer(bitmap).toString('base64');
-}
 /**
  * Get my info
  */
@@ -154,7 +146,7 @@ exports.me = function(req, res, next) {
       }
       if(user.avatar){
         try{
-            var base64str = base64_encode(user.avatar); 
+            var base64str = utils.base64_encode(user.avatar); 
             var userWithAvatarImg = Object.assign({},user._doc,{avatar:base64str});
             res.json(userWithAvatarImg);
         }catch(ex){
