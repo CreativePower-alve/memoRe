@@ -6,6 +6,7 @@ var controller = require('./user.controller');
 var auth = require('../../auth/auth.service');
 var router = new app.Router();
 var multer = require('multer');
+var maxsize = 3 * 1000 * 1000;
 var storage = multer.diskStorage({
 	destination:function(req, file, callback){
 		callback(null, './uploads');
@@ -14,7 +15,7 @@ var storage = multer.diskStorage({
 		callback(null, req.user.id);
 	}
 });
-var upload = multer({storage: storage,dest: './uploads'});
+var upload = multer({storage: storage, limits:{fileSize:maxsize}, dest: './uploads'});
 
 
 router.get('/', auth.hasRole('admin'), controller.index);

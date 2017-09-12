@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
       let file = target.files[0];
       this.avatar = file;
       let filesize = parseFloat(((file.size/1024)/1024).toFixed(4)); // MB
-      if(filesize < 3){
+      if(filesize < 5){
           let reader = new FileReader();
        
           if (file) {

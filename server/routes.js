@@ -25,7 +25,9 @@ app.use(function (req, res, next) {
   //customize error/unauthorized response 
   app.use(function(err, req, res, next){
     console.error(err.stack);
-    if(err.status == 401){
+    if(err.message == "File too large"){
+      res.send(422);
+    }else if(err.status == 401){
       res.send(401, 'Unauthorized');  
     }
     else{

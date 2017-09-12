@@ -112,21 +112,17 @@ exports.updateProfile = function(req, res) {
   var name = String(req.body.name);
   var email = String(req.body.email);
   var avatarValue = req.file;
-  console.log('req.body', req.body);
-  console.log('req.file', req.file);
-
   return User.findById(userId).exec()
     .then(user => {
       user.name = name ? name : user.name;
       user.email = email ? email : user.email;
       if (avatarValue != undefined) {
-          user.avatar =avatarValue.path;
-          return user.save()
+           user.avatar =avatarValue.path;
+            return user.save()
             .then(() => {
               res.status(204).end();
             })
             .catch(validationError(res));
-        
       } else {
         console.log(email, 'email');
         user.gravatar = gravatar.url(email, { s: '200', r: 'pg', d: '404' });
@@ -158,9 +154,14 @@ exports.me = function(req, res, next) {
         return res.status(401).end();
       }
       if(user.avatar){
-        var base64str = base64_encode(user.avatar);
-        var userWithAvatarImg = Object.assign({},user._doc,{avatar:base64str});
-        res.json(userWithAvatarImg);
+        try{
+            var base64str = base64_encode(user.avatar); 
+            var userWithAvatarImg = Object.assign({},user._doc,{avatar:base64str});
+            res.json(userWithAvatarImg);
+        }catch(ex){
+          var userWithAvatarImg = Object.assign({},user._doc,{avatar:""});
+          res.json(userWithAvatarImg);
+        }
       }else{
         res.json(user);
       }
