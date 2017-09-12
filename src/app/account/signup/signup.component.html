@@ -27,7 +27,7 @@
          <md-error *ngIf="confirmPassword.errors?.pattern">Confirm Password must match Password</md-error>
       </md-input-container>
     </div>
-    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" [ngClass]="signupForm.valid? 'green': 'no-class'" [disabled]="signupForm.invalid">Sign up</button></span>
+    <span><button type="submit" [ngClass]="signupForm.valid? 'green': 'no-class'" [disabled]="signupForm.invalid">Sign up</button></span>
      <div> Already have an account ?<a routerLink="/login"> Login here</a></div>
   </form>
 </div>

@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { LoginService } from './login/login.service';
 import { ProfileComponent } from './profile/profile.component';
 import { RouterModule } from '@angular/router';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 @NgModule({
 	imports: [
 	  SharedModule,
@@ -13,7 +14,8 @@ import { RouterModule } from '@angular/router';
 	declarations: [
 	  LoginComponent,
     SignupComponent,
-    ProfileComponent
+    ProfileComponent,
+    ForgotPasswordComponent
     ],
     providers: [
       LoginService
