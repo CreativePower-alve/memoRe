@@ -23,7 +23,9 @@ var UserSchema = new mongoose.Schema({
   avatar: String,
   provider: String,
   salt: String,
-  google: {}
+  google: {},
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 });
 
 /**
