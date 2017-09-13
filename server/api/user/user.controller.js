@@ -3,9 +3,12 @@
 var User = require('./user.model');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
-const gravatar = require('gravatar');
-const utils = require('../../utils/utils');
-
+var gravatar = require('gravatar');
+var utils = require('../../utils/utils');
+var config = require('../../config/nodemailer');
+var crypto = require('crypto');
+var nodemailer = require('nodemailer');
+var domain = process.env.NODE_ENV === 'development'? 'localhost:4200' : process.env.DOMAIN; 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
@@ -133,6 +136,58 @@ exports.updateProfile = function(req, res) {
 
     });
 }
+exports.forgotPass = function(req, res){
+    var email = req.body.email;
+    User.findOne({email:email}).exec()
+    .then( user =>{
+       if(!user){
+          return res.status(422).end();
+       }
+         crypto.randomBytes(48, function (ex, buf) {
+            // make the string url safe
+            var token = buf.toString('base64').replace(/\//g, '_').replace(/\+/g, '-');
+            user.resetPasswordToken = token;
+            user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+            user.save(function(saveUser){
+               sendEmail(res, req, email, token);
+            });
+            
+          });
+    })
+     
+}
+function sendEmail(res, req, email, token){
+     var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: config.email,
+          pass: config.password
+        }
+      });
+      var mailOptions = {
+        to: email,
+        from: config.email,
+        subject: 'MemoRe Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://'+domain+'/reset?token=' + token + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      transporter.sendMail(mailOptions, function(err) {
+         if(err){
+            return res.status(422).end();
+         }
+         return res.send('An e-mail has been sent to ' + email + ' with further instructions.');
+      });
+    }
+ exports.resetPassword = function(req, res){
+    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      return res.status(404).end('token not found');
+    }
+      return res.status(200).end('found token');
+   });
+ }
 /**
  * Get my info
  */

@@ -112,6 +112,18 @@ export class LoginService {
       .put(`/api/users/${this.currentUser._id}/profile`, formData)
       .catch(this.handleError);
   }
+  sendEmail(email){
+      return this.http
+      .post(`/api/users/forgot-password`, {
+        email
+      })
+      .catch(this.handleError);
+  }
+   resetPassword(token){
+      return this.http
+      .get(`/api/users/reset/`+token)
+      .catch(this.handleError);
+  }
 
 
 }

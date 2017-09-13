@@ -6,6 +6,8 @@ import { LoginService } from './login/login.service';
 import { ProfileComponent } from './profile/profile.component';
 import { RouterModule } from '@angular/router';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import {ResetPasswordGuard} from './reset-password/reset-password-guard';
 @NgModule({
 	imports: [
 	  SharedModule,
@@ -15,10 +17,12 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 	  LoginComponent,
     SignupComponent,
     ProfileComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ResetPasswordComponent
     ],
     providers: [
-      LoginService
+      LoginService,
+      ResetPasswordGuard
     ],
     exports:[ 
        LoginComponent,
