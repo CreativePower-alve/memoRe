@@ -13,5 +13,7 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit() {
   	console.log(window.location);
   }
-
+	resetPassword(formValues){
+		
+	}
 }
