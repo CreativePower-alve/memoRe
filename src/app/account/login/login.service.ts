@@ -124,6 +124,13 @@ export class LoginService {
       .get(`/api/users/reset/`+token)
       .catch(this.handleError);
   }
-
+  resetPass(token, password, confirmPassword){
+      return this.http
+      .post(`/api/users/reset-password/`+token, {
+                 password, 
+                 confirmPassword
+            })
+      .catch(this.handleError);
+  }
 
 }

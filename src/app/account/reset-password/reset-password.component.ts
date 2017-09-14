@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute,ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-
+import { LoginService } from "../login/login.service";
+import { ToastService } from "../../shared/toast.service";
 @Component({
   selector: 'memore-reset-password',
   templateUrl: './reset-password.component.html',
@@ -8,12 +9,20 @@ import {Router, ActivatedRoute,ActivatedRouteSnapshot, RouterStateSnapshot} from
 })
 export class ResetPasswordComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+  		private auth: LoginService, 
+  		private toastService: ToastService,
+  		public route: Router) { }
 
   ngOnInit() {
-  	console.log(window.location);
   }
-	resetPassword(formValues){
-		
+	resetPassword(formValues, ){
+		const token = this.route.url.split('token=')[1];
+		this.auth.resetPass(token,formValues.password, formValues.confirmPassword).subscribe(() => {
+          this.toastService.open('Password reset successfully', 'success-toaster');
+          this.route.navigate(['login']);
+       }, () => {
+         this.toastService.open('Password could not be reset', 'error-toaster');
+    });
 	}
 }

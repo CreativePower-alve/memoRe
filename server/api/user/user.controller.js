@@ -8,7 +8,7 @@ var utils = require('../../utils/utils');
 var config = require('../../config/nodemailer');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
-var domain = process.env.NODE_ENV === 'development'? 'http://localhost:4200' : process.env.DOMAIN; 
+var domain = process.env.NODE_ENV === 'development'? 'http://localhost:4200/' : process.env.DOMAIN; 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
@@ -149,14 +149,18 @@ exports.forgotPass = function(req, res){
             user.resetPasswordToken = token;
             user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
             user.save(function(saveUser){
-               sendEmail(res, req, email, token);
+            var message = 'You are receiving this because you (or someone else) have requested the reset of the password for your account on MemoRe.\n\n' +
+                        'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                        domain+'reset?token=' + token + '\n\n' +
+                        'If you did not request this, please ignore this email and your password will remain unchanged.\n';
+               sendEmail(res, email, message, "MemoRe Password Reset");
             });
             
           });
     })
      
 }
-function sendEmail(res, req, email, token){
+function sendEmail(res, email, message, subject){
      var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -167,11 +171,8 @@ function sendEmail(res, req, email, token){
       var mailOptions = {
         to: email,
         from: config.email,
-        subject: 'MemoRe Password Reset',
-        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          domain+'reset?token=' + token + '\n\n' +
-          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        subject:subject,
+        text: message
       };
       transporter.sendMail(mailOptions, function(err) {
          if(err){
@@ -187,6 +188,32 @@ function sendEmail(res, req, email, token){
     }
       return res.status(200).end('found token');
    });
+ }
+  exports.resetPass = function(req, res){
+    var password = req.body.password;
+    var confirmPassword = req.body.confirmPassword;
+    if(password && confirmPassword && password === confirmPassword){
+        User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        if (!user) {
+         return res.status(422).end('Password reset token is invalid or has expired.');
+        }
+
+        user.password = password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        user.save(function(err) {
+          var message = 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n';
+           sendEmail(res, user.email, message, "Your MemoRe password has been changed")
+           return res.status(200).end('Password has been reset');
+        });
+      });
+    }
+    else{
+      return res.status(422).end('Confirm Password and Password do not match');
+    }
+   
  }
 /**
  * Get my info
