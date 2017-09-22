@@ -21,6 +21,7 @@ app.use(function (req, res, next) {
   app.use('/api/tags', require('./api/tag'));
   app.use('/api/users', require('./api/user'));
   app.use('/api/clients', require('./api/client'));
+  app.use('/api/oauth2',require('./api/oauth2'));
   app.use('/auth', require('./auth').router);
   //customize error/unauthorized response 
   app.use(function(err, req, res, next){
@@ -28,10 +29,10 @@ app.use(function (req, res, next) {
     if(err.message == "File too large"){
       res.send(422);
     }else if(err.status == 401){
-      res.send(401, 'Unauthorized');  
+      res.send(401, 'Unauthorized'+err.stack);  
     }
     else{
-      res.send(401, 'Something went wrong'); 
+      res.send(401, 'Something went wrong' + err.stack); 
     }
     
   });

@@ -1,11 +1,17 @@
 'use strict';
 var config = require('../config/environment');
+var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var redirectDomain = process.env.NODE_ENV === 'development'? 'http://localhost:9000/' : process.env.DOMAIN;
-var oauth = require('../config/express').oauth;
+//var oauth = require('../config/express').oauth;
+var localStrategy = require('passport-local');
+var Client = require('../api/client/client.model');
+var BasicStrategy = require('passport-http').BasicStrategy;
+var BearerStrategy = require('passport-http-bearer').Strategy;
+var Token = require('../api/token/token.model');
 
 var validateJwt = expressJwt({
   secret: config.secrets.session
@@ -85,3 +91,41 @@ exports.setTokenCookie = function(req, res) {
   res.redirect(`${redirectDomain}/google?token=${token}`);
 }
 exports.isAuthenticated = isAuthenticated;
+
+passport.use('client-basic', new BasicStrategy(
+  function(email, password, callback) {
+    Client.findOne({ email: email }, function (err, client) {
+      if (err) { return callback(err); }
+
+      // No client found with that id or bad password
+      if (!client || client.secret !== password) { return callback(null, false); }
+
+      // Success
+      return callback(null, client);
+    });
+  }
+));
+
+passport.use(new BearerStrategy(
+  function(accessToken, callback) {
+    Token.findOne({value: accessToken }, function (err, token) {
+      if (err) { return callback(err); }
+
+      // No token found
+      if (!token) { return callback(null, false); }
+
+      User.findOne({ _id: token.userId }, function (err, user) {
+        if (err) { return callback(err); }
+
+        // No user found
+        if (!user) { return callback(null, false); }
+
+        // Simple example with no scope
+        callback(null, user, { scope: '*' });
+      });
+    });
+  }
+));
+
+exports.isClientAuthenticated = passport.authenticate('client-basic', { session : false });
+exports.isBearerAuthenticated = passport.authenticate('bearer', { session: false });

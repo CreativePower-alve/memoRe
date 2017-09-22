@@ -1,6 +1,6 @@
 // Load required packages
 var mongoose = require('mongoose');
-
+var crypto = require('crypto');
 // Define our token schema
 var TokenSchema   = new mongoose.Schema({
   value: { type: String, required: true },

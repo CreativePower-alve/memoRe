@@ -15,6 +15,8 @@ var errorHandler = require('errorhandler');
 var path = require('path');
 var config = require('./environment');
 var passport = require('passport');
+var session = require('express-session');
+var ejs = require('ejs');
 // var oauthserver = require('node-oauth2-server');
 // var oauth =  oauthserver({
 //         model: require('../api/client/model.js'),
@@ -26,11 +28,16 @@ var expressFunction = function(app) {
     var env = app.get('env');
 
     app.set('views', config.root + '/server/views');
-    app.engine('html', require('ejs').renderFile);
-    app.set('view engine', 'html'); 
+    app.engine('ejs', require('ejs').renderFile);
+    app.set('view engine', 'ejs'); 
     app.use(compression());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
+    app.use(session({
+      secret: 'MemoRe Super Secret Session Key',
+      saveUninitialized: true,
+      resave: true
+    }));
     app.use(methodOverride());
     app.use(cookieParser());
     app.use(passport.initialize());
