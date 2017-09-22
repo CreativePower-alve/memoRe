@@ -15,12 +15,12 @@ var errorHandler = require('errorhandler');
 var path = require('path');
 var config = require('./environment');
 var passport = require('passport');
-var oauthserver = require('node-oauth2-server');
-var oauth =  oauthserver({
-        model: require('../api/client/model.js'),
-        grants: ['password', 'client_credentials'],
-        debug: true
-    });
+// var oauthserver = require('node-oauth2-server');
+// var oauth =  oauthserver({
+//         model: require('../api/client/model.js'),
+//         grants: ['password', 'client_credentials'],
+//         debug: true
+//     });
 
 var expressFunction = function(app) {
     var env = app.get('env');
@@ -35,15 +35,15 @@ var expressFunction = function(app) {
     app.use(cookieParser());
     app.use(passport.initialize());
     
-    app.oauth = oauth;
+   // app.oauth = oauth;
 
-    app.post('/oauth/token', app.oauth.grant());
+    // app.post('/oauth/token', app.oauth.grant());
 
-    app.get('/', app.oauth.authorise(), function (req, res) {
-        res.send('Congratulations, you are in a secret area!');
-    });
+    // app.get('/', app.oauth.authorise(), function (req, res) {
+    //     res.send('Congratulations, you are in a secret area!');
+    // });
 
-    app.use(app.oauth.errorHandler());
+    // app.use(app.oauth.errorHandler());
 
     console.log("env",env);
     if ('production' === env) {
@@ -64,6 +64,6 @@ var expressFunction = function(app) {
     }
 };
 module.exports = {
-    oauth : oauth,
+   // oauth : oauth,
     appExpress: expressFunction
 }
