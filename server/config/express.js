@@ -15,20 +15,36 @@ var errorHandler = require('errorhandler');
 var path = require('path');
 var config = require('./environment');
 var passport = require('passport');
-module.exports = function(app) {
+var oauthserver = require('node-oauth2-server');
+var oauth =  oauthserver({
+        model: require('../api/client/model.js'),
+        grants: ['password', 'client_credentials'],
+        debug: true
+    });
+
+var expressFunction = function(app) {
     var env = app.get('env');
 
     app.set('views', config.root + '/server/views');
     app.engine('html', require('ejs').renderFile);
     app.set('view engine', 'html'); 
     app.use(compression());
-    app.use(bodyParser.urlencoded({
-        extended: true
-    }));
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(methodOverride());
     app.use(cookieParser());
     app.use(passport.initialize());
+    
+    app.oauth = oauth;
+
+    app.post('/oauth/token', app.oauth.grant());
+
+    app.get('/', app.oauth.authorise(), function (req, res) {
+        res.send('Congratulations, you are in a secret area!');
+    });
+
+    app.use(app.oauth.errorHandler());
+
     console.log("env",env);
     if ('production' === env) {
         app.use(favicon(path.join(config.root, 'dist', 'favicon.ico')));
@@ -47,3 +63,7 @@ module.exports = function(app) {
         app.use(errorHandler()); // Error handler - has to be last
     }
 };
+module.exports = {
+    oauth : oauth,
+    appExpress: expressFunction
+}

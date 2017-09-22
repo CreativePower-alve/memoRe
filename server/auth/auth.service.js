@@ -5,6 +5,7 @@ var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var redirectDomain = process.env.NODE_ENV === 'development'? 'http://localhost:9000/' : process.env.DOMAIN;
+var oauth = require('../config/express').oauth;
 
 var validateJwt = expressJwt({
   secret: config.secrets.session

@@ -6,6 +6,7 @@
 
 var errors = require('./components/errors');
 var path = require('path');
+var auth = require('./auth/auth.service');
 
 module.exports= function(app) {
 app.use(function (req, res, next) {
@@ -17,11 +18,10 @@ app.use(function (req, res, next) {
 
   // Insert routes below
   app.use('/api/things', require('./api/thing'));
-   app.use('/api/tags', require('./api/tag'));
+  app.use('/api/tags', require('./api/tag'));
   app.use('/api/users', require('./api/user'));
-
+  app.use('/api/clients', require('./api/client'));
   app.use('/auth', require('./auth').router);
-
   //customize error/unauthorized response 
   app.use(function(err, req, res, next){
     console.error(err.stack);
