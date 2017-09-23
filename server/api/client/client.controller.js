@@ -7,14 +7,15 @@ exports.postClients = function(req, res) {
 
   // Set the client properties that came from the POST data
   client.name = req.body.name;
+  client.secret = req.body.secret;
   client.userId = req.user._id;
 
   // Save the client and check for errors
   client.save(function(err) {
     if (err)
-      res.send(err);
+      return res.send(err);
 
-    res.json({ message: 'Application Client added !', data: client });
+    return res.json({ message: 'Application Client added !', data: client });
   });
 };
 
