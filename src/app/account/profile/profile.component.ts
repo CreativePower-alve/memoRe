@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from "../login/login.service";
+import { ToastService } from "../../shared/toast.service";
+import {NgForm} from '@angular/forms';
 @Component({
   selector: 'memore-profile',
   templateUrl: './profile.component.html',
@@ -17,52 +19,71 @@ export class ProfileComponent implements OnInit {
   errorMessage;
   uploadFile;
   currentUser;
-  constructor(public auth: LoginService) { }
+  avatarValue;
+  constructor(
+    public auth: LoginService,
+    private toastService: ToastService) { }
 
-  ngOnInit() {
-    this.currentUser = this.auth.getCurrentUser();
-    if (this.currentUser) {
-      this.name = this.currentUser.name;
-      this.email = this.currentUser.email;
-      if (this.currentUser.avatar) {
-        this.avatar = 'data:image/jpeg;base64,' + this.currentUser.avatar;
-      }
-      else {
-        this.avatar = this.currentUser.gravatar;
-      }
+ ngOnInit() {
+   this.auth.checkAuthenticationStatus().subscribe(() =>{
+     this.currentUser = this.auth.getCurrentUser();
+     if(this.currentUser){
+       this.name = this.currentUser.name;
+       this.email = this.currentUser.email;
+       if(this.currentUser.avatar){
+         this.avatarValue = 'data:image/jpeg;base64,'+ this.currentUser.avatar ;
+       }
+       else{
+          this.avatarValue =  this.currentUser.gravatar;
+       }
+     }
+   });
+ }
 
-      console.log('avatar', this.avatar);
-    }
-  }
-  hexToBase64(str) {
-    return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
-  }
-  updatePassword() {
-    this.auth.changePassword(this.currentPassword, this.newPassword)
-      .subscribe(() => { }, () => {
-        this.errorMessage = "incorrect password";
-      });
+ updatePassword(profilePasswordForm:NgForm) {
+    this.auth
+    .changePassword(this.currentPassword, this.newPassword)
+    .subscribe(() => {
+          this.toastService.open('Password updated successfully', 'success-toaster');
+       }, () => {
+         this.toastService.open('Old password incorrect', 'error-toaster');
+         this.errorMessage = "incorrect password";
+    });
+     profilePasswordForm.resetForm();
   }
   updateProfileData() {
-    console.log('prof avatar', this.avatar);
     this.auth
       .updateProfile(this.name, this.email, this.avatar)
-      .subscribe(() => { }, () => {
-        this.errorMessage = "incorrect data";
+      .flatMap(() => this.auth.checkAuthenticationStatus())
+      .subscribe(() => {
+            this.toastService.open('Profile updated successfully', 'success-toaster');
+         }, () => {
+          this.errorMessage = "incorrect data";
+           this.toastService.open('Profile could not be updated', 'error-toaster');
       });
   }
-  fileChanged(e: Event) {
-    const target: HTMLInputElement = e.target as HTMLInputElement;
-    let file = target.files[0];
-    let reader = new FileReader();
+    fileChanged(e: Event) {
+      const target: HTMLInputElement = e.target as HTMLInputElement;
+      let file = target.files[0];
+      this.avatar = file;
+      let filesize = parseFloat(((file.size/1024)/1024).toFixed(4)); // MB
+      if(filesize < 5){
+          let reader = new FileReader();
+       
+          if (file) {
+             reader.readAsDataURL(file); //reads the data as a URL
+         } else {
+             this.avatarValue = "";
+         }
+          reader.onloadend = function () {
+             this.avatarValue = reader.result;
 
-    if (file) {
-      reader.readAsDataURL(file); //reads the data as a URL
-    } else {
-      this.avatar = "";
+         }.bind(this);
+      }
+      else{
+        this.toastService.open('File size too large. Please use images under 3 Mb.','error-toaster');
+      }
+    
     }
-    reader.onloadend = function () {
-      this.avatar = reader.result;
-    }.bind(this);
-  }
+
 }

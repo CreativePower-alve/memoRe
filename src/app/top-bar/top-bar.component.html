@@ -15,12 +15,12 @@
             <memore-open-session-dialog (onStartSession)="startSession($event)"></memore-open-session-dialog>
         </div>
         <div class="userProfile">
-            <img src="{{loggedUser?.gravatar || loggedUser?.google.image.url }}" class="icon" />
+            <img src="{{image }}" class="icon" />
             <button md-button [mdMenuTriggerFor]="menu">{{loggedUser?.name}} <md-icon>keyboard_arrow_down</md-icon> </button>
         </div>
         <md-menu #menu="mdMenu" [overlapTrigger]="false">
             <button *ngIf="hasProfileAccess" class="menu-section" [routerLink]="['profile']" md-menu-item>
-               <img class="userIcon" src="{{loggedUser?.gravatar || loggedUser?.google.image.url}}" class="icon"/>
+               <img class="userIcon" src="{{image}}" class="icon"/>
                 <div class="userInfo">
                        {{loggedUser?.name}} 
                </div>

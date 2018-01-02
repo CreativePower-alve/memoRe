@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { IUser } from './user.model';
+import { Http, Response, RequestOptions, Headers} from '@angular/http';
+import {IUser} from './user.model';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { AuthTokenService } from '../../shared/authToken.service';
@@ -90,24 +90,47 @@ export class LoginService {
         this.logoutEvent.next(true);
     }
 
-    changePassword(oldPassword, newPassword) {
-        return this.http
-            .put(`/api/users/${this.currentUser._id}/password`, {
-                oldPassword,
-                newPassword
-            })
-            .catch(this.handleError);
-    }
+  changePassword(oldPassword, newPassword) {
+    return this.http
+      .put(`/api/users/${this.currentUser._id}/password`, {
+        oldPassword,
+        newPassword
+      })
+      .catch(this.handleError);
+  }
+   updateProfile(name, email, avatar) {
     
-    updateProfile(name, email, avatar) {
-        console.log('avatar', avatar);
-        return this.http
-            .put(`/api/users/${this.currentUser._id}/profile`, {
-                name,
-                email,
-                avatar
+        let formData:FormData = new FormData();
+        if(avatar){
+            formData.append('avatar', avatar, avatar.name);
+        }
+       
+        formData.append('name', name);
+         formData.append('email', email);
+   
+    return this.http
+      .put(`/api/users/${this.currentUser._id}/profile`, formData)
+      .catch(this.handleError);
+  }
+  sendEmail(email){
+      return this.http
+      .post(`/api/users/forgot-password`, {
+        email
+      })
+      .catch(this.handleError);
+  }
+   resetPassword(token){
+      return this.http
+      .get(`/api/users/reset/`+token)
+      .catch(this.handleError);
+  }
+  resetPass(token, password, confirmPassword){
+      return this.http
+      .post(`/api/users/reset-password/`+token, {
+                 password, 
+                 confirmPassword
             })
-            .catch(this.handleError);
-    }
+      .catch(this.handleError);
+  }
 
 }

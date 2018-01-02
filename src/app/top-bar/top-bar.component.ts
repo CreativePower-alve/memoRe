@@ -27,7 +27,7 @@ export class TopBarComponent implements OnInit {
   canPlay;
   hasProfileAccess: boolean;
   thingsUpdateSubscription;
-
+  image;
   constructor(private thingsService: ThingsService) { }
 
   ngOnInit() {
@@ -44,6 +44,11 @@ export class TopBarComponent implements OnInit {
   ngOnChanges(change) {
     if (change['loggedUser'] && change['loggedUser'].currentValue) {
       this.hasProfileAccess = this.canSeeProfile(change['loggedUser'].currentValue);
+      if(change['loggedUser'].currentValue.avatar){
+        this.image = "data:image/jpeg;base64,"+ change['loggedUser'].currentValue.avatar;
+      }else{
+        this.image = change['loggedUser'].currentValue.gravatar || change['loggedUser'].currentValue.google.image.url;
+      }
     }
   }
 

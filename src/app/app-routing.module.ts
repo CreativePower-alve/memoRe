@@ -3,18 +3,26 @@ import { RouterModule } from '@angular/router';
 import { ThingsComponent } from './things/things.component';
 import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
+import { ForgotPasswordComponent } from './account/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './account/reset-password/reset-password.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { ThingsSessionComponent } from './things-session/things-session.component';
 import {ThingsGuard} from './things/things-guard.service';
 import {GoogleComponent} from './google/google.component';
 import {LoginGuard} from './account/login/login-guard.service';
-
+import {ResetPasswordGuard} from './account/reset-password/reset-password-guard';
 @NgModule({
 	imports: [
 	RouterModule.forRoot([
 	{ path: 'login', 
 	  canActivate: [LoginGuard],		
 	  component: LoginComponent },	
+	{ path: 'forgot-password', 
+	  component: ForgotPasswordComponent },	
+	{ path: 'reset', 
+	  canActivate: [ResetPasswordGuard],	
+	  component: ResetPasswordComponent
+	 },
 	{ path: 'google', 		
 	  component: GoogleComponent },	
     { path: 'signup', 

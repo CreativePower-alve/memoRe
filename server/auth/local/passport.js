@@ -32,4 +32,5 @@ exports.setup = function(User/*, config*/) {
   }, function(email, password, done) {
     return localAuthenticate(User, email, password, done);
   }));
+
 }
