@@ -51,7 +51,7 @@ export class SideNavComponent implements OnInit {
 
   ngOnDestroy() {
     this.newTagSubscription.unsubscribe();
-    localstorage.removeItem('tags');
+    localStorage.removeItem('tags');
   }
 
   openSidenav() {
