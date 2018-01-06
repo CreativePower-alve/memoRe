@@ -51,7 +51,6 @@ export class SideNavComponent implements OnInit {
 
   ngOnDestroy() {
     this.newTagSubscription.unsubscribe();
-    localStorage.removeItem('tags');
   }
 
   openSidenav() {
@@ -59,7 +58,7 @@ export class SideNavComponent implements OnInit {
   }
 
   initializeTags() {
-    const selectedTags = localStorage.getItem('tags');
+    const selectedTags = sessionStorage.getItem('tags');
     this.filterBy = selectedTags ? selectedTags.split(',') : [];
     this.tagsService.getAllTags().subscribe(allTags => {
       this.allTags = allTags.map(aTag => {
@@ -78,7 +77,7 @@ export class SideNavComponent implements OnInit {
     else {
       this.filterBy = this.filterBy.filter(tagId => tagId && tagId !== tag.id);
     }
-    localStorage.setItem('tags', this.filterBy.join(','));
+    sessionStorage.setItem('tags', this.filterBy.join(','));
     this.router.navigate(['/things'], { queryParams: { tags: this.filterBy.join(',') } });
   }
 
