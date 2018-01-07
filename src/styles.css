@@ -18,9 +18,17 @@ body{
 }
 
 .truncate{
+	max-width: 226px;
+	white-space: nowrap;
 	overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
+
+.mat-checkbox-label {
+	max-width: 160px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .toast-top-right{

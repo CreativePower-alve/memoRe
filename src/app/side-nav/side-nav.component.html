@@ -26,7 +26,8 @@
                color="accent" 
                [disableRipple]="true"
                (change)="addFilter($event, tag)" 
-               [checked]="tag.checked">
+               [checked]="tag.checked"
+               title="{{tag.name}}">
 		               {{tag.name}}
               </md-checkbox>
               <md-icon 
