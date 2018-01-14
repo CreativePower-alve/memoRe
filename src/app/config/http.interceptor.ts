@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from "@angular/http";
-import {Observable} from "rxjs/Rx";
+import {Observable} from "rxjs/Observable";
 import { environment } from '../../environments/environment';
 import { AuthTokenService } from '../shared/authToken.service';
 import { Router } from '@angular/router';
@@ -9,6 +9,9 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/share';
+import "rxjs/add/operator/debounceTime";
+import 'rxjs/add/operator/filter';
 
 @Injectable()
 export class InterceptedHttp extends Http {

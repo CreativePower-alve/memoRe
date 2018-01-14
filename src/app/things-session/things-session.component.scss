@@ -4,6 +4,22 @@
 	flex: 1 0 auto;
 }
 
+.alertSessionEnding {
+	position: absolute;
+	top: 86px;
+	right: 141px;
+	z-index: 19;
+	font-size: 20px;
+	display: flex;
+	background: white;
+	padding: 9px;
+	i {
+		color: red;
+    margin-right: 8px;
+    font-size: 25px;
+	}
+}
+
 .isSession {
 	background: rgba(0,0,0, 0.4);
 }

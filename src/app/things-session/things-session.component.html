@@ -26,6 +26,9 @@
         </div>
     </div>
     <div class="session zoomIn" *ngIf="isSession">
+        <div class="alertSessionEnding" *ngIf="showSessionEndingAlert">
+            <i class="material-icons">error</i> {{countDown}} seconds left
+        </div>
         <div class="items">
             <div class="wrapper" *ngFor="let sessionItem of practiceItems; let i=index">
                 <memore-practice-item [item]="sessionItem" (onFinish)="getNextItem()" *ngIf="i===currentIndex">
